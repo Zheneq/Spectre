@@ -296,42 +296,43 @@ namespace Spectre {
 			DrawSpec(e);
 		}
 
-		PointF TransformImp(double x, double y)
+		PointF TransformImp(double x, double y, int index)
 		{
-			return PointF((float)((x - XRangeImp[0]) * XScaleImp * pbxImp->Width),
-				          (float)((1 - (y - YRangeImp[0]) * YScaleImp) * pbxImp->Height));
+			return PointF((float)(x / buf[index].len * pbxImp->Width),
+				          (float)((1 - (y + 0.125) * 0.8) * pbxImp->Height));
 		}
-		PointF TransformSpec(double x, double y)
+		PointF TransformSpec(double x, double y, int index)
 		{
-			return PointF((float)((x - XRangeSpec[0]) * XScaleSpec * pbxSpec->Width),
-				          (float)((1 - (y - YRangeSpec[0]) * YScaleSpec) * pbxSpec->Height));
+			return PointF((float)(x / buf[index].len * .5 * pbxSpec->Width),
+				          (float)((1 - y / buf[index].MaxSpec) * pbxSpec->Height));
 		}
-		PointF BackTransformImp(float x, float y)
+		PointF BackTransformImp(float x, float y, int index)
 		{
-			return PointF((float)(x / (XScaleImp * pbxImp->Width) + XRangeImp[0]),
-				          (float)((1 - (y / pbxImp->Height)) / YScaleImp + YRangeImp[0]));
+			return PointF((float)(x * buf[index].len / pbxImp->Width),
+				          (float)((1 - (y / pbxImp->Height)) / 0.8 - 0.125));
 		}
-		PointF BackTransformSpec(float x, float y)
+		PointF BackTransformSpec(float x, float y, int index)
 		{
-			return PointF((float)(x / (XScaleSpec * pbxSpec->Width) + XRangeSpec[0]),
-				          (float)((1 - (y / pbxSpec->Height)) / YScaleSpec + YRangeSpec[0]));
+			return PointF((float)(x * buf[index].len * 2 / pbxSpec->Width),
+				          (float)((1 - (y / pbxSpec->Height)) * buf[index].MaxSpec));
 		}
 
 		array<PointF>^ TransformPointsImp(int index, PaintEventArgs^ e)
 		{
-			array<PointF>^ res = gcnew array<PointF>(implen);
-			for(int i=0; i<implen; i++)
+			array<PointF>^ res = gcnew array<PointF>(buf[index].len);
+			for(int i=0; i<buf[index].len; i++)
 			{
-				res[i] = TransformImp(imp[index][0][i], imp[index][1][i]);
+				res[i] = TransformImp(i, buf[index].imp[i], index);
 			}
 			return res;
 		}
 		array<PointF>^ TransformPointsSpec(int index, PaintEventArgs^ e)
 		{
+			register int speclen = buf[index].len/2 + 1;
 			array<PointF>^ res = gcnew array<PointF>(speclen);
 			for(int i=0; i<speclen; i++)
 			{
-				res[i] = TransformSpec(spec[index][0][i], spec[index][1][i]);
+				res[i] = TransformSpec(i, buf[index].spec[i], index);
 			}
 			return res;
 		}
@@ -346,13 +347,13 @@ namespace Spectre {
 
 			e->Graphics->SmoothingMode = Drawing2D::SmoothingMode::HighQuality;
 			// Draw axes
-			e->Graphics->DrawLine(AxisPen, TransformImp(XRangeImp[0], 0), TransformImp(XRangeImp[1], 0));
-			e->Graphics->DrawLine(AxisPen, TransformImp(0, YRangeImp[0]), TransformImp(0, YRangeImp[1]));
+			//e->Graphics->DrawLine(AxisPen, TransformImp(XRangeImp[0], 0), TransformImp(XRangeImp[1], 0));
+			//e->Graphics->DrawLine(AxisPen, TransformImp(0, YRangeImp[0]), TransformImp(0, YRangeImp[1]));
 
 			array<PointF>^ curvePoints = TransformPointsImp(0, e);
-			e->Graphics->DrawCurve(GreenPen, curvePoints, 0, implen-1, .5F);
-			curvePoints = TransformPointsImp(1, e);
-			e->Graphics->DrawCurve(RedPen, curvePoints, 0, implen-1, .5F);
+			e->Graphics->DrawCurve(GreenPen, curvePoints, 0, buf[0].len-1, .5F);
+//			curvePoints = TransformPointsImp(1, e);
+//			e->Graphics->DrawCurve(RedPen, curvePoints, 0, buf[1].len-1, .5F);
 		}
 		void DrawSpec(PaintEventArgs^ e)
 		{
@@ -362,13 +363,13 @@ namespace Spectre {
 
 			e->Graphics->SmoothingMode = Drawing2D::SmoothingMode::HighQuality;
 			// Draw axes
-			e->Graphics->DrawLine(AxisPen, TransformSpec(XRangeSpec[0], 0), TransformSpec(XRangeSpec[1], 0));
-			e->Graphics->DrawLine(AxisPen, TransformSpec(0, YRangeSpec[0]), TransformSpec(0, YRangeSpec[1]));
+			//e->Graphics->DrawLine(AxisPen, TransformSpec(XRangeSpec[0], 0), TransformSpec(XRangeSpec[1], 0));
+			//e->Graphics->DrawLine(AxisPen, TransformSpec(0, YRangeSpec[0]), TransformSpec(0, YRangeSpec[1]));
 
-			array<PointF>^ curvePoints = TransformPointsSpec(0, e);
-			e->Graphics->DrawCurve(GreenPen, curvePoints, 0, implen-1, .5F);
-			curvePoints = TransformPointsSpec(1, e);
-			e->Graphics->DrawCurve(RedPen, curvePoints, 0, implen-1, .5F);
+//			array<PointF>^ curvePoints = TransformPointsSpec(0, e);
+//			e->Graphics->DrawCurve(GreenPen, curvePoints, 0, implen-1, .5F);
+//			curvePoints = TransformPointsSpec(1, e);
+//			e->Graphics->DrawCurve(RedPen, curvePoints, 0, implen-1, .5F);
 		}
 
 		System::Void FuncChanged(System::Object^  sender, System::EventArgs^  e)
@@ -415,11 +416,12 @@ namespace Spectre {
 			const int idx = (int)rdb2->Checked;
 			for(int i=0; i<pbxImp->Width; ++i)
 			{
-				PointF t = BackTransformImp((float)i, RawHand[idx][i]);
-				imp[idx][0][i] = t.X;
-				imp[idx][1][i] = t.Y;
+				PointF t = BackTransformImp((float)i, RawHand[idx][i], idx);
+				buf[idx].imp[i] = t.X;
+				buf[idx].imp[i] = t.Y;
 			}
 			pbxImp->Invalidate();
 		}
+
 };
 }

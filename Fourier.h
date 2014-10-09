@@ -1,5 +1,6 @@
 #pragma once
 #include <fftw3.h>
+#pragma comment(lib, "../FFTW/libfftw3-3")
 
 struct buffer 
 {
@@ -8,7 +9,9 @@ struct buffer
 	fftw_plan p;
 	int len;
 
-	buffer() : imp(NULL), spec(NULL), len(0), p(NULL) {}
+	double MaxSpec;
+
+	buffer() : imp(NULL), spec(NULL), len(0), p(NULL), MaxSpec(1e-10) {}
 	~buffer()
 	{
 		free();
@@ -27,16 +30,14 @@ struct buffer
 	void alloc(int n)
 	{
 		free();
-		imp = (double*)fftw_malloc(sizeof(double)*n);
-		imp = (double*)fftw_malloc(sizeof(double)*n);
+		len = n;
+		imp = (double*)fftw_malloc(sizeof(double)*len);
+		imp = (double*)fftw_malloc(sizeof(double)*len);
 		// p = 
 	}
 };
 
-extern double *imp[2][2], *spec[2][2];
-extern int implen, speclen;
-
-extern double XRangeImp[2], YRangeImp[2], XRangeSpec[2], YRangeSpec[2], XScaleImp, YScaleImp, XScaleSpec, YScaleSpec;
+extern buffer buf[2];
 
 namespace Fourier
 {

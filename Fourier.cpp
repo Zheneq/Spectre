@@ -16,7 +16,7 @@ enum functions
 	FUNC_Linear,
 	FUNC_Gauss,
 	FUNC_Sine
-}
+};
 
 void function(functions func, int left_b, int right_b){
 
