@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <fftw3.h>
 #include <math.h>
+#include "Fourier.h"
+
+buffer buf[2];
 
 double *imp, *spec;
 int implen, speclen;
