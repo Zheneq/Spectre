@@ -6,7 +6,8 @@
 
 buffer buf[2];
 
-double *imp, *spec;
+
+double *imp, *spec, energy, E_0, step;
 int implen, speclen;
 
 enum functions
@@ -84,4 +85,39 @@ void fourier(){
 	fftw_free(out);
 }
 
+void add_energy(){
+
+	int length = (E_0 - energy)/step;
+	for(int i = 0; i < size/2; i++){
+		if ((i + length/2) < size/2){
+			imp[i] = imp[i+length/2];
+		}
+	}
+
+	for(int i = size; i > size/2; i--){
+		if ((i - length/2) > size/2){
+			imp[i] = imp[i-length/2];
+		}
+	}
+
+	for(int i = (size/2 - length/2); i < (size/2 + length/2); i++){
+		imp[i] = 1.0;
+	}
+
+
+
+}
+
+void check_energy(){
+
+	energy = 0.0;
+
+	for (int i = 0; i < size; i++){
+		energy += imp[i]*imp[i];
+	}
+
+	if ((E_0 - energy) > 0){
+		add_energy();
+	}
+}
 //зависимость спектра от формы импульса
