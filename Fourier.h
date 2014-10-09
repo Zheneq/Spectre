@@ -8,7 +8,7 @@ struct buffer
 	fftw_plan p;
 	int len;
 
-	buffer() : imp(NULL), spec(NULL), len(0) {}
+	buffer() : imp(NULL), spec(NULL), len(0), p(NULL) {}
 	~buffer()
 	{
 		free();
@@ -20,6 +20,8 @@ struct buffer
 		imp = NULL;
 		if(imp) fftw_free(spec);
 		spec = NULL;
+		if(p) fftw_destroy_plan(p);
+		p = NULL;
 	}
 
 	void alloc(int n)
@@ -27,6 +29,7 @@ struct buffer
 		free();
 		imp = (double*)fftw_malloc(sizeof(double)*n);
 		imp = (double*)fftw_malloc(sizeof(double)*n);
+		// p = 
 	}
 };
 
