@@ -55,6 +55,9 @@ namespace Spectre {
 
 	private: System::Windows::Forms::ComboBox^  cbxRight;
 	private: System::Windows::Forms::ComboBox^  cbxLeft;
+	private: System::Windows::Forms::TrackBar^  trackBar1;
+	private: System::Windows::Forms::TrackBar^  trackBar2;
+	private: System::Windows::Forms::TrackBar^  trackBar3;
 
 
 
@@ -87,11 +90,17 @@ namespace Spectre {
 			this->pnlFunc = (gcnew System::Windows::Forms::Panel());
 			this->cbxRight = (gcnew System::Windows::Forms::ComboBox());
 			this->cbxLeft = (gcnew System::Windows::Forms::ComboBox());
+			this->trackBar1 = (gcnew System::Windows::Forms::TrackBar());
+			this->trackBar2 = (gcnew System::Windows::Forms::TrackBar());
+			this->trackBar3 = (gcnew System::Windows::Forms::TrackBar());
 			this->panel1->SuspendLayout();
 			this->panel2->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pbxImp))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pbxSpec))->BeginInit();
 			this->pnlFunc->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar3))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// panel1
@@ -139,6 +148,7 @@ namespace Spectre {
 			this->panel2->Name = L"panel2";
 			this->panel2->Size = System::Drawing::Size(158, 29);
 			this->panel2->TabIndex = 5;
+			this->panel2->Visible = false;
 			// 
 			// rdbHand
 			// 
@@ -201,6 +211,7 @@ namespace Spectre {
 			this->pnlFunc->Name = L"pnlFunc";
 			this->pnlFunc->Size = System::Drawing::Size(265, 29);
 			this->pnlFunc->TabIndex = 10;
+			this->pnlFunc->Visible = false;
 			// 
 			// cbxRight
 			// 
@@ -224,14 +235,51 @@ namespace Spectre {
 			this->cbxLeft->Text = L"Слева";
 			this->cbxLeft->SelectedIndexChanged += gcnew System::EventHandler(this, &UI::FuncChanged);
 			// 
+			// trackBar1
+			// 
+			this->trackBar1->Location = System::Drawing::Point(512, 12);
+			this->trackBar1->Maximum = 32;
+			this->trackBar1->Minimum = 8;
+			this->trackBar1->Name = L"trackBar1";
+			this->trackBar1->Size = System::Drawing::Size(143, 45);
+			this->trackBar1->TabIndex = 11;
+			this->trackBar1->Value = 8;
+			this->trackBar1->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar1_ValueChanged);
+			// 
+			// trackBar2
+			// 
+			this->trackBar2->Location = System::Drawing::Point(661, 12);
+			this->trackBar2->Maximum = 100;
+			this->trackBar2->Minimum = 1;
+			this->trackBar2->Name = L"trackBar2";
+			this->trackBar2->Size = System::Drawing::Size(143, 45);
+			this->trackBar2->TabIndex = 12;
+			this->trackBar2->Value = 50;
+			this->trackBar2->Scroll += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
+			this->trackBar2->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
+			// 
+			// trackBar3
+			// 
+			this->trackBar3->Location = System::Drawing::Point(811, 12);
+			this->trackBar3->Minimum = 1;
+			this->trackBar3->Name = L"trackBar3";
+			this->trackBar3->Size = System::Drawing::Size(143, 45);
+			this->trackBar3->TabIndex = 13;
+			this->trackBar3->Value = 1;
+			this->trackBar3->Scroll += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
+			this->trackBar3->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
+			// 
 			// UI
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(668, 502);
+			this->ClientSize = System::Drawing::Size(966, 502);
+			this->Controls->Add(this->trackBar3);
+			this->Controls->Add(this->trackBar2);
+			this->Controls->Add(this->pbxImp);
+			this->Controls->Add(this->trackBar1);
 			this->Controls->Add(this->pnlFunc);
 			this->Controls->Add(this->pbxSpec);
-			this->Controls->Add(this->pbxImp);
 			this->Controls->Add(this->panel2);
 			this->Controls->Add(this->panel1);
 			this->Name = L"UI";
@@ -247,7 +295,11 @@ namespace Spectre {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pbxImp))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pbxSpec))->EndInit();
 			this->pnlFunc->ResumeLayout(false);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar3))->EndInit();
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion
@@ -259,7 +311,7 @@ namespace Spectre {
 		System::Void AdaptToWindowSize(System::Object^  sender, System::EventArgs^  e)
 		{
 			int AwailableWidth  = ClientSize.Width - pbxImp->Left * 2;
-			int AwailableHeight = ClientSize.Height - pbxImp->Top - pbxImp->Left;
+			int AwailableHeight = ClientSize.Height - pbxImp->Top - pbxImp->Left * 2;
 			
 			pbxImp->Width = AwailableWidth;
 			pbxSpec->Width = AwailableWidth;
@@ -298,13 +350,13 @@ namespace Spectre {
 
 		PointF TransformImp(double x, double y, int index)
 		{
-			return PointF((float)(x / buf[index].len * pbxImp->Width),
+			return PointF((float)((x / buf[index].len * trackBar3->Value - (trackBar3->Value-1)*.5) * pbxImp->Width),
 				          (float)((1 - (y + 0.125) * 0.8) * pbxImp->Height));
 		}
 		PointF TransformSpec(double x, double y, int index)
 		{
-			return PointF((float)(x / buf[index].len * .5 * pbxSpec->Width),
-				          (float)((1 - y / buf[index].MaxSpec) * pbxSpec->Height));
+			return PointF((float)(x / buf[index].len * trackBar2->Value * pbxSpec->Width),
+				          (float)((1 - y / buf[0].MaxSpec) * pbxSpec->Height));
 		}
 		PointF BackTransformImp(float x, float y, int index)
 		{
@@ -313,7 +365,7 @@ namespace Spectre {
 		}
 		PointF BackTransformSpec(float x, float y, int index)
 		{
-			return PointF((float)(x * buf[index].len * 2 / pbxSpec->Width),
+			return PointF((float)(x * buf[index].len / trackBar2->Value/ pbxSpec->Width),
 				          (float)((1 - (y / pbxSpec->Height)) * buf[index].MaxSpec));
 		}
 
@@ -341,8 +393,8 @@ namespace Spectre {
 		void DrawImp(PaintEventArgs^ e)
 		{
 			
-			Pen^ RedPen = gcnew Pen( Color::Red,3.0f );
-			Pen^ GreenPen = gcnew Pen( Color::Green, 2.0f );
+			Pen^ RedPen = gcnew Pen( Color::Red, 1.0f );
+			Pen^ GreenPen = gcnew Pen( Color::Green, 3.0f );
 			Pen^ AxisPen = gcnew Pen( Color::Black, 1.0f );
 
 			e->Graphics->SmoothingMode = Drawing2D::SmoothingMode::HighQuality;
@@ -351,14 +403,16 @@ namespace Spectre {
 			//e->Graphics->DrawLine(AxisPen, TransformImp(0, YRangeImp[0]), TransformImp(0, YRangeImp[1]));
 
 			array<PointF>^ curvePoints = TransformPointsImp(0, e);
-			e->Graphics->DrawCurve(GreenPen, curvePoints, 0, buf[0].len-1, .5F);
+			//e->Graphics->DrawCurve(GreenPen, curvePoints, 0, buf[0].len-1, .5F);
+			e->Graphics->DrawLines(GreenPen, curvePoints);
 			curvePoints = TransformPointsImp(1, e);
-			e->Graphics->DrawCurve(RedPen, curvePoints, 0, buf[1].len-1, .5F);
+			//e->Graphics->DrawCurve(RedPen, curvePoints, 0, buf[1].len-1, .5F);
+			e->Graphics->DrawLines(RedPen, curvePoints);
 		}
 		void DrawSpec(PaintEventArgs^ e)
 		{
-			Pen^ RedPen = gcnew Pen( Color::Red,3.0f );
-			Pen^ GreenPen = gcnew Pen( Color::Green, 2.0f );
+			Pen^ RedPen = gcnew Pen( Color::Red,1.0f );
+			Pen^ GreenPen = gcnew Pen( Color::Green, 3.0f );
 			Pen^ AxisPen = gcnew Pen( Color::Black, 1.0f );
 
 			e->Graphics->SmoothingMode = Drawing2D::SmoothingMode::HighQuality;
@@ -367,9 +421,11 @@ namespace Spectre {
 			//e->Graphics->DrawLine(AxisPen, TransformSpec(0, YRangeSpec[0]), TransformSpec(0, YRangeSpec[1]));
 
 			array<PointF>^ curvePoints = TransformPointsSpec(0, e);
-			e->Graphics->DrawCurve(GreenPen, curvePoints, 0, buf[0].len/2, .5F);
+			//e->Graphics->DrawCurve(GreenPen, curvePoints, 0, buf[0].len/2, .5F);
+			e->Graphics->DrawLines(GreenPen, curvePoints);
 			curvePoints = TransformPointsSpec(1, e);
-			e->Graphics->DrawCurve(RedPen, curvePoints, 0, buf[1].len/2, .5F);
+			//e->Graphics->DrawCurve(RedPen, curvePoints, 0, buf[1].len/2, .5F);
+			e->Graphics->DrawLines(RedPen, curvePoints);
 		}
 
 		System::Void FuncChanged(System::Object^  sender, System::EventArgs^  e)
@@ -408,7 +464,7 @@ namespace Spectre {
 				RawHand[idx][i] = last.Y + ((float)e->Y-last.Y)*(i-beg+1)/(end-beg+1);
 			}
 */
-			RawHand[idx][e->X] = e->Y;
+			RawHand[idx][e->X] = (float)e->Y;
 			RefreshHand();
 		}
 		System::Void RefreshHand()
@@ -423,5 +479,14 @@ namespace Spectre {
 			pbxImp->Invalidate();
 		}
 
+private: System::Void trackBar1_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+			 E_0 = /*buf[0].len * .0*/15 * trackBar1->Value;
+			 buf[0].generate_gauss(100);
+			 buf[1].generate_rect();
+			 InvalidateAll();
+		 }
+private: System::Void trackBar2_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+			 InvalidateAll();
+		 }
 };
 }

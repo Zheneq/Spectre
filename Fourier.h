@@ -1,6 +1,11 @@
 #pragma once
 #include <fftw3.h>
+#include <string.h>
+#include <iostream>
+#include <math.h>
 #pragma comment(lib, "../FFTW/libfftw3-3")
+
+extern double E_0;
 
 struct buffer 
 {
@@ -13,7 +18,7 @@ struct buffer
 
 	double MaxSpec;
 
-	buffer() : imp(NULL), spec(NULL), len(0), p(NULL), MaxSpec(1e-10) {}
+	buffer() : imp(NULL), spec(NULL), cspec(NULL), len(0), p(NULL), MaxSpec(1) {}
 
 	~buffer()
 	{
@@ -26,6 +31,8 @@ struct buffer
 		imp = NULL;
 		if(spec) fftw_free(spec);
 		spec = NULL;
+		if(cspec) fftw_free(cspec);
+		cspec = NULL;
 		if(p) fftw_destroy_plan(p);
 		p = NULL;
 	}
@@ -36,6 +43,7 @@ struct buffer
 		len = n;
 		imp = (double*)fftw_malloc(sizeof(double)*len);
 		spec = (double*)fftw_malloc(sizeof(double)*(len/2+1));
+		cspec = fftw_alloc_complex(sizeof(double)*(len/2+1));
 		p = fftw_plan_dft_r2c_1d(len, imp, cspec, FFTW_ESTIMATE);
 	}
 
@@ -46,9 +54,58 @@ struct buffer
 		MaxSpec = 0;
 		for(int i = 0; i < len/2 + 1; i++)
 		{
-			spec[i] = (sqrt(cspec[i][0]*cspec[i][0]+cspec[i][1]*cspec[i][1]))/len;
+			spec[i] = sqrt((cspec[i][0]*cspec[i][0]+cspec[i][1]*cspec[i][1])/len);
 			if(spec[i] > MaxSpec) MaxSpec = spec[i];
 		}
+	}
+
+	void check_energy(){
+
+		double energy = E_0;
+
+		for (int i = 0; i < len; i++){
+			energy -= imp[i]*imp[i];
+		}
+		
+
+		int length = (int)(energy * .5);
+		if(length <= 0) return;
+
+		for(int i = length; i < len/2; i++)
+		{
+			imp[i - length] = imp[i];
+		}
+
+		for(int i = len - length - 1; i > len/2; i--)
+		{
+			imp[i + length] = imp[i];
+		}
+
+		for(int i = len/2 - length; i <= (len/2 + length); i++)
+		{
+			imp[i] = 1.0;
+		}
+
+		std::cout << "check energy: E0 = " << E_0 << ", Efunc = " << E_0 - energy
+			<< ", Efixed = " << E_0 - energy + 2*length << std::endl;
+	}
+
+	
+	void generate_gauss(double param)
+	{
+		for (int i = 0; i < len; i++)
+		{
+			imp[i] = exp(-((i-len/2)*(i-len/2)/(param*param)));
+		}
+		check_energy();
+		fourier();
+	}
+
+	void generate_rect()
+	{
+		memset(imp, 0, sizeof(double)*len);
+		check_energy();
+		fourier();
 	}
 };
 

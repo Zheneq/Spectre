@@ -6,8 +6,7 @@
 
 buffer buf[2];
 
-
-double energy, E_0, step;
+double E_0 = 250;
 int implen, len;
 
 enum functions
@@ -52,50 +51,4 @@ void function(functions func, int left_b, int right_b, int index){
 		}
 	}
 
-}
-
-
-
-void add_energy(){
-
-	int length = (E_0 - energy)/step;
-	for(int i = 0; i < size/2; i++){
-		if ((i + length/2) < size/2){
-			buf.imp[i] = buf.imp[i+length/2];
-		}
-	}
-
-	for(int i = size; i > size/2; i--){
-		if ((i - length/2) > size/2){
-			buf.imp[i] = buf.imp[i-length/2];
-		}
-	}
-
-	for(int i = (size/2 - length/2); i < (size/2 + length/2); i++){
-		buf.imp[i] = 1.0;
-	}
-
-
-
-}
-
-void check_energy(){
-
-	energy = 0.0;
-
-	for (int i = 0; i < buf.len; i++){
-		energy += buf.imp[i]*buf.imp[i];
-	}
-
-	if ((E_0 - energy) > 0){
-		add_energy();
-	}
-}
-
-void generate_gauss(double param){
-
-	for (int i = 0; i < buf.len; i++){
-
-		buf.imp[i] = exp(-((i-buf.len/2)*(i-buf.len/2)/(param*param)));
-	}
 }
