@@ -91,4 +91,11 @@ void check_energy(){
 		add_energy();
 	}
 }
-//зависимость спектра от формы импульса
+
+void generate_gauss(double param){
+
+	for (int i = 0; i < buf.len; i++){
+
+		buf.imp[i] = exp(-((i-buf.len/2)*(i-buf.len/2)/(param*param)));
+	}
+}
