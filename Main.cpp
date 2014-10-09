@@ -32,6 +32,7 @@ int main(array<String^>^ args)
 	{
 		buf[0].spec[i] = sin(10*(i*.05F - 2));
 		buf[1].spec[i] = cos(10*(i*.05F - 2));
+		buf[1].MaxSpec = buf[0].MaxSpec = 1;
 	}
 	//// Test
 

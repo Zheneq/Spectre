@@ -12,6 +12,7 @@ struct buffer
 	double MaxSpec;
 
 	buffer() : imp(NULL), spec(NULL), len(0), p(NULL), MaxSpec(1e-10) {}
+
 	~buffer()
 	{
 		free();
@@ -21,7 +22,7 @@ struct buffer
 	{
 		if(imp) fftw_free(imp);
 		imp = NULL;
-		if(imp) fftw_free(spec);
+		if(spec) fftw_free(spec);
 		spec = NULL;
 		if(p) fftw_destroy_plan(p);
 		p = NULL;
@@ -32,7 +33,7 @@ struct buffer
 		free();
 		len = n;
 		imp = (double*)fftw_malloc(sizeof(double)*len);
-		imp = (double*)fftw_malloc(sizeof(double)*len);
+		spec = (double*)fftw_malloc(sizeof(double)*(len/2+1));
 		// p = 
 	}
 };

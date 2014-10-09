@@ -352,8 +352,8 @@ namespace Spectre {
 
 			array<PointF>^ curvePoints = TransformPointsImp(0, e);
 			e->Graphics->DrawCurve(GreenPen, curvePoints, 0, buf[0].len-1, .5F);
-//			curvePoints = TransformPointsImp(1, e);
-//			e->Graphics->DrawCurve(RedPen, curvePoints, 0, buf[1].len-1, .5F);
+			curvePoints = TransformPointsImp(1, e);
+			e->Graphics->DrawCurve(RedPen, curvePoints, 0, buf[1].len-1, .5F);
 		}
 		void DrawSpec(PaintEventArgs^ e)
 		{
@@ -366,10 +366,10 @@ namespace Spectre {
 			//e->Graphics->DrawLine(AxisPen, TransformSpec(XRangeSpec[0], 0), TransformSpec(XRangeSpec[1], 0));
 			//e->Graphics->DrawLine(AxisPen, TransformSpec(0, YRangeSpec[0]), TransformSpec(0, YRangeSpec[1]));
 
-//			array<PointF>^ curvePoints = TransformPointsSpec(0, e);
-//			e->Graphics->DrawCurve(GreenPen, curvePoints, 0, implen-1, .5F);
-//			curvePoints = TransformPointsSpec(1, e);
-//			e->Graphics->DrawCurve(RedPen, curvePoints, 0, implen-1, .5F);
+			array<PointF>^ curvePoints = TransformPointsSpec(0, e);
+			e->Graphics->DrawCurve(GreenPen, curvePoints, 0, buf[0].len/2, .5F);
+			curvePoints = TransformPointsSpec(1, e);
+			e->Graphics->DrawCurve(RedPen, curvePoints, 0, buf[1].len/2, .5F);
 		}
 
 		System::Void FuncChanged(System::Object^  sender, System::EventArgs^  e)
