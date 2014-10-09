@@ -1,11 +1,14 @@
 #pragma once
+#include <fftw3.h>
 
 struct buffer 
 {
-	double *impX, *impY;
+	double *imp;
+	double *spec;
+	fftw_plan p;
 	int len;
 
-	buffer() : impX(NULL), impY(NULL), len(0) {}
+	buffer() : imp(NULL), spec(NULL), len(0) {}
 	~buffer()
 	{
 		free();
@@ -13,15 +16,17 @@ struct buffer
 
 	void free()
 	{
-		if(impX) fftw_free(impX);
-		if(impY) fftw_free(impY);
+		if(imp) fftw_free(imp);
+		imp = NULL;
+		if(imp) fftw_free(spec);
+		spec = NULL;
 	}
 
 	void alloc(int n)
 	{
 		free();
-		impX = (double*)fftw_malloc(sizeof(double)*n);
-		impY = (double*)fftw_malloc(sizeof(double)*n);
+		imp = (double*)fftw_malloc(sizeof(double)*n);
+		imp = (double*)fftw_malloc(sizeof(double)*n);
 	}
 };
 
@@ -32,9 +37,5 @@ extern double XRangeImp[2], YRangeImp[2], XRangeSpec[2], YRangeSpec[2], XScaleIm
 
 namespace Fourier
 {
-
-
-
-	void alloc(int num);
 	void function(int index, int left, int right);
 }
