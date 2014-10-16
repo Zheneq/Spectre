@@ -453,7 +453,7 @@ namespace Spectre {
 		PointF TransformSpec(double x, double y, int index)
 		{
 			return PointF((float)(x / buf[index].len * trackBar2->Value * pbxSpec->Width),
-				          (float)((1 - y / buf[0].MaxSpec) * pbxSpec->Height));
+				          (float)((1 - (y / buf[0].MaxSpec + 0.125) * 0.8) * pbxSpec->Height));
 		}
 		PointF BackTransformImp(float x, float y, int index)
 		{
@@ -463,7 +463,7 @@ namespace Spectre {
 		PointF BackTransformSpec(float x, float y, int index)
 		{
 			return PointF((float)(x * buf[index].len / trackBar2->Value/ pbxSpec->Width),
-				          (float)((1 - (y / pbxSpec->Height)) * buf[index].MaxSpec));
+				          (float)(((1 - (y / pbxSpec->Height))/ 0.8 - 0.125) * buf[index].MaxSpec));
 		}
 
 		array<PointF>^ TransformPointsImp(int index, PaintEventArgs^ e)
@@ -520,7 +520,7 @@ namespace Spectre {
 
 			e->Graphics->SmoothingMode = Drawing2D::SmoothingMode::HighQuality;
 			// Draw axes
-			//e->Graphics->DrawLine(AxisPen, TransformSpec(XRangeSpec[0], 0), TransformSpec(XRangeSpec[1], 0));
+			e->Graphics->DrawLine(AxisPen, TransformSpec(-1, 0, 0), TransformSpec(1000, 0, 0));
 			//e->Graphics->DrawLine(AxisPen, TransformSpec(0, YRangeSpec[0]), TransformSpec(0, YRangeSpec[1]));
 
 			array<PointF>^ curvePoints = TransformPointsSpec(0, e);
