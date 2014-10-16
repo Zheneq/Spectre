@@ -5,6 +5,12 @@
 #include <cmath>
 extern std::vector<float> RawHand[2];
 
+enum WMode
+{
+	MD_MainMenu,
+	MD_Preset,
+};
+
 namespace Spectre {
 
 	using namespace System;
@@ -28,6 +34,7 @@ namespace Spectre {
 			bDrawing = false;
 			Point def = Point(-1,-1);
 			Point last = def;
+			ActiveMode = MD_MainMenu;
 			//
 		}
 
@@ -42,22 +49,42 @@ namespace Spectre {
 				delete components;
 			}
 		}
+	private: System::Windows::Forms::Panel^  uiMainMenu;
+	protected:
+	private: System::Windows::Forms::Button^  btnPreset;
+	private: System::Windows::Forms::Panel^  uiPreset;
+
 	private: System::Windows::Forms::Panel^  panel1;
-	protected: 
 	private: System::Windows::Forms::RadioButton^  rdb2;
 	private: System::Windows::Forms::RadioButton^  rdb1;
+	private: System::Windows::Forms::TrackBar^  trackBar3;
 	private: System::Windows::Forms::Panel^  panel2;
 	private: System::Windows::Forms::RadioButton^  rdbHand;
 	private: System::Windows::Forms::RadioButton^  rdbFunc;
-	private: System::Windows::Forms::PictureBox^  pbxImp;
+	private: System::Windows::Forms::TrackBar^  trackBar2;
 	private: System::Windows::Forms::PictureBox^  pbxSpec;
+	private: System::Windows::Forms::TrackBar^  trackBar1;
 	private: System::Windows::Forms::Panel^  pnlFunc;
-
 	private: System::Windows::Forms::ComboBox^  cbxRight;
 	private: System::Windows::Forms::ComboBox^  cbxLeft;
-	private: System::Windows::Forms::TrackBar^  trackBar1;
-	private: System::Windows::Forms::TrackBar^  trackBar2;
-	private: System::Windows::Forms::TrackBar^  trackBar3;
+	private: System::Windows::Forms::PictureBox^  pbxImp;
+	private: System::Windows::Forms::Label^  lblPreset;
+
+	protected: 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -79,36 +106,81 @@ namespace Spectre {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->uiMainMenu = (gcnew System::Windows::Forms::Panel());
+			this->btnPreset = (gcnew System::Windows::Forms::Button());
+			this->uiPreset = (gcnew System::Windows::Forms::Panel());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->rdb2 = (gcnew System::Windows::Forms::RadioButton());
 			this->rdb1 = (gcnew System::Windows::Forms::RadioButton());
+			this->trackBar3 = (gcnew System::Windows::Forms::TrackBar());
 			this->panel2 = (gcnew System::Windows::Forms::Panel());
 			this->rdbHand = (gcnew System::Windows::Forms::RadioButton());
 			this->rdbFunc = (gcnew System::Windows::Forms::RadioButton());
-			this->pbxImp = (gcnew System::Windows::Forms::PictureBox());
+			this->trackBar2 = (gcnew System::Windows::Forms::TrackBar());
 			this->pbxSpec = (gcnew System::Windows::Forms::PictureBox());
+			this->trackBar1 = (gcnew System::Windows::Forms::TrackBar());
 			this->pnlFunc = (gcnew System::Windows::Forms::Panel());
 			this->cbxRight = (gcnew System::Windows::Forms::ComboBox());
 			this->cbxLeft = (gcnew System::Windows::Forms::ComboBox());
-			this->trackBar1 = (gcnew System::Windows::Forms::TrackBar());
-			this->trackBar2 = (gcnew System::Windows::Forms::TrackBar());
-			this->trackBar3 = (gcnew System::Windows::Forms::TrackBar());
+			this->pbxImp = (gcnew System::Windows::Forms::PictureBox());
+			this->lblPreset = (gcnew System::Windows::Forms::Label());
+			this->uiMainMenu->SuspendLayout();
+			this->uiPreset->SuspendLayout();
 			this->panel1->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar3))->BeginInit();
 			this->panel2->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pbxImp))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pbxSpec))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxSpec))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->BeginInit();
 			this->pnlFunc->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar1))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar2))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar3))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxImp))->BeginInit();
 			this->SuspendLayout();
+			// 
+			// uiMainMenu
+			// 
+			this->uiMainMenu->BackColor = System::Drawing::SystemColors::ControlDark;
+			this->uiMainMenu->Controls->Add(this->btnPreset);
+			this->uiMainMenu->Location = System::Drawing::Point(221, 12);
+			this->uiMainMenu->Name = L"uiMainMenu";
+			this->uiMainMenu->Size = System::Drawing::Size(568, 294);
+			this->uiMainMenu->TabIndex = 15;
+			// 
+			// btnPreset
+			// 
+			this->btnPreset->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->btnPreset->Location = System::Drawing::Point(85, 80);
+			this->btnPreset->Name = L"btnPreset";
+			this->btnPreset->Size = System::Drawing::Size(350, 60);
+			this->btnPreset->TabIndex = 1;
+			this->btnPreset->Text = L"Preset";
+			this->btnPreset->UseVisualStyleBackColor = true;
+			this->btnPreset->Click += gcnew System::EventHandler(this, &UI::btnPreset_Click);
+			// 
+			// uiPreset
+			// 
+			this->uiPreset->BackColor = System::Drawing::SystemColors::InactiveCaptionText;
+			this->uiPreset->Controls->Add(this->lblPreset);
+			this->uiPreset->Controls->Add(this->panel1);
+			this->uiPreset->Controls->Add(this->trackBar3);
+			this->uiPreset->Controls->Add(this->panel2);
+			this->uiPreset->Controls->Add(this->trackBar2);
+			this->uiPreset->Controls->Add(this->pbxSpec);
+			this->uiPreset->Controls->Add(this->trackBar1);
+			this->uiPreset->Controls->Add(this->pnlFunc);
+			this->uiPreset->Controls->Add(this->pbxImp);
+			this->uiPreset->Location = System::Drawing::Point(35, 51);
+			this->uiPreset->Name = L"uiPreset";
+			this->uiPreset->Size = System::Drawing::Size(919, 480);
+			this->uiPreset->TabIndex = 16;
+			this->uiPreset->Visible = false;
 			// 
 			// panel1
 			// 
 			this->panel1->BackColor = System::Drawing::SystemColors::ControlDark;
 			this->panel1->Controls->Add(this->rdb2);
 			this->panel1->Controls->Add(this->rdb1);
-			this->panel1->Location = System::Drawing::Point(12, 12);
+			this->panel1->Location = System::Drawing::Point(10, 65);
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(59, 29);
 			this->panel1->TabIndex = 4;
@@ -139,12 +211,24 @@ namespace Spectre {
 			this->rdb1->Text = L"1";
 			this->rdb1->UseVisualStyleBackColor = true;
 			// 
+			// trackBar3
+			// 
+			this->trackBar3->Location = System::Drawing::Point(13, 232);
+			this->trackBar3->Maximum = 20;
+			this->trackBar3->Minimum = 1;
+			this->trackBar3->Name = L"trackBar3";
+			this->trackBar3->Size = System::Drawing::Size(252, 45);
+			this->trackBar3->TabIndex = 13;
+			this->trackBar3->Value = 1;
+			this->trackBar3->Scroll += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
+			this->trackBar3->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
+			// 
 			// panel2
 			// 
 			this->panel2->BackColor = System::Drawing::SystemColors::ControlDark;
 			this->panel2->Controls->Add(this->rdbHand);
 			this->panel2->Controls->Add(this->rdbFunc);
-			this->panel2->Location = System::Drawing::Point(77, 12);
+			this->panel2->Location = System::Drawing::Point(75, 65);
 			this->panel2->Name = L"panel2";
 			this->panel2->Size = System::Drawing::Size(158, 29);
 			this->panel2->TabIndex = 5;
@@ -177,10 +261,75 @@ namespace Spectre {
 			this->rdbFunc->Text = L"Функция";
 			this->rdbFunc->UseVisualStyleBackColor = true;
 			// 
+			// trackBar2
+			// 
+			this->trackBar2->Location = System::Drawing::Point(13, 181);
+			this->trackBar2->Maximum = 100;
+			this->trackBar2->Minimum = 1;
+			this->trackBar2->Name = L"trackBar2";
+			this->trackBar2->Size = System::Drawing::Size(252, 45);
+			this->trackBar2->TabIndex = 12;
+			this->trackBar2->Value = 50;
+			this->trackBar2->Scroll += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
+			this->trackBar2->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
+			// 
+			// pbxSpec
+			// 
+			this->pbxSpec->BackColor = System::Drawing::SystemColors::ButtonHighlight;
+			this->pbxSpec->Location = System::Drawing::Point(267, 288);
+			this->pbxSpec->Name = L"pbxSpec";
+			this->pbxSpec->Size = System::Drawing::Size(640, 214);
+			this->pbxSpec->TabIndex = 7;
+			this->pbxSpec->TabStop = false;
+			this->pbxSpec->Click += gcnew System::EventHandler(this, &UI::onClick);
+			this->pbxSpec->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &UI::onSpecPaint);
+			// 
+			// trackBar1
+			// 
+			this->trackBar1->Location = System::Drawing::Point(10, 130);
+			this->trackBar1->Maximum = 32;
+			this->trackBar1->Minimum = 8;
+			this->trackBar1->Name = L"trackBar1";
+			this->trackBar1->Size = System::Drawing::Size(255, 45);
+			this->trackBar1->TabIndex = 11;
+			this->trackBar1->Value = 8;
+			this->trackBar1->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar1_ValueChanged);
+			// 
+			// pnlFunc
+			// 
+			this->pnlFunc->BackColor = System::Drawing::SystemColors::ButtonShadow;
+			this->pnlFunc->Controls->Add(this->cbxRight);
+			this->pnlFunc->Controls->Add(this->cbxLeft);
+			this->pnlFunc->Location = System::Drawing::Point(10, 102);
+			this->pnlFunc->Name = L"pnlFunc";
+			this->pnlFunc->Size = System::Drawing::Size(265, 29);
+			this->pnlFunc->TabIndex = 10;
+			this->pnlFunc->Visible = false;
+			// 
+			// cbxRight
+			// 
+			this->cbxRight->FormattingEnabled = true;
+			this->cbxRight->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"Разрыв", L"Линейная", L"Гаусс", L"Синус" });
+			this->cbxRight->Location = System::Drawing::Point(130, 3);
+			this->cbxRight->Name = L"cbxRight";
+			this->cbxRight->Size = System::Drawing::Size(121, 21);
+			this->cbxRight->TabIndex = 11;
+			this->cbxRight->Text = L"Справа";
+			// 
+			// cbxLeft
+			// 
+			this->cbxLeft->FormattingEnabled = true;
+			this->cbxLeft->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"Разрыв", L"Линейная", L"Гаусс", L"Синус" });
+			this->cbxLeft->Location = System::Drawing::Point(3, 3);
+			this->cbxLeft->Name = L"cbxLeft";
+			this->cbxLeft->Size = System::Drawing::Size(121, 21);
+			this->cbxLeft->TabIndex = 10;
+			this->cbxLeft->Text = L"Слева";
+			// 
 			// pbxImp
 			// 
 			this->pbxImp->BackColor = System::Drawing::SystemColors::ButtonHighlight;
-			this->pbxImp->Location = System::Drawing::Point(15, 47);
+			this->pbxImp->Location = System::Drawing::Point(267, 68);
 			this->pbxImp->Name = L"pbxImp";
 			this->pbxImp->Size = System::Drawing::Size(640, 214);
 			this->pbxImp->TabIndex = 6;
@@ -191,115 +340,45 @@ namespace Spectre {
 			this->pbxImp->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &UI::HandDrawing);
 			this->pbxImp->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &UI::DisableDrawing);
 			// 
-			// pbxSpec
+			// lblPreset
 			// 
-			this->pbxSpec->BackColor = System::Drawing::SystemColors::ButtonHighlight;
-			this->pbxSpec->Location = System::Drawing::Point(15, 267);
-			this->pbxSpec->Name = L"pbxSpec";
-			this->pbxSpec->Size = System::Drawing::Size(640, 214);
-			this->pbxSpec->TabIndex = 7;
-			this->pbxSpec->TabStop = false;
-			this->pbxSpec->Click += gcnew System::EventHandler(this, &UI::onClick);
-			this->pbxSpec->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &UI::onSpecPaint);
-			// 
-			// pnlFunc
-			// 
-			this->pnlFunc->BackColor = System::Drawing::SystemColors::ButtonShadow;
-			this->pnlFunc->Controls->Add(this->cbxRight);
-			this->pnlFunc->Controls->Add(this->cbxLeft);
-			this->pnlFunc->Location = System::Drawing::Point(241, 12);
-			this->pnlFunc->Name = L"pnlFunc";
-			this->pnlFunc->Size = System::Drawing::Size(265, 29);
-			this->pnlFunc->TabIndex = 10;
-			this->pnlFunc->Visible = false;
-			// 
-			// cbxRight
-			// 
-			this->cbxRight->FormattingEnabled = true;
-			this->cbxRight->Items->AddRange(gcnew cli::array< System::Object^  >(4) {L"Разрыв", L"Линейная", L"Гаусс", L"Синус"});
-			this->cbxRight->Location = System::Drawing::Point(130, 3);
-			this->cbxRight->Name = L"cbxRight";
-			this->cbxRight->Size = System::Drawing::Size(121, 21);
-			this->cbxRight->TabIndex = 11;
-			this->cbxRight->Text = L"Справа";
-			this->cbxRight->SelectedIndexChanged += gcnew System::EventHandler(this, &UI::FuncChanged);
-			// 
-			// cbxLeft
-			// 
-			this->cbxLeft->FormattingEnabled = true;
-			this->cbxLeft->Items->AddRange(gcnew cli::array< System::Object^  >(4) {L"Разрыв", L"Линейная", L"Гаусс", L"Синус"});
-			this->cbxLeft->Location = System::Drawing::Point(3, 3);
-			this->cbxLeft->Name = L"cbxLeft";
-			this->cbxLeft->Size = System::Drawing::Size(121, 21);
-			this->cbxLeft->TabIndex = 10;
-			this->cbxLeft->Text = L"Слева";
-			this->cbxLeft->SelectedIndexChanged += gcnew System::EventHandler(this, &UI::FuncChanged);
-			// 
-			// trackBar1
-			// 
-			this->trackBar1->Location = System::Drawing::Point(512, 12);
-			this->trackBar1->Maximum = 32;
-			this->trackBar1->Minimum = 8;
-			this->trackBar1->Name = L"trackBar1";
-			this->trackBar1->Size = System::Drawing::Size(143, 45);
-			this->trackBar1->TabIndex = 11;
-			this->trackBar1->Value = 8;
-			this->trackBar1->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar1_ValueChanged);
-			// 
-			// trackBar2
-			// 
-			this->trackBar2->Location = System::Drawing::Point(661, 12);
-			this->trackBar2->Maximum = 100;
-			this->trackBar2->Minimum = 1;
-			this->trackBar2->Name = L"trackBar2";
-			this->trackBar2->Size = System::Drawing::Size(143, 45);
-			this->trackBar2->TabIndex = 12;
-			this->trackBar2->Value = 50;
-			this->trackBar2->Scroll += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
-			this->trackBar2->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
-			// 
-			// trackBar3
-			// 
-			this->trackBar3->Location = System::Drawing::Point(811, 12);
-			this->trackBar3->Minimum = 1;
-			this->trackBar3->Name = L"trackBar3";
-			this->trackBar3->Size = System::Drawing::Size(143, 45);
-			this->trackBar3->TabIndex = 13;
-			this->trackBar3->Value = 1;
-			this->trackBar3->Scroll += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
-			this->trackBar3->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
+			this->lblPreset->AutoSize = true;
+			this->lblPreset->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->lblPreset->Location = System::Drawing::Point(13, 12);
+			this->lblPreset->Name = L"lblPreset";
+			this->lblPreset->Size = System::Drawing::Size(167, 37);
+			this->lblPreset->TabIndex = 14;
+			this->lblPreset->Text = L"Заголовок";
+			this->lblPreset->TextAlign = System::Drawing::ContentAlignment::TopCenter;
 			// 
 			// UI
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(966, 502);
-			this->Controls->Add(this->trackBar3);
-			this->Controls->Add(this->trackBar2);
-			this->Controls->Add(this->pbxImp);
-			this->Controls->Add(this->trackBar1);
-			this->Controls->Add(this->pnlFunc);
-			this->Controls->Add(this->pbxSpec);
-			this->Controls->Add(this->panel2);
-			this->Controls->Add(this->panel1);
+			this->ClientSize = System::Drawing::Size(966, 534);
+			this->Controls->Add(this->uiPreset);
+			this->Controls->Add(this->uiMainMenu);
 			this->Name = L"UI";
 			this->Text = L"UI";
 			this->Load += gcnew System::EventHandler(this, &UI::AdaptToWindowSize);
 			this->ResizeEnd += gcnew System::EventHandler(this, &UI::AdaptToWindowSize);
 			this->Resize += gcnew System::EventHandler(this, &UI::AdaptToWindowSize);
 			this->StyleChanged += gcnew System::EventHandler(this, &UI::AdaptToWindowSize);
+			this->uiMainMenu->ResumeLayout(false);
+			this->uiPreset->ResumeLayout(false);
+			this->uiPreset->PerformLayout();
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar3))->EndInit();
 			this->panel2->ResumeLayout(false);
 			this->panel2->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pbxImp))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pbxSpec))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxSpec))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->EndInit();
 			this->pnlFunc->ResumeLayout(false);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar1))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar2))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar3))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxImp))->EndInit();
 			this->ResumeLayout(false);
-			this->PerformLayout();
 
 		}
 #pragma endregion
@@ -307,11 +386,29 @@ namespace Spectre {
 		bool bDrawing; // В данный момент рисуем мышкой (кнопка мыши нажата)
 		Point def;
 		Point last;
+		WMode ActiveMode;
 		
 		System::Void AdaptToWindowSize(System::Object^  sender, System::EventArgs^  e)
 		{
-			int AwailableWidth  = ClientSize.Width - pbxImp->Left * 2;
-			int AwailableHeight = ClientSize.Height - pbxImp->Top - pbxImp->Left * 2;
+			uiMainMenu->Left = 0;
+			uiMainMenu->Top = 0;
+			uiMainMenu->Width = ClientSize.Width;
+			uiMainMenu->Height = ClientSize.Height;
+			uiPreset->Left = 0;
+			uiPreset->Top = 0;
+			uiPreset->Width = ClientSize.Width;
+			uiPreset->Height = ClientSize.Height;
+
+			// uiMainMenu
+			btnPreset->Left = (ClientSize.Width - btnPreset->Width) / 2;
+
+			// uiPreset
+			int Spacing = 10;
+
+			lblPreset->Left = (ClientSize.Width - lblPreset->Width) / 2;
+
+			int AwailableWidth  = ClientSize.Width  - pbxImp->Left - Spacing;
+			int AwailableHeight = ClientSize.Height - pbxImp->Top  - Spacing * 2;
 			
 			pbxImp->Width = AwailableWidth;
 			pbxSpec->Width = AwailableWidth;
@@ -319,7 +416,7 @@ namespace Spectre {
 			pbxSpec->Height = AwailableHeight / 2;
 
 			pbxSpec->Left = pbxImp->Left;
-			pbxSpec->Top  = pbxImp->Top + pbxImp->Height + pbxImp->Left;
+			pbxSpec->Top  = pbxImp->Top + pbxImp->Height + Spacing;
 			
 			RawHand[0].resize(pbxImp->Width, 0);
 			RawHand[1].resize(pbxImp->Width, 0);
@@ -372,20 +469,26 @@ namespace Spectre {
 		array<PointF>^ TransformPointsImp(int index, PaintEventArgs^ e)
 		{
 			array<PointF>^ res = gcnew array<PointF>(buf[index].len);
-			for(int i=0; i<buf[index].len; i++)
+			int i;
+			for(i=0; i<buf[index].len; i++)
 			{
 				res[i] = TransformImp(i, buf[index].imp[i], index);
+				if (res[i].X > pbxImp->Width) break;
 			}
+			if (i < buf[index].len) array<PointF>::Resize(res, i);
 			return res;
 		}
 		array<PointF>^ TransformPointsSpec(int index, PaintEventArgs^ e)
 		{
 			register int speclen = buf[index].len/2 + 1;
 			array<PointF>^ res = gcnew array<PointF>(speclen);
-			for(int i=0; i<speclen; i++)
+			int i;
+			for(i=0; i<speclen; i++)
 			{
 				res[i] = TransformSpec(i, buf[index].spec[i], index);
+				if (res[i].X > pbxSpec->Width) break;
 			}
+			if (i < buf[index].len) array<PointF>::Resize(res, i);
 			return res;
 		}
 		
@@ -488,5 +591,10 @@ private: System::Void trackBar1_ValueChanged(System::Object^  sender, System::Ev
 private: System::Void trackBar2_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
 			 InvalidateAll();
 		 }
+		System::Void btnPreset_Click(System::Object^  sender, System::EventArgs^  e)
+		{
+			uiMainMenu->Visible = false;
+			uiPreset->Visible = true;
+		}
 };
 }

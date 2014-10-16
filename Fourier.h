@@ -1,5 +1,5 @@
 #pragma once
-#include <fftw3.h>
+#include "../FFTW/fftw3.h"
 #include <string.h>
 #include <iostream>
 #include <math.h>
@@ -54,7 +54,7 @@ struct buffer
 		MaxSpec = 0;
 		for(int i = 0; i < len/2 + 1; i++)
 		{
-			spec[i] = sqrt((cspec[i][0]*cspec[i][0]+cspec[i][1]*cspec[i][1])/len);
+			spec[i] = (cspec[i][0]*cspec[i][0]+cspec[i][1]*cspec[i][1])/len;
 			if(spec[i] > MaxSpec) MaxSpec = spec[i];
 		}
 	}
