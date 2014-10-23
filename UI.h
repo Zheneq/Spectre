@@ -4,6 +4,7 @@
 #include <vector>
 #include <cmath>
 extern std::vector<float> RawHand[2];
+extern float PointsPerSecond;
 
 enum WMode
 {
@@ -35,6 +36,11 @@ namespace Spectre {
 			Point def = Point(-1,-1);
 			Point last = def;
 			ActiveMode = MD_MainMenu;
+
+
+			RedPen = gcnew Pen(Color::Red, 1.0f);
+			GreenPen = gcnew Pen(Color::Green, 3.0f);
+			AxisPen = gcnew Pen(Color::Black, 3.0f);
 			//
 		}
 
@@ -447,11 +453,13 @@ namespace Spectre {
 			// trbTrap
 			// 
 			this->trbTrap->Location = System::Drawing::Point(10, 130);
-			this->trbTrap->Maximum = 100;
+			this->trbTrap->Maximum = 200;
+			this->trbTrap->Minimum = 1;
 			this->trbTrap->Name = L"trbTrap";
 			this->trbTrap->Size = System::Drawing::Size(255, 45);
 			this->trbTrap->TabIndex = 11;
 			this->trbTrap->Value = 10;
+			this->trbTrap->Scroll += gcnew System::EventHandler(this, &UI::TrapWidthChanged);
 			this->trbTrap->ValueChanged += gcnew System::EventHandler(this, &UI::TrapWidthChanged);
 			// 
 			// btnBack
@@ -472,10 +480,10 @@ namespace Spectre {
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(966, 534);
+			this->Controls->Add(this->uiGfx);
 			this->Controls->Add(this->btnBack);
 			this->Controls->Add(this->uiMainMenu);
 			this->Controls->Add(this->uiTrap);
-			this->Controls->Add(this->uiGfx);
 			this->Controls->Add(this->uiPreset);
 			this->Name = L"UI";
 			this->Text = L"UI";
@@ -510,6 +518,8 @@ namespace Spectre {
 		Point def;
 		Point last;
 		WMode ActiveMode;
+
+		Pen ^RedPen, ^GreenPen, ^AxisPen;
 		
 		System::Void AdaptToWindowSize(System::Object^  sender, System::EventArgs^  e)
 		{
@@ -607,7 +617,7 @@ namespace Spectre {
 		PointF TransformSpec(double x, double y, int index)
 		{
 			return PointF((float)(x / buf[index].len * trackBar2->Value * pbxSpec->Width),
-				          (float)((1 - (y / buf[0].MaxSpec + 0.125) * 0.8) * pbxSpec->Height));
+				          (float)((1 - (y / 8 /* buf[0].MaxSpec*/ + 0.125) * 0.8) * pbxSpec->Height));
 		}
 		PointF BackTransformImp(float x, float y, int index)
 		{
@@ -617,7 +627,7 @@ namespace Spectre {
 		PointF BackTransformSpec(float x, float y, int index)
 		{
 			return PointF((float)(x * buf[index].len / trackBar2->Value/ pbxSpec->Width),
-				          (float)(((1 - (y / pbxSpec->Height))/ 0.8 - 0.125) * buf[index].MaxSpec));
+				          (float)(((1 - (y / pbxSpec->Height))/ 0.8 - 0.125) * 8 /* buf[index].MaxSpec*/));
 		}
 
 		array<PointF>^ TransformPointsImp(int index, PaintEventArgs^ e)
@@ -649,11 +659,6 @@ namespace Spectre {
 		
 		void DrawImp(PaintEventArgs^ e)
 		{
-			
-			Pen^ RedPen = gcnew Pen( Color::Red, 1.0f );
-			Pen^ GreenPen = gcnew Pen( Color::Green, 3.0f );
-			Pen^ AxisPen = gcnew Pen( Color::Black, 1.0f );
-
 			e->Graphics->SmoothingMode = Drawing2D::SmoothingMode::HighQuality;
 			// Draw axes
 			//e->Graphics->DrawLine(AxisPen, TransformImp(-1000, 0, 0), TransformImp(1000, 0, 0));
@@ -665,16 +670,21 @@ namespace Spectre {
 			curvePoints = TransformPointsImp(1, e);
 			//e->Graphics->DrawCurve(RedPen, curvePoints, 0, curvePoints->Length-1, .5F);
 			e->Graphics->DrawLines(RedPen, curvePoints);
+
+			PointF p;
+			for (int i = -100; i < 100; ++i)
+			{
+				p = TransformImp(buf[0].len / 2 + i * PointsPerSecond, 0, 0);
+				e->Graphics->DrawLine(AxisPen, p.X, p.Y + 2, p.X, p.Y + 15);
+			}
+			p = TransformImp(buf[0].len / 2, 0, 0);
+			e->Graphics->DrawLine(AxisPen, p.X - 2000, p.Y + 15, p.X + 2000, p.Y + 15);
 		}
 		void DrawSpec(PaintEventArgs^ e)
 		{
-			Pen^ RedPen = gcnew Pen( Color::Red,1.0f );
-			Pen^ GreenPen = gcnew Pen( Color::Green, 3.0f );
-			Pen^ AxisPen = gcnew Pen( Color::Black, 1.0f );
-
 			e->Graphics->SmoothingMode = Drawing2D::SmoothingMode::HighQuality;
 			// Draw axes
-			e->Graphics->DrawLine(AxisPen, TransformSpec(-1, 0, 0), TransformSpec(1000, 0, 0));
+			//e->Graphics->DrawLine(AxisPen, TransformSpec(-1, 0, 0), TransformSpec(1000, 0, 0));
 			//e->Graphics->DrawLine(AxisPen, TransformSpec(0, YRangeSpec[0]), TransformSpec(0, YRangeSpec[1]));
 
 			array<PointF>^ curvePoints = TransformPointsSpec(0, e);
@@ -683,6 +693,21 @@ namespace Spectre {
 			curvePoints = TransformPointsSpec(1, e);
 			//e->Graphics->DrawCurve(RedPen, curvePoints, 0, curvePoints->Length-1, .5F);
 			e->Graphics->DrawLines(RedPen, curvePoints);
+
+			PointF p;
+			for (int i = -100; i < 100; ++i)
+			{
+				p = TransformSpec(i * buf[0].len / PointsPerSecond, 0, 0);
+				e->Graphics->DrawLine(AxisPen, p.X, p.Y + 2, p.X, p.Y + 15);
+			}
+			p = TransformSpec(0, 0, 0);
+			e->Graphics->DrawLine(AxisPen, p.X - 5, p.Y + 15, p.X + 4000, p.Y + 15);
+			for (int i = 0; i < 10; ++i)
+			{
+				p = TransformSpec(0, i, 0);
+				e->Graphics->DrawLine(AxisPen, p.X + 2, p.Y, p.X + 15, p.Y);
+			}
+
 		}
 
 
@@ -693,6 +718,13 @@ private: System::Void trackBar1_ValueChanged(System::Object^  sender, System::Ev
 			 InvalidateAll();
 }
 private: System::Void trackBar2_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+			 InvalidateAll();
+}
+private: System::Void PresetFuncChanged(System::Object^  sender, System::EventArgs^  e) {
+			 //TODO
+}
+private: System::Void TrapWidthChanged(System::Object^  sender, System::EventArgs^  e) {
+			 buf[0].generate_gauss(trbTrap->Value);
 			 InvalidateAll();
 }
 
@@ -739,11 +771,5 @@ private: System::Void trackBar2_ValueChanged(System::Object^  sender, System::Ev
 
 */
 
-private: System::Void PresetFuncChanged(System::Object^  sender, System::EventArgs^  e) {
-			 //TODO
-}
-private: System::Void TrapWidthChanged(System::Object^  sender, System::EventArgs^  e) {
-			 //TODO
-}
 };
 }

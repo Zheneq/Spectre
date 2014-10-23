@@ -11,6 +11,7 @@ using namespace System::Drawing;
 std::vector<float> RawHand[2];
 //buffer buf[2];
 //double *imp[2][2] = {{NULL, NULL}, {NULL, NULL}}, *spec[2][2] = {{NULL, NULL}, {NULL, NULL}};
+float PointsPerSecond = 300;
 
 //// Test
 
