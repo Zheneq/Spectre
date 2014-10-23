@@ -54,21 +54,40 @@ namespace Spectre {
 	private: System::Windows::Forms::Button^  btnPreset;
 	private: System::Windows::Forms::Panel^  uiPreset;
 
-	private: System::Windows::Forms::Panel^  panel1;
-	private: System::Windows::Forms::RadioButton^  rdb2;
-	private: System::Windows::Forms::RadioButton^  rdb1;
+
+
+
 	private: System::Windows::Forms::TrackBar^  trackBar3;
-	private: System::Windows::Forms::Panel^  panel2;
-	private: System::Windows::Forms::RadioButton^  rdbHand;
-	private: System::Windows::Forms::RadioButton^  rdbFunc;
+
+
+
 	private: System::Windows::Forms::TrackBar^  trackBar2;
 	private: System::Windows::Forms::PictureBox^  pbxSpec;
 	private: System::Windows::Forms::TrackBar^  trackBar1;
-	private: System::Windows::Forms::Panel^  pnlFunc;
-	private: System::Windows::Forms::ComboBox^  cbxRight;
-	private: System::Windows::Forms::ComboBox^  cbxLeft;
+
+
+
 	private: System::Windows::Forms::PictureBox^  pbxImp;
 	private: System::Windows::Forms::Label^  lblPreset;
+	private: System::Windows::Forms::Panel^  uiGfx;
+	private: System::Windows::Forms::Panel^  panPresetControl;
+	private: System::Windows::Forms::Panel^  panPresetControl2;
+	private: System::Windows::Forms::RadioButton^  rdbPreset25;
+	private: System::Windows::Forms::RadioButton^  rdbPreset24;
+	private: System::Windows::Forms::RadioButton^  rdbPreset23;
+	private: System::Windows::Forms::RadioButton^  rdbPreset22;
+	private: System::Windows::Forms::RadioButton^  rdbPreset21;
+	private: System::Windows::Forms::Panel^  panPresetControl1;
+	private: System::Windows::Forms::RadioButton^  rdbPreset15;
+	private: System::Windows::Forms::RadioButton^  rdbPreset14;
+	private: System::Windows::Forms::RadioButton^  rdbPreset13;
+	private: System::Windows::Forms::RadioButton^  rdbPreset12;
+	private: System::Windows::Forms::RadioButton^  rdbPreset11;
+	private: System::Windows::Forms::Button^  btnTrap;
+	private: System::Windows::Forms::Panel^  uiTrap;
+	private: System::Windows::Forms::Label^  lblTrap;
+	private: System::Windows::Forms::TrackBar^  trbTrap;
+	private: System::Windows::Forms::Button^  btnBack;
 
 	private:
 		/// <summary>
@@ -84,43 +103,69 @@ namespace Spectre {
 		void InitializeComponent(void)
 		{
 			this->uiMainMenu = (gcnew System::Windows::Forms::Panel());
+			this->btnTrap = (gcnew System::Windows::Forms::Button());
 			this->btnPreset = (gcnew System::Windows::Forms::Button());
 			this->uiPreset = (gcnew System::Windows::Forms::Panel());
-			this->panel1 = (gcnew System::Windows::Forms::Panel());
-			this->rdb2 = (gcnew System::Windows::Forms::RadioButton());
-			this->rdb1 = (gcnew System::Windows::Forms::RadioButton());
+			this->panPresetControl = (gcnew System::Windows::Forms::Panel());
+			this->panPresetControl2 = (gcnew System::Windows::Forms::Panel());
+			this->rdbPreset25 = (gcnew System::Windows::Forms::RadioButton());
+			this->rdbPreset24 = (gcnew System::Windows::Forms::RadioButton());
+			this->rdbPreset23 = (gcnew System::Windows::Forms::RadioButton());
+			this->rdbPreset22 = (gcnew System::Windows::Forms::RadioButton());
+			this->rdbPreset21 = (gcnew System::Windows::Forms::RadioButton());
+			this->panPresetControl1 = (gcnew System::Windows::Forms::Panel());
+			this->rdbPreset15 = (gcnew System::Windows::Forms::RadioButton());
+			this->rdbPreset14 = (gcnew System::Windows::Forms::RadioButton());
+			this->rdbPreset13 = (gcnew System::Windows::Forms::RadioButton());
+			this->rdbPreset12 = (gcnew System::Windows::Forms::RadioButton());
+			this->rdbPreset11 = (gcnew System::Windows::Forms::RadioButton());
+			this->lblPreset = (gcnew System::Windows::Forms::Label());
+			this->trackBar1 = (gcnew System::Windows::Forms::TrackBar());
 			this->trackBar3 = (gcnew System::Windows::Forms::TrackBar());
-			this->panel2 = (gcnew System::Windows::Forms::Panel());
-			this->rdbHand = (gcnew System::Windows::Forms::RadioButton());
-			this->rdbFunc = (gcnew System::Windows::Forms::RadioButton());
 			this->trackBar2 = (gcnew System::Windows::Forms::TrackBar());
 			this->pbxSpec = (gcnew System::Windows::Forms::PictureBox());
-			this->trackBar1 = (gcnew System::Windows::Forms::TrackBar());
-			this->pnlFunc = (gcnew System::Windows::Forms::Panel());
-			this->cbxRight = (gcnew System::Windows::Forms::ComboBox());
-			this->cbxLeft = (gcnew System::Windows::Forms::ComboBox());
 			this->pbxImp = (gcnew System::Windows::Forms::PictureBox());
-			this->lblPreset = (gcnew System::Windows::Forms::Label());
+			this->uiGfx = (gcnew System::Windows::Forms::Panel());
+			this->uiTrap = (gcnew System::Windows::Forms::Panel());
+			this->lblTrap = (gcnew System::Windows::Forms::Label());
+			this->trbTrap = (gcnew System::Windows::Forms::TrackBar());
+			this->btnBack = (gcnew System::Windows::Forms::Button());
 			this->uiMainMenu->SuspendLayout();
 			this->uiPreset->SuspendLayout();
-			this->panel1->SuspendLayout();
+			this->panPresetControl->SuspendLayout();
+			this->panPresetControl2->SuspendLayout();
+			this->panPresetControl1->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar3))->BeginInit();
-			this->panel2->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxSpec))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->BeginInit();
-			this->pnlFunc->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxImp))->BeginInit();
+			this->uiGfx->SuspendLayout();
+			this->uiTrap->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trbTrap))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// uiMainMenu
 			// 
 			this->uiMainMenu->BackColor = System::Drawing::SystemColors::ControlDark;
+			this->uiMainMenu->Controls->Add(this->btnTrap);
 			this->uiMainMenu->Controls->Add(this->btnPreset);
-			this->uiMainMenu->Location = System::Drawing::Point(221, 12);
+			this->uiMainMenu->Location = System::Drawing::Point(431, 12);
 			this->uiMainMenu->Name = L"uiMainMenu";
 			this->uiMainMenu->Size = System::Drawing::Size(568, 294);
 			this->uiMainMenu->TabIndex = 15;
+			// 
+			// btnTrap
+			// 
+			this->btnTrap->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->btnTrap->Location = System::Drawing::Point(85, 146);
+			this->btnTrap->Name = L"btnTrap";
+			this->btnTrap->Size = System::Drawing::Size(350, 60);
+			this->btnTrap->TabIndex = 2;
+			this->btnTrap->Text = L"Trapezoid";
+			this->btnTrap->UseVisualStyleBackColor = true;
+			this->btnTrap->Click += gcnew System::EventHandler(this, &UI::btnTrap_Click);
 			// 
 			// btnPreset
 			// 
@@ -137,129 +182,172 @@ namespace Spectre {
 			// uiPreset
 			// 
 			this->uiPreset->BackColor = System::Drawing::SystemColors::InactiveCaptionText;
+			this->uiPreset->Controls->Add(this->panPresetControl);
 			this->uiPreset->Controls->Add(this->lblPreset);
-			this->uiPreset->Controls->Add(this->panel1);
-			this->uiPreset->Controls->Add(this->trackBar3);
-			this->uiPreset->Controls->Add(this->panel2);
-			this->uiPreset->Controls->Add(this->trackBar2);
-			this->uiPreset->Controls->Add(this->pbxSpec);
 			this->uiPreset->Controls->Add(this->trackBar1);
-			this->uiPreset->Controls->Add(this->pnlFunc);
-			this->uiPreset->Controls->Add(this->pbxImp);
-			this->uiPreset->Location = System::Drawing::Point(35, 51);
+			this->uiPreset->Location = System::Drawing::Point(12, 60);
 			this->uiPreset->Name = L"uiPreset";
 			this->uiPreset->Size = System::Drawing::Size(919, 480);
 			this->uiPreset->TabIndex = 16;
 			this->uiPreset->Visible = false;
 			// 
-			// panel1
+			// panPresetControl
 			// 
-			this->panel1->BackColor = System::Drawing::SystemColors::ControlDark;
-			this->panel1->Controls->Add(this->rdb2);
-			this->panel1->Controls->Add(this->rdb1);
-			this->panel1->Location = System::Drawing::Point(10, 65);
-			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(59, 29);
-			this->panel1->TabIndex = 4;
+			this->panPresetControl->BackColor = System::Drawing::Color::Silver;
+			this->panPresetControl->Controls->Add(this->panPresetControl2);
+			this->panPresetControl->Controls->Add(this->panPresetControl1);
+			this->panPresetControl->Location = System::Drawing::Point(20, 181);
+			this->panPresetControl->Name = L"panPresetControl";
+			this->panPresetControl->Size = System::Drawing::Size(245, 224);
+			this->panPresetControl->TabIndex = 15;
 			// 
-			// rdb2
+			// panPresetControl2
 			// 
-			this->rdb2->Appearance = System::Windows::Forms::Appearance::Button;
-			this->rdb2->AutoSize = true;
-			this->rdb2->Location = System::Drawing::Point(32, 3);
-			this->rdb2->Name = L"rdb2";
-			this->rdb2->Size = System::Drawing::Size(23, 23);
-			this->rdb2->TabIndex = 3;
-			this->rdb2->Tag = L"";
-			this->rdb2->Text = L"2";
-			this->rdb2->UseVisualStyleBackColor = true;
+			this->panPresetControl2->BackColor = System::Drawing::Color::DarkOrange;
+			this->panPresetControl2->Controls->Add(this->rdbPreset25);
+			this->panPresetControl2->Controls->Add(this->rdbPreset24);
+			this->panPresetControl2->Controls->Add(this->rdbPreset23);
+			this->panPresetControl2->Controls->Add(this->rdbPreset22);
+			this->panPresetControl2->Controls->Add(this->rdbPreset21);
+			this->panPresetControl2->Location = System::Drawing::Point(131, 39);
+			this->panPresetControl2->Name = L"panPresetControl2";
+			this->panPresetControl2->Size = System::Drawing::Size(29, 139);
+			this->panPresetControl2->TabIndex = 1;
 			// 
-			// rdb1
+			// rdbPreset25
 			// 
-			this->rdb1->Appearance = System::Windows::Forms::Appearance::Button;
-			this->rdb1->AutoSize = true;
-			this->rdb1->Checked = true;
-			this->rdb1->Location = System::Drawing::Point(3, 3);
-			this->rdb1->Name = L"rdb1";
-			this->rdb1->Size = System::Drawing::Size(23, 23);
-			this->rdb1->TabIndex = 2;
-			this->rdb1->TabStop = true;
-			this->rdb1->Tag = L"";
-			this->rdb1->Text = L"1";
-			this->rdb1->UseVisualStyleBackColor = true;
+			this->rdbPreset25->AutoSize = true;
+			this->rdbPreset25->Location = System::Drawing::Point(0, 76);
+			this->rdbPreset25->Name = L"rdbPreset25";
+			this->rdbPreset25->Size = System::Drawing::Size(14, 13);
+			this->rdbPreset25->TabIndex = 9;
+			this->rdbPreset25->TabStop = true;
+			this->rdbPreset25->UseVisualStyleBackColor = true;
+			this->rdbPreset25->CheckedChanged += gcnew System::EventHandler(this, &UI::PresetFuncChanged);
 			// 
-			// trackBar3
+			// rdbPreset24
 			// 
-			this->trackBar3->Location = System::Drawing::Point(13, 232);
-			this->trackBar3->Maximum = 20;
-			this->trackBar3->Minimum = 1;
-			this->trackBar3->Name = L"trackBar3";
-			this->trackBar3->Size = System::Drawing::Size(252, 45);
-			this->trackBar3->TabIndex = 13;
-			this->trackBar3->Value = 1;
-			this->trackBar3->Scroll += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
-			this->trackBar3->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
+			this->rdbPreset24->AutoSize = true;
+			this->rdbPreset24->Location = System::Drawing::Point(0, 57);
+			this->rdbPreset24->Name = L"rdbPreset24";
+			this->rdbPreset24->Size = System::Drawing::Size(14, 13);
+			this->rdbPreset24->TabIndex = 8;
+			this->rdbPreset24->TabStop = true;
+			this->rdbPreset24->UseVisualStyleBackColor = true;
+			this->rdbPreset24->CheckedChanged += gcnew System::EventHandler(this, &UI::PresetFuncChanged);
 			// 
-			// panel2
+			// rdbPreset23
 			// 
-			this->panel2->BackColor = System::Drawing::SystemColors::ControlDark;
-			this->panel2->Controls->Add(this->rdbHand);
-			this->panel2->Controls->Add(this->rdbFunc);
-			this->panel2->Location = System::Drawing::Point(75, 65);
-			this->panel2->Name = L"panel2";
-			this->panel2->Size = System::Drawing::Size(158, 29);
-			this->panel2->TabIndex = 5;
-			this->panel2->Visible = false;
+			this->rdbPreset23->AutoSize = true;
+			this->rdbPreset23->Location = System::Drawing::Point(0, 38);
+			this->rdbPreset23->Name = L"rdbPreset23";
+			this->rdbPreset23->Size = System::Drawing::Size(14, 13);
+			this->rdbPreset23->TabIndex = 7;
+			this->rdbPreset23->TabStop = true;
+			this->rdbPreset23->UseVisualStyleBackColor = true;
+			this->rdbPreset23->CheckedChanged += gcnew System::EventHandler(this, &UI::PresetFuncChanged);
 			// 
-			// rdbHand
+			// rdbPreset22
 			// 
-			this->rdbHand->Appearance = System::Windows::Forms::Appearance::Button;
-			this->rdbHand->AutoSize = true;
-			this->rdbHand->Location = System::Drawing::Point(72, 3);
-			this->rdbHand->Name = L"rdbHand";
-			this->rdbHand->Size = System::Drawing::Size(79, 23);
-			this->rdbHand->TabIndex = 5;
-			this->rdbHand->Tag = L"";
-			this->rdbHand->Text = L"Ручной ввод";
-			this->rdbHand->UseVisualStyleBackColor = true;
-			this->rdbHand->CheckedChanged += gcnew System::EventHandler(this, &UI::HideFunc);
+			this->rdbPreset22->AutoSize = true;
+			this->rdbPreset22->Location = System::Drawing::Point(0, 19);
+			this->rdbPreset22->Name = L"rdbPreset22";
+			this->rdbPreset22->Size = System::Drawing::Size(14, 13);
+			this->rdbPreset22->TabIndex = 6;
+			this->rdbPreset22->TabStop = true;
+			this->rdbPreset22->UseVisualStyleBackColor = true;
+			this->rdbPreset22->CheckedChanged += gcnew System::EventHandler(this, &UI::PresetFuncChanged);
 			// 
-			// rdbFunc
+			// rdbPreset21
 			// 
-			this->rdbFunc->Appearance = System::Windows::Forms::Appearance::Button;
-			this->rdbFunc->AutoSize = true;
-			this->rdbFunc->Checked = true;
-			this->rdbFunc->Location = System::Drawing::Point(3, 3);
-			this->rdbFunc->Name = L"rdbFunc";
-			this->rdbFunc->Size = System::Drawing::Size(63, 23);
-			this->rdbFunc->TabIndex = 4;
-			this->rdbFunc->TabStop = true;
-			this->rdbFunc->Tag = L"";
-			this->rdbFunc->Text = L"Функция";
-			this->rdbFunc->UseVisualStyleBackColor = true;
+			this->rdbPreset21->AutoSize = true;
+			this->rdbPreset21->Location = System::Drawing::Point(0, 0);
+			this->rdbPreset21->Name = L"rdbPreset21";
+			this->rdbPreset21->Size = System::Drawing::Size(14, 13);
+			this->rdbPreset21->TabIndex = 5;
+			this->rdbPreset21->TabStop = true;
+			this->rdbPreset21->UseVisualStyleBackColor = true;
+			this->rdbPreset21->CheckedChanged += gcnew System::EventHandler(this, &UI::PresetFuncChanged);
 			// 
-			// trackBar2
+			// panPresetControl1
 			// 
-			this->trackBar2->Location = System::Drawing::Point(13, 181);
-			this->trackBar2->Maximum = 100;
-			this->trackBar2->Minimum = 1;
-			this->trackBar2->Name = L"trackBar2";
-			this->trackBar2->Size = System::Drawing::Size(252, 45);
-			this->trackBar2->TabIndex = 12;
-			this->trackBar2->Value = 50;
-			this->trackBar2->Scroll += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
-			this->trackBar2->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
+			this->panPresetControl1->BackColor = System::Drawing::Color::DarkOrange;
+			this->panPresetControl1->Controls->Add(this->rdbPreset15);
+			this->panPresetControl1->Controls->Add(this->rdbPreset14);
+			this->panPresetControl1->Controls->Add(this->rdbPreset13);
+			this->panPresetControl1->Controls->Add(this->rdbPreset12);
+			this->panPresetControl1->Controls->Add(this->rdbPreset11);
+			this->panPresetControl1->Location = System::Drawing::Point(92, 39);
+			this->panPresetControl1->Name = L"panPresetControl1";
+			this->panPresetControl1->Size = System::Drawing::Size(29, 139);
+			this->panPresetControl1->TabIndex = 0;
 			// 
-			// pbxSpec
+			// rdbPreset15
 			// 
-			this->pbxSpec->BackColor = System::Drawing::SystemColors::ButtonHighlight;
-			this->pbxSpec->Location = System::Drawing::Point(267, 288);
-			this->pbxSpec->Name = L"pbxSpec";
-			this->pbxSpec->Size = System::Drawing::Size(640, 214);
-			this->pbxSpec->TabIndex = 7;
-			this->pbxSpec->TabStop = false;
-			this->pbxSpec->Click += gcnew System::EventHandler(this, &UI::onClick);
-			this->pbxSpec->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &UI::onSpecPaint);
+			this->rdbPreset15->AutoSize = true;
+			this->rdbPreset15->Location = System::Drawing::Point(0, 76);
+			this->rdbPreset15->Name = L"rdbPreset15";
+			this->rdbPreset15->Size = System::Drawing::Size(14, 13);
+			this->rdbPreset15->TabIndex = 4;
+			this->rdbPreset15->TabStop = true;
+			this->rdbPreset15->UseVisualStyleBackColor = true;
+			this->rdbPreset15->CheckedChanged += gcnew System::EventHandler(this, &UI::PresetFuncChanged);
+			// 
+			// rdbPreset14
+			// 
+			this->rdbPreset14->AutoSize = true;
+			this->rdbPreset14->Location = System::Drawing::Point(0, 57);
+			this->rdbPreset14->Name = L"rdbPreset14";
+			this->rdbPreset14->Size = System::Drawing::Size(14, 13);
+			this->rdbPreset14->TabIndex = 3;
+			this->rdbPreset14->TabStop = true;
+			this->rdbPreset14->UseVisualStyleBackColor = true;
+			this->rdbPreset14->CheckedChanged += gcnew System::EventHandler(this, &UI::PresetFuncChanged);
+			// 
+			// rdbPreset13
+			// 
+			this->rdbPreset13->AutoSize = true;
+			this->rdbPreset13->Location = System::Drawing::Point(0, 38);
+			this->rdbPreset13->Name = L"rdbPreset13";
+			this->rdbPreset13->Size = System::Drawing::Size(14, 13);
+			this->rdbPreset13->TabIndex = 2;
+			this->rdbPreset13->TabStop = true;
+			this->rdbPreset13->UseVisualStyleBackColor = true;
+			this->rdbPreset13->CheckedChanged += gcnew System::EventHandler(this, &UI::PresetFuncChanged);
+			// 
+			// rdbPreset12
+			// 
+			this->rdbPreset12->AutoSize = true;
+			this->rdbPreset12->Location = System::Drawing::Point(0, 19);
+			this->rdbPreset12->Name = L"rdbPreset12";
+			this->rdbPreset12->Size = System::Drawing::Size(14, 13);
+			this->rdbPreset12->TabIndex = 1;
+			this->rdbPreset12->TabStop = true;
+			this->rdbPreset12->UseVisualStyleBackColor = true;
+			this->rdbPreset12->CheckedChanged += gcnew System::EventHandler(this, &UI::PresetFuncChanged);
+			// 
+			// rdbPreset11
+			// 
+			this->rdbPreset11->AutoSize = true;
+			this->rdbPreset11->Location = System::Drawing::Point(0, 0);
+			this->rdbPreset11->Name = L"rdbPreset11";
+			this->rdbPreset11->Size = System::Drawing::Size(14, 13);
+			this->rdbPreset11->TabIndex = 0;
+			this->rdbPreset11->TabStop = true;
+			this->rdbPreset11->UseVisualStyleBackColor = true;
+			this->rdbPreset11->CheckedChanged += gcnew System::EventHandler(this, &UI::PresetFuncChanged);
+			// 
+			// lblPreset
+			// 
+			this->lblPreset->AutoSize = true;
+			this->lblPreset->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->lblPreset->Location = System::Drawing::Point(13, 12);
+			this->lblPreset->Name = L"lblPreset";
+			this->lblPreset->Size = System::Drawing::Size(364, 37);
+			this->lblPreset->TabIndex = 14;
+			this->lblPreset->Text = L"Фиксированный импульс";
+			this->lblPreset->TextAlign = System::Drawing::ContentAlignment::TopCenter;
 			// 
 			// trackBar1
 			// 
@@ -272,70 +360,123 @@ namespace Spectre {
 			this->trackBar1->Value = 8;
 			this->trackBar1->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar1_ValueChanged);
 			// 
-			// pnlFunc
+			// trackBar3
 			// 
-			this->pnlFunc->BackColor = System::Drawing::SystemColors::ButtonShadow;
-			this->pnlFunc->Controls->Add(this->cbxRight);
-			this->pnlFunc->Controls->Add(this->cbxLeft);
-			this->pnlFunc->Location = System::Drawing::Point(10, 102);
-			this->pnlFunc->Name = L"pnlFunc";
-			this->pnlFunc->Size = System::Drawing::Size(265, 29);
-			this->pnlFunc->TabIndex = 10;
-			this->pnlFunc->Visible = false;
+			this->trackBar3->Location = System::Drawing::Point(261, 204);
+			this->trackBar3->Maximum = 20;
+			this->trackBar3->Minimum = 1;
+			this->trackBar3->Name = L"trackBar3";
+			this->trackBar3->Size = System::Drawing::Size(252, 45);
+			this->trackBar3->TabIndex = 13;
+			this->trackBar3->Value = 18;
+			this->trackBar3->Visible = false;
+			this->trackBar3->Scroll += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
+			this->trackBar3->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
 			// 
-			// cbxRight
+			// trackBar2
 			// 
-			this->cbxRight->FormattingEnabled = true;
-			this->cbxRight->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"Разрыв", L"Линейная", L"Гаусс", L"Синус" });
-			this->cbxRight->Location = System::Drawing::Point(130, 3);
-			this->cbxRight->Name = L"cbxRight";
-			this->cbxRight->Size = System::Drawing::Size(121, 21);
-			this->cbxRight->TabIndex = 11;
-			this->cbxRight->Text = L"Справа";
+			this->trackBar2->Location = System::Drawing::Point(3, 204);
+			this->trackBar2->Maximum = 100;
+			this->trackBar2->Minimum = 1;
+			this->trackBar2->Name = L"trackBar2";
+			this->trackBar2->Size = System::Drawing::Size(252, 45);
+			this->trackBar2->TabIndex = 12;
+			this->trackBar2->Value = 75;
+			this->trackBar2->Visible = false;
+			this->trackBar2->Scroll += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
+			this->trackBar2->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
 			// 
-			// cbxLeft
+			// pbxSpec
 			// 
-			this->cbxLeft->FormattingEnabled = true;
-			this->cbxLeft->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"Разрыв", L"Линейная", L"Гаусс", L"Синус" });
-			this->cbxLeft->Location = System::Drawing::Point(3, 3);
-			this->cbxLeft->Name = L"cbxLeft";
-			this->cbxLeft->Size = System::Drawing::Size(121, 21);
-			this->cbxLeft->TabIndex = 10;
-			this->cbxLeft->Text = L"Слева";
+			this->pbxSpec->BackColor = System::Drawing::SystemColors::ButtonHighlight;
+			this->pbxSpec->Location = System::Drawing::Point(19, 244);
+			this->pbxSpec->Name = L"pbxSpec";
+			this->pbxSpec->Size = System::Drawing::Size(640, 214);
+			this->pbxSpec->TabIndex = 7;
+			this->pbxSpec->TabStop = false;
+			this->pbxSpec->Click += gcnew System::EventHandler(this, &UI::onClick);
+			this->pbxSpec->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &UI::onSpecPaint);
 			// 
 			// pbxImp
 			// 
 			this->pbxImp->BackColor = System::Drawing::SystemColors::ButtonHighlight;
-			this->pbxImp->Location = System::Drawing::Point(267, 68);
+			this->pbxImp->Location = System::Drawing::Point(19, 24);
 			this->pbxImp->Name = L"pbxImp";
 			this->pbxImp->Size = System::Drawing::Size(640, 214);
 			this->pbxImp->TabIndex = 6;
 			this->pbxImp->TabStop = false;
 			this->pbxImp->Click += gcnew System::EventHandler(this, &UI::onClick);
 			this->pbxImp->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &UI::onImpPaint);
-			this->pbxImp->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &UI::EnableDrawing);
-			this->pbxImp->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &UI::HandDrawing);
-			this->pbxImp->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &UI::DisableDrawing);
 			// 
-			// lblPreset
+			// uiGfx
 			// 
-			this->lblPreset->AutoSize = true;
-			this->lblPreset->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->uiGfx->BackColor = System::Drawing::Color::Maroon;
+			this->uiGfx->Controls->Add(this->trackBar3);
+			this->uiGfx->Controls->Add(this->trackBar2);
+			this->uiGfx->Controls->Add(this->pbxImp);
+			this->uiGfx->Controls->Add(this->pbxSpec);
+			this->uiGfx->Location = System::Drawing::Point(144, 25);
+			this->uiGfx->Name = L"uiGfx";
+			this->uiGfx->Size = System::Drawing::Size(676, 474);
+			this->uiGfx->TabIndex = 17;
+			this->uiGfx->Visible = false;
+			// 
+			// uiTrap
+			// 
+			this->uiTrap->BackColor = System::Drawing::Color::DarkGreen;
+			this->uiTrap->Controls->Add(this->lblTrap);
+			this->uiTrap->Controls->Add(this->trbTrap);
+			this->uiTrap->Location = System::Drawing::Point(80, 42);
+			this->uiTrap->Name = L"uiTrap";
+			this->uiTrap->Size = System::Drawing::Size(919, 480);
+			this->uiTrap->TabIndex = 17;
+			this->uiTrap->Visible = false;
+			// 
+			// lblTrap
+			// 
+			this->lblTrap->AutoSize = true;
+			this->lblTrap->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->lblPreset->Location = System::Drawing::Point(13, 12);
-			this->lblPreset->Name = L"lblPreset";
-			this->lblPreset->Size = System::Drawing::Size(167, 37);
-			this->lblPreset->TabIndex = 14;
-			this->lblPreset->Text = L"Заголовок";
-			this->lblPreset->TextAlign = System::Drawing::ContentAlignment::TopCenter;
+			this->lblTrap->Location = System::Drawing::Point(13, 12);
+			this->lblTrap->Name = L"lblTrap";
+			this->lblTrap->Size = System::Drawing::Size(371, 37);
+			this->lblTrap->TabIndex = 14;
+			this->lblTrap->Text = L"Криволинейная трапеция";
+			this->lblTrap->TextAlign = System::Drawing::ContentAlignment::TopCenter;
+			// 
+			// trbTrap
+			// 
+			this->trbTrap->Location = System::Drawing::Point(10, 130);
+			this->trbTrap->Maximum = 100;
+			this->trbTrap->Name = L"trbTrap";
+			this->trbTrap->Size = System::Drawing::Size(255, 45);
+			this->trbTrap->TabIndex = 11;
+			this->trbTrap->Value = 10;
+			this->trbTrap->ValueChanged += gcnew System::EventHandler(this, &UI::TrapWidthChanged);
+			// 
+			// btnBack
+			// 
+			this->btnBack->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
+			this->btnBack->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->btnBack->Location = System::Drawing::Point(15, 12);
+			this->btnBack->Name = L"btnBack";
+			this->btnBack->Size = System::Drawing::Size(204, 57);
+			this->btnBack->TabIndex = 18;
+			this->btnBack->Text = L"Назад";
+			this->btnBack->UseVisualStyleBackColor = true;
+			this->btnBack->Click += gcnew System::EventHandler(this, &UI::btnBack_Click);
 			// 
 			// UI
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(966, 534);
-			this->Controls->Add(this->uiPreset);
+			this->Controls->Add(this->btnBack);
 			this->Controls->Add(this->uiMainMenu);
+			this->Controls->Add(this->uiTrap);
+			this->Controls->Add(this->uiGfx);
+			this->Controls->Add(this->uiPreset);
 			this->Name = L"UI";
 			this->Text = L"UI";
 			this->Load += gcnew System::EventHandler(this, &UI::AdaptToWindowSize);
@@ -345,16 +486,21 @@ namespace Spectre {
 			this->uiMainMenu->ResumeLayout(false);
 			this->uiPreset->ResumeLayout(false);
 			this->uiPreset->PerformLayout();
-			this->panel1->ResumeLayout(false);
-			this->panel1->PerformLayout();
+			this->panPresetControl->ResumeLayout(false);
+			this->panPresetControl2->ResumeLayout(false);
+			this->panPresetControl2->PerformLayout();
+			this->panPresetControl1->ResumeLayout(false);
+			this->panPresetControl1->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar3))->EndInit();
-			this->panel2->ResumeLayout(false);
-			this->panel2->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxSpec))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->EndInit();
-			this->pnlFunc->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxImp))->EndInit();
+			this->uiGfx->ResumeLayout(false);
+			this->uiGfx->PerformLayout();
+			this->uiTrap->ResumeLayout(false);
+			this->uiTrap->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trbTrap))->EndInit();
 			this->ResumeLayout(false);
 
 		}
@@ -367,6 +513,10 @@ namespace Spectre {
 		
 		System::Void AdaptToWindowSize(System::Object^  sender, System::EventArgs^  e)
 		{
+			int Spacing = 10;
+			int LeftPanelWidth = 280;
+			int TopPanelHeight = 80;
+
 			uiMainMenu->Left = 0;
 			uiMainMenu->Top = 0;
 			uiMainMenu->Width = ClientSize.Width;
@@ -375,40 +525,67 @@ namespace Spectre {
 			uiPreset->Top = 0;
 			uiPreset->Width = ClientSize.Width;
 			uiPreset->Height = ClientSize.Height;
+			uiTrap->Left = 0;
+			uiTrap->Top = 0;
+			uiTrap->Width = ClientSize.Width;
+			uiTrap->Height = ClientSize.Height;
+
+			// global
+			btnBack->Left = Spacing;
+			btnBack->Top  = ClientSize.Height - btnBack->Height - Spacing;
 
 			// uiMainMenu
 			btnPreset->Left = (ClientSize.Width - btnPreset->Width) / 2;
+			btnTrap->Left = btnPreset->Left;
 
 			// uiPreset
-			int Spacing = 10;
 
 			lblPreset->Left = (ClientSize.Width - lblPreset->Width) / 2;
 
-			int AwailableWidth  = ClientSize.Width  - pbxImp->Left - Spacing;
-			int AwailableHeight = ClientSize.Height - pbxImp->Top  - Spacing * 2;
+			uiGfx->Width  = ClientSize.Width - LeftPanelWidth - Spacing;
+			uiGfx->Height = ClientSize.Height - TopPanelHeight - Spacing;
+			uiGfx->Left   = LeftPanelWidth;
+			uiGfx->Top    = TopPanelHeight;
 			
-			pbxImp->Width = AwailableWidth;
-			pbxSpec->Width = AwailableWidth;
-			pbxImp->Height = AwailableHeight / 2;
-			pbxSpec->Height = AwailableHeight / 2;
+			// uiGfx
+			pbxImp->Width   = uiGfx->Width;
+			pbxSpec->Width  = pbxImp->Width;
+			pbxImp->Height  = (uiGfx->Height - Spacing) / 2;
+			pbxSpec->Height = pbxImp->Height;
 
-			pbxSpec->Left = pbxImp->Left;
-			pbxSpec->Top  = pbxImp->Top + pbxImp->Height + Spacing;
+			pbxImp->Left  = 0;
+			pbxSpec->Left = 0;
+			pbxImp->Top   = 0;
+			pbxSpec->Top  = pbxImp->Height + Spacing;
 			
 			RawHand[0].resize(pbxImp->Width, 0);
 			RawHand[1].resize(pbxImp->Width, 0);
 
 			InvalidateAll();
 		}
+		System::Void btnBack_Click(System::Object^  sender, System::EventArgs^  e) {
+			uiMainMenu->Visible = true;
+			uiPreset->Visible = false;
+			uiTrap->Visible = false;
+			uiGfx->Visible = false;
+		}
+		System::Void btnPreset_Click(System::Object^  sender, System::EventArgs^  e)
+		{
+			uiMainMenu->Visible = false;
+			uiPreset->Visible = true;
+			uiGfx->Visible = true;
+		}
+		System::Void btnTrap_Click(System::Object^  sender, System::EventArgs^  e)
+		{
+			uiMainMenu->Visible = false;
+			uiTrap->Visible = true;
+			uiGfx->Visible = true;
+		}
 		System::Void InvalidateAll()
 		{
 			pbxImp->Invalidate();
 			pbxSpec->Invalidate();
-		}
-		System::Void HideFunc(System::Object^  sender, System::EventArgs^  e) {
-			pnlFunc->Visible = rdbFunc->Checked;
-		}
-		
+		}		
 		System::Void onClick(System::Object^  sender, System::EventArgs^  e)
 		{
 			InvalidateAll();
@@ -479,8 +656,8 @@ namespace Spectre {
 
 			e->Graphics->SmoothingMode = Drawing2D::SmoothingMode::HighQuality;
 			// Draw axes
-			//e->Graphics->DrawLine(AxisPen, TransformImp(XRangeImp[0], 0), TransformImp(XRangeImp[1], 0));
-			//e->Graphics->DrawLine(AxisPen, TransformImp(0, YRangeImp[0]), TransformImp(0, YRangeImp[1]));
+			//e->Graphics->DrawLine(AxisPen, TransformImp(-1000, 0, 0), TransformImp(1000, 0, 0));
+			//e->Graphics->DrawLine(AxisPen, TransformImp(0, -1000, 0), TransformImp(0, 1000, 0));
 
 			array<PointF>^ curvePoints = TransformPointsImp(0, e);
 			//e->Graphics->DrawCurve(GreenPen, curvePoints, 0, curvePoints->Length-1, .5F);
@@ -508,17 +685,18 @@ namespace Spectre {
 			e->Graphics->DrawLines(RedPen, curvePoints);
 		}
 
-		System::Void FuncChanged(System::Object^  sender, System::EventArgs^  e)
-		{
-			/*
-			if(cbxLeft->SelectedIndex >= 0 || cbxRight->SelectedIndex >= 0)
-				Fourier::function((int)rdb2->Checked, cbxLeft->SelectedIndex + 1, cbxRight->SelectedIndex + 1);
-			//*/
-			std::cout << (int)rdb2->Checked << ' ' << cbxLeft->SelectedIndex << ' ' << cbxRight->SelectedIndex << std::endl;
-		}
 
-		
+private: System::Void trackBar1_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+			 E_0 = 15 * trackBar1->Value;
+			 buf[0].generate_gauss(100);
+			 buf[1].generate_rect();
+			 InvalidateAll();
+}
+private: System::Void trackBar2_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+			 InvalidateAll();
+}
 
+/*
 		System::Void EnableDrawing(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
 		{
 			bDrawing = true;
@@ -527,23 +705,22 @@ namespace Spectre {
 		{
 			bDrawing = false;
 		}
-
 		System::Void HandDrawing(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
 		{
 			if(!rdbHand->Checked || !bDrawing)
 				return;
 			
 			const int idx = (int)rdb2->Checked;
-/*		
-			if(last == def) last = e->Location;
+		
+//			if(last == def) last = e->Location;
 
-			int beg = Math::Min(last.X, e->X);
-			int end = Math::Max(last.X, e->X);
-			for(int i = beg; i <=end; ++i)
-			{
-				RawHand[idx][i] = last.Y + ((float)e->Y-last.Y)*(i-beg+1)/(end-beg+1);
-			}
-*/
+//			int beg = Math::Min(last.X, e->X);
+//			int end = Math::Max(last.X, e->X);
+//			for(int i = beg; i <=end; ++i)
+//			{
+//				RawHand[idx][i] = last.Y + ((float)e->Y-last.Y)*(i-beg+1)/(end-beg+1);
+//			}
+
 			RawHand[idx][e->X] = (float)e->Y;
 			RefreshHand();
 		}
@@ -559,19 +736,14 @@ namespace Spectre {
 			pbxImp->Invalidate();
 		}
 
-private: System::Void trackBar1_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
-			 E_0 = /*buf[0].len * .0*/15 * trackBar1->Value;
-			 buf[0].generate_gauss(100);
-			 buf[1].generate_rect();
-			 InvalidateAll();
-		 }
-private: System::Void trackBar2_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
-			 InvalidateAll();
-		 }
-		System::Void btnPreset_Click(System::Object^  sender, System::EventArgs^  e)
-		{
-			uiMainMenu->Visible = false;
-			uiPreset->Visible = true;
-		}
+
+*/
+
+private: System::Void PresetFuncChanged(System::Object^  sender, System::EventArgs^  e) {
+			 //TODO
+}
+private: System::Void TrapWidthChanged(System::Object^  sender, System::EventArgs^  e) {
+			 //TODO
+}
 };
 }
