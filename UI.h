@@ -70,29 +70,6 @@ namespace Spectre {
 	private: System::Windows::Forms::PictureBox^  pbxImp;
 	private: System::Windows::Forms::Label^  lblPreset;
 
-	protected: 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	protected: 
-
-
-
-
 	private:
 		/// <summary>
 		/// Required designer variable.
@@ -506,10 +483,10 @@ namespace Spectre {
 			//e->Graphics->DrawLine(AxisPen, TransformImp(0, YRangeImp[0]), TransformImp(0, YRangeImp[1]));
 
 			array<PointF>^ curvePoints = TransformPointsImp(0, e);
-			//e->Graphics->DrawCurve(GreenPen, curvePoints, 0, buf[0].len-1, .5F);
+			//e->Graphics->DrawCurve(GreenPen, curvePoints, 0, curvePoints->Length-1, .5F);
 			e->Graphics->DrawLines(GreenPen, curvePoints);
 			curvePoints = TransformPointsImp(1, e);
-			//e->Graphics->DrawCurve(RedPen, curvePoints, 0, buf[1].len-1, .5F);
+			//e->Graphics->DrawCurve(RedPen, curvePoints, 0, curvePoints->Length-1, .5F);
 			e->Graphics->DrawLines(RedPen, curvePoints);
 		}
 		void DrawSpec(PaintEventArgs^ e)
@@ -524,10 +501,10 @@ namespace Spectre {
 			//e->Graphics->DrawLine(AxisPen, TransformSpec(0, YRangeSpec[0]), TransformSpec(0, YRangeSpec[1]));
 
 			array<PointF>^ curvePoints = TransformPointsSpec(0, e);
-			//e->Graphics->DrawCurve(GreenPen, curvePoints, 0, buf[0].len/2, .5F);
+			//e->Graphics->DrawCurve(GreenPen, curvePoints, 0, curvePoints->Length-1, .5F);
 			e->Graphics->DrawLines(GreenPen, curvePoints);
 			curvePoints = TransformPointsSpec(1, e);
-			//e->Graphics->DrawCurve(RedPen, curvePoints, 0, buf[1].len/2, .5F);
+			//e->Graphics->DrawCurve(RedPen, curvePoints, 0, curvePoints->Length-1, .5F);
 			e->Graphics->DrawLines(RedPen, curvePoints);
 		}
 
