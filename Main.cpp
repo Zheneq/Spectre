@@ -30,5 +30,6 @@ int main(array<String^>^ args)
 	//// Test
 
     Spectre::UI form;
+	form.SetBounds(0,0,640,480);
     Application::Run(%form);
 }

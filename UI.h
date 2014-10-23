@@ -79,13 +79,13 @@ namespace Spectre {
 	private: System::Windows::Forms::Panel^  uiGfx;
 	private: System::Windows::Forms::Panel^  panPresetControl;
 	private: System::Windows::Forms::Panel^  panPresetControl2;
-	private: System::Windows::Forms::RadioButton^  rdbPreset25;
+
 	private: System::Windows::Forms::RadioButton^  rdbPreset24;
 	private: System::Windows::Forms::RadioButton^  rdbPreset23;
 	private: System::Windows::Forms::RadioButton^  rdbPreset22;
 	private: System::Windows::Forms::RadioButton^  rdbPreset21;
 	private: System::Windows::Forms::Panel^  panPresetControl1;
-	private: System::Windows::Forms::RadioButton^  rdbPreset15;
+
 	private: System::Windows::Forms::RadioButton^  rdbPreset14;
 	private: System::Windows::Forms::RadioButton^  rdbPreset13;
 	private: System::Windows::Forms::RadioButton^  rdbPreset12;
@@ -101,7 +101,7 @@ namespace Spectre {
 	private: System::Windows::Forms::Label^  label3;
 	private: System::Windows::Forms::Label^  label2;
 	private: System::Windows::Forms::Label^  label1;
-	private: System::Windows::Forms::Label^  label8;
+
 	private: System::Windows::Forms::Label^  label7;
 	private: System::Windows::Forms::Label^  label6;
 	private: System::Windows::Forms::Label^  label5;
@@ -125,14 +125,16 @@ namespace Spectre {
 			this->btnPreset = (gcnew System::Windows::Forms::Button());
 			this->uiPreset = (gcnew System::Windows::Forms::Panel());
 			this->panPresetControl = (gcnew System::Windows::Forms::Panel());
+			this->label7 = (gcnew System::Windows::Forms::Label());
+			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->panPresetControl2 = (gcnew System::Windows::Forms::Panel());
-			this->rdbPreset25 = (gcnew System::Windows::Forms::RadioButton());
 			this->rdbPreset24 = (gcnew System::Windows::Forms::RadioButton());
 			this->rdbPreset23 = (gcnew System::Windows::Forms::RadioButton());
 			this->rdbPreset22 = (gcnew System::Windows::Forms::RadioButton());
 			this->rdbPreset21 = (gcnew System::Windows::Forms::RadioButton());
 			this->panPresetControl1 = (gcnew System::Windows::Forms::Panel());
-			this->rdbPreset15 = (gcnew System::Windows::Forms::RadioButton());
 			this->rdbPreset14 = (gcnew System::Windows::Forms::RadioButton());
 			this->rdbPreset13 = (gcnew System::Windows::Forms::RadioButton());
 			this->rdbPreset12 = (gcnew System::Windows::Forms::RadioButton());
@@ -149,29 +151,24 @@ namespace Spectre {
 			this->trbTrap = (gcnew System::Windows::Forms::TrackBar());
 			this->btnBack = (gcnew System::Windows::Forms::Button());
 			this->uiGlobal = (gcnew System::Windows::Forms::Panel());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->lblSpecWidth2 = (gcnew System::Windows::Forms::Label());
 			this->lblSpecWidth1 = (gcnew System::Windows::Forms::Label());
-			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->label5 = (gcnew System::Windows::Forms::Label());
-			this->label6 = (gcnew System::Windows::Forms::Label());
-			this->label7 = (gcnew System::Windows::Forms::Label());
-			this->label8 = (gcnew System::Windows::Forms::Label());
 			this->uiMainMenu->SuspendLayout();
 			this->uiPreset->SuspendLayout();
 			this->panPresetControl->SuspendLayout();
 			this->panPresetControl2->SuspendLayout();
 			this->panPresetControl1->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar3))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar2))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxSpec))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxImp))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar3))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pbxSpec))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pbxImp))->BeginInit();
 			this->uiGfx->SuspendLayout();
 			this->uiTrap->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trbTrap))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trbTrap))->BeginInit();
 			this->uiGlobal->SuspendLayout();
 			this->SuspendLayout();
 			// 
@@ -187,7 +184,7 @@ namespace Spectre {
 			// 
 			// btnTrap
 			// 
-			this->btnTrap->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnTrap->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
 			this->btnTrap->Location = System::Drawing::Point(3, 69);
 			this->btnTrap->Name = L"btnTrap";
@@ -199,7 +196,7 @@ namespace Spectre {
 			// 
 			// btnPreset
 			// 
-			this->btnPreset->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnPreset->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
 			this->btnPreset->Location = System::Drawing::Point(3, 3);
 			this->btnPreset->Name = L"btnPreset";
@@ -211,7 +208,7 @@ namespace Spectre {
 			// 
 			// uiPreset
 			// 
-			this->uiPreset->BackColor = System::Drawing::SystemColors::InactiveCaptionText;
+			this->uiPreset->BackColor = System::Drawing::Color::Gray;
 			this->uiPreset->Controls->Add(this->panPresetControl);
 			this->uiPreset->Controls->Add(this->lblPreset);
 			this->uiPreset->Controls->Add(this->trackBar1);
@@ -224,7 +221,6 @@ namespace Spectre {
 			// panPresetControl
 			// 
 			this->panPresetControl->BackColor = System::Drawing::Color::Silver;
-			this->panPresetControl->Controls->Add(this->label8);
 			this->panPresetControl->Controls->Add(this->label7);
 			this->panPresetControl->Controls->Add(this->label6);
 			this->panPresetControl->Controls->Add(this->label5);
@@ -236,10 +232,45 @@ namespace Spectre {
 			this->panPresetControl->Size = System::Drawing::Size(245, 224);
 			this->panPresetControl->TabIndex = 15;
 			// 
+			// label7
+			// 
+			this->label7->AutoSize = true;
+			this->label7->Location = System::Drawing::Point(43, 67);
+			this->label7->Name = L"label7";
+			this->label7->Size = System::Drawing::Size(72, 13);
+			this->label7->TabIndex = 5;
+			this->label7->Text = L"Треугольник";
+			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->Location = System::Drawing::Point(43, 48);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(49, 13);
+			this->label6->TabIndex = 4;
+			this->label6->Text = L"Косинус";
+			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->Location = System::Drawing::Point(43, 86);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(87, 13);
+			this->label5->TabIndex = 3;
+			this->label5->Text = L"Прямоугольник";
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(43, 29);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(36, 13);
+			this->label4->TabIndex = 2;
+			this->label4->Text = L"Гаусс";
+			// 
 			// panPresetControl2
 			// 
 			this->panPresetControl2->BackColor = System::Drawing::Color::DarkOrange;
-			this->panPresetControl2->Controls->Add(this->rdbPreset25);
 			this->panPresetControl2->Controls->Add(this->rdbPreset24);
 			this->panPresetControl2->Controls->Add(this->rdbPreset23);
 			this->panPresetControl2->Controls->Add(this->rdbPreset22);
@@ -248,16 +279,6 @@ namespace Spectre {
 			this->panPresetControl2->Name = L"panPresetControl2";
 			this->panPresetControl2->Size = System::Drawing::Size(29, 139);
 			this->panPresetControl2->TabIndex = 1;
-			// 
-			// rdbPreset25
-			// 
-			this->rdbPreset25->AutoSize = true;
-			this->rdbPreset25->Location = System::Drawing::Point(0, 76);
-			this->rdbPreset25->Name = L"rdbPreset25";
-			this->rdbPreset25->Size = System::Drawing::Size(14, 13);
-			this->rdbPreset25->TabIndex = 9;
-			this->rdbPreset25->UseVisualStyleBackColor = true;
-			this->rdbPreset25->CheckedChanged += gcnew System::EventHandler(this, &UI::PresetFuncChanged);
 			// 
 			// rdbPreset24
 			// 
@@ -304,7 +325,6 @@ namespace Spectre {
 			// panPresetControl1
 			// 
 			this->panPresetControl1->BackColor = System::Drawing::Color::DarkOrange;
-			this->panPresetControl1->Controls->Add(this->rdbPreset15);
 			this->panPresetControl1->Controls->Add(this->rdbPreset14);
 			this->panPresetControl1->Controls->Add(this->rdbPreset13);
 			this->panPresetControl1->Controls->Add(this->rdbPreset12);
@@ -313,16 +333,6 @@ namespace Spectre {
 			this->panPresetControl1->Name = L"panPresetControl1";
 			this->panPresetControl1->Size = System::Drawing::Size(29, 139);
 			this->panPresetControl1->TabIndex = 0;
-			// 
-			// rdbPreset15
-			// 
-			this->rdbPreset15->AutoSize = true;
-			this->rdbPreset15->Location = System::Drawing::Point(0, 76);
-			this->rdbPreset15->Name = L"rdbPreset15";
-			this->rdbPreset15->Size = System::Drawing::Size(14, 13);
-			this->rdbPreset15->TabIndex = 4;
-			this->rdbPreset15->UseVisualStyleBackColor = true;
-			this->rdbPreset15->CheckedChanged += gcnew System::EventHandler(this, &UI::PresetFuncChanged);
 			// 
 			// rdbPreset14
 			// 
@@ -369,7 +379,7 @@ namespace Spectre {
 			// lblPreset
 			// 
 			this->lblPreset->AutoSize = true;
-			this->lblPreset->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->lblPreset->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
 			this->lblPreset->Location = System::Drawing::Point(13, 12);
 			this->lblPreset->Name = L"lblPreset";
@@ -464,7 +474,7 @@ namespace Spectre {
 			// lblTrap
 			// 
 			this->lblTrap->AutoSize = true;
-			this->lblTrap->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->lblTrap->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
 			this->lblTrap->Location = System::Drawing::Point(13, 12);
 			this->lblTrap->Name = L"lblTrap";
@@ -487,7 +497,7 @@ namespace Spectre {
 			// btnBack
 			// 
 			this->btnBack->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
-			this->btnBack->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnBack->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
 			this->btnBack->Location = System::Drawing::Point(7, 210);
 			this->btnBack->Name = L"btnBack";
@@ -511,6 +521,39 @@ namespace Spectre {
 			this->uiGlobal->Size = System::Drawing::Size(273, 270);
 			this->uiGlobal->TabIndex = 19;
 			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(204)));
+			this->label3->Location = System::Drawing::Point(10, 44);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(246, 37);
+			this->label3->TabIndex = 23;
+			this->label3->Text = L"Ширина спектра";
+			// 
+			// label2
+			// 
+			this->label2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
+			this->label2->AutoSize = true;
+			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F));
+			this->label2->Location = System::Drawing::Point(10, 157);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(96, 39);
+			this->label2->TabIndex = 22;
+			this->label2->Text = L"Крас";
+			// 
+			// label1
+			// 
+			this->label1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
+			this->label1->AutoSize = true;
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F));
+			this->label1->Location = System::Drawing::Point(10, 101);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(78, 39);
+			this->label1->TabIndex = 21;
+			this->label1->Text = L"Зел";
+			// 
 			// lblSpecWidth2
 			// 
 			this->lblSpecWidth2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
@@ -533,93 +576,15 @@ namespace Spectre {
 			this->lblSpecWidth1->TabIndex = 19;
 			this->lblSpecWidth1->Text = L"--";
 			// 
-			// label1
-			// 
-			this->label1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
-			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F));
-			this->label1->Location = System::Drawing::Point(10, 101);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(78, 39);
-			this->label1->TabIndex = 21;
-			this->label1->Text = L"Зел";
-			// 
-			// label2
-			// 
-			this->label2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
-			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F));
-			this->label2->Location = System::Drawing::Point(10, 157);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(96, 39);
-			this->label2->TabIndex = 22;
-			this->label2->Text = L"Крас";
-			// 
-			// label3
-			// 
-			this->label3->AutoSize = true;
-			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->label3->Location = System::Drawing::Point(10, 44);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(246, 37);
-			this->label3->TabIndex = 23;
-			this->label3->Text = L"Ширина спектра";
-			// 
-			// label4
-			// 
-			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(43, 29);
-			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(36, 13);
-			this->label4->TabIndex = 2;
-			this->label4->Text = L"Гаусс";
-			// 
-			// label5
-			// 
-			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(43, 48);
-			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(87, 13);
-			this->label5->TabIndex = 3;
-			this->label5->Text = L"Прямоугольник";
-			// 
-			// label6
-			// 
-			this->label6->AutoSize = true;
-			this->label6->Location = System::Drawing::Point(43, 67);
-			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(56, 13);
-			this->label6->TabIndex = 4;
-			this->label6->Text = L"Трапеция";
-			// 
-			// label7
-			// 
-			this->label7->AutoSize = true;
-			this->label7->Location = System::Drawing::Point(43, 86);
-			this->label7->Name = L"label7";
-			this->label7->Size = System::Drawing::Size(72, 13);
-			this->label7->TabIndex = 5;
-			this->label7->Text = L"Треугольник";
-			// 
-			// label8
-			// 
-			this->label8->AutoSize = true;
-			this->label8->Location = System::Drawing::Point(43, 105);
-			this->label8->Name = L"label8";
-			this->label8->Size = System::Drawing::Size(49, 13);
-			this->label8->TabIndex = 6;
-			this->label8->Text = L"Косинус";
-			// 
 			// UI
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(966, 750);
+			this->ClientSize = System::Drawing::Size(966, 733);
+			this->Controls->Add(this->uiGfx);
+			this->Controls->Add(this->uiGlobal);
 			this->Controls->Add(this->uiTrap);
 			this->Controls->Add(this->uiPreset);
-			this->Controls->Add(this->uiGlobal);
-			this->Controls->Add(this->uiGfx);
 			this->Controls->Add(this->uiMainMenu);
 			this->Name = L"UI";
 			this->Text = L"UI";
@@ -636,16 +601,16 @@ namespace Spectre {
 			this->panPresetControl2->PerformLayout();
 			this->panPresetControl1->ResumeLayout(false);
 			this->panPresetControl1->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar3))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar2))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxSpec))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxImp))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar3))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pbxSpec))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pbxImp))->EndInit();
 			this->uiGfx->ResumeLayout(false);
 			this->uiGfx->PerformLayout();
 			this->uiTrap->ResumeLayout(false);
 			this->uiTrap->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trbTrap))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trbTrap))->EndInit();
 			this->uiGlobal->ResumeLayout(false);
 			this->uiGlobal->PerformLayout();
 			this->ResumeLayout(false);
@@ -688,15 +653,18 @@ namespace Spectre {
 			btnTrap->Left = btnPreset->Left;
 
 			// uiPreset
-
 			lblPreset->Left = (ClientSize.Width - lblPreset->Width) / 2;
 
+			// uiTrap
+			lblTrap->Left = (ClientSize.Width - lblTrap->Width) / 2;
+
+			
+			// uiGfx
 			uiGfx->Width  = ClientSize.Width - LeftPanelWidth - Spacing;
 			uiGfx->Height = ClientSize.Height - TopPanelHeight - Spacing;
 			uiGfx->Left   = LeftPanelWidth;
 			uiGfx->Top    = TopPanelHeight;
-			
-			// uiGfx
+
 			pbxImp->Width   = uiGfx->Width;
 			pbxSpec->Width  = pbxImp->Width;
 			pbxImp->Height  = (uiGfx->Height - Spacing) / 2;
@@ -717,18 +685,21 @@ namespace Spectre {
 			uiPreset->Visible = false;
 			uiTrap->Visible = false;
 			uiGfx->Visible = false;
+			uiGlobal->Visible = false;
 		}
 		System::Void btnPreset_Click(System::Object^  sender, System::EventArgs^  e)
 		{
 			uiMainMenu->Visible = false;
 			uiPreset->Visible = true;
 			uiGfx->Visible = true;
+			uiGlobal->Visible = true;
 		}
 		System::Void btnTrap_Click(System::Object^  sender, System::EventArgs^  e)
 		{
 			uiMainMenu->Visible = false;
 			uiTrap->Visible = true;
 			uiGfx->Visible = true;
+			uiGlobal->Visible = true;
 		}
 		System::Void InvalidateAll()
 		{
@@ -865,7 +836,26 @@ private: System::Void trackBar2_ValueChanged(System::Object^  sender, System::Ev
 			 InvalidateAll();
 }
 private: System::Void PresetFuncChanged(System::Object^  sender, System::EventArgs^  e) {
-			 //TODO
+			 if(rdbPreset11->Checked)
+				 buf[0].generate_gauss_f_p();
+			 if(rdbPreset12->Checked)
+				 buf[0].generate_sin_f_p();
+			 if(rdbPreset13->Checked)
+				 buf[0].generate_tri_f_p();
+			 if(rdbPreset14->Checked)
+				 buf[0].generate_rect();
+			 
+			 if(rdbPreset21->Checked)
+				 buf[1].generate_gauss_f_p();
+			 if(rdbPreset22->Checked)
+				 buf[1].generate_sin_f_p();
+			 if(rdbPreset23->Checked)
+				 buf[1].generate_tri_f_p();
+			 if(rdbPreset24->Checked)
+				 buf[1].generate_rect();
+
+			 InvalidateAll();
+
 }
 private: System::Void TrapWidthChanged(System::Object^  sender, System::EventArgs^  e) {
 			 if (trbTrap->Value)

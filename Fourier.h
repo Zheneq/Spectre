@@ -140,6 +140,7 @@ struct buffer
 		{
 			imp[i] = 0.0;
 		}
+		fourier();
 	}
 
 	void generate_gauss_f_p()
@@ -149,6 +150,7 @@ struct buffer
 		{
 			imp[i] = exp(-((i-len/2 + 1)*(i-len/2 + 1)/(((length)/sqrt(pi))*((length)/sqrt(pi)))));
 		}
+		fourier();
 	}
 
 	void generate_sin_f_p()
@@ -173,6 +175,7 @@ struct buffer
 		{
 			imp[i] = 0.0;
 		}
+		fourier();
 	}
 };
 
