@@ -7,6 +7,7 @@
 
 extern double E_0;
 const long double pi = 3.14159265359;
+const double Level = .95;
 
 struct buffer 
 {
@@ -18,6 +19,7 @@ struct buffer
 	int len;
 
 	double MaxSpec;
+	int SpecWidth;
 
 	buffer() : imp(NULL), spec(NULL), cspec(NULL), len(0), p(NULL), MaxSpec(1) {}
 
@@ -51,13 +53,20 @@ struct buffer
 	void fourier()
 	{
 		fftw_execute(p);
-
+		int i;
 		MaxSpec = 0;
-		for(int i = 0; i < len/2 + 1; i++)
+		double SpecSum = 0, t = 0;
+		for(i = 0; i < len/2 + 1; i++)
 		{
 			spec[i] = (cspec[i][0]*cspec[i][0]+cspec[i][1]*cspec[i][1])/len;
 			if(spec[i] > MaxSpec) MaxSpec = spec[i];
+			SpecSum += spec[i];
 		}
+		for (i = 0; t/SpecSum < Level && i < len / 2 + 1; ++i)
+		{
+			t += spec[i];
+		}
+		SpecWidth = i;
 	}
 
 	void check_energy(){

@@ -5,6 +5,7 @@
 #include <cmath>
 extern std::vector<float> RawHand[2];
 extern float PointsPerSecond;
+extern char textbuffer[512];
 
 enum WMode
 {
@@ -94,6 +95,9 @@ namespace Spectre {
 	private: System::Windows::Forms::Label^  lblTrap;
 	private: System::Windows::Forms::TrackBar^  trbTrap;
 	private: System::Windows::Forms::Button^  btnBack;
+	private: System::Windows::Forms::Panel^  uiGlobal;
+	private: System::Windows::Forms::Label^  lblSpecWidth2;
+	private: System::Windows::Forms::Label^  lblSpecWidth1;
 
 	private:
 		/// <summary>
@@ -136,6 +140,9 @@ namespace Spectre {
 			this->lblTrap = (gcnew System::Windows::Forms::Label());
 			this->trbTrap = (gcnew System::Windows::Forms::TrackBar());
 			this->btnBack = (gcnew System::Windows::Forms::Button());
+			this->uiGlobal = (gcnew System::Windows::Forms::Panel());
+			this->lblSpecWidth1 = (gcnew System::Windows::Forms::Label());
+			this->lblSpecWidth2 = (gcnew System::Windows::Forms::Label());
 			this->uiMainMenu->SuspendLayout();
 			this->uiPreset->SuspendLayout();
 			this->panPresetControl->SuspendLayout();
@@ -149,6 +156,7 @@ namespace Spectre {
 			this->uiGfx->SuspendLayout();
 			this->uiTrap->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trbTrap))->BeginInit();
+			this->uiGlobal->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// uiMainMenu
@@ -156,7 +164,7 @@ namespace Spectre {
 			this->uiMainMenu->BackColor = System::Drawing::SystemColors::ControlDark;
 			this->uiMainMenu->Controls->Add(this->btnTrap);
 			this->uiMainMenu->Controls->Add(this->btnPreset);
-			this->uiMainMenu->Location = System::Drawing::Point(431, 12);
+			this->uiMainMenu->Location = System::Drawing::Point(354, 31);
 			this->uiMainMenu->Name = L"uiMainMenu";
 			this->uiMainMenu->Size = System::Drawing::Size(568, 294);
 			this->uiMainMenu->TabIndex = 15;
@@ -191,7 +199,7 @@ namespace Spectre {
 			this->uiPreset->Controls->Add(this->panPresetControl);
 			this->uiPreset->Controls->Add(this->lblPreset);
 			this->uiPreset->Controls->Add(this->trackBar1);
-			this->uiPreset->Location = System::Drawing::Point(12, 60);
+			this->uiPreset->Location = System::Drawing::Point(117, 92);
 			this->uiPreset->Name = L"uiPreset";
 			this->uiPreset->Size = System::Drawing::Size(919, 480);
 			this->uiPreset->TabIndex = 16;
@@ -421,7 +429,7 @@ namespace Spectre {
 			this->uiGfx->Controls->Add(this->trackBar2);
 			this->uiGfx->Controls->Add(this->pbxImp);
 			this->uiGfx->Controls->Add(this->pbxSpec);
-			this->uiGfx->Location = System::Drawing::Point(144, 25);
+			this->uiGfx->Location = System::Drawing::Point(249, 63);
 			this->uiGfx->Name = L"uiGfx";
 			this->uiGfx->Size = System::Drawing::Size(676, 474);
 			this->uiGfx->TabIndex = 17;
@@ -432,7 +440,7 @@ namespace Spectre {
 			this->uiTrap->BackColor = System::Drawing::Color::DarkGreen;
 			this->uiTrap->Controls->Add(this->lblTrap);
 			this->uiTrap->Controls->Add(this->trbTrap);
-			this->uiTrap->Location = System::Drawing::Point(80, 42);
+			this->uiTrap->Location = System::Drawing::Point(65, 117);
 			this->uiTrap->Name = L"uiTrap";
 			this->uiTrap->Size = System::Drawing::Size(919, 480);
 			this->uiTrap->TabIndex = 17;
@@ -454,7 +462,6 @@ namespace Spectre {
 			// 
 			this->trbTrap->Location = System::Drawing::Point(10, 130);
 			this->trbTrap->Maximum = 200;
-			this->trbTrap->Minimum = 1;
 			this->trbTrap->Name = L"trbTrap";
 			this->trbTrap->Size = System::Drawing::Size(255, 45);
 			this->trbTrap->TabIndex = 11;
@@ -467,7 +474,7 @@ namespace Spectre {
 			this->btnBack->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
 			this->btnBack->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->btnBack->Location = System::Drawing::Point(15, 12);
+			this->btnBack->Location = System::Drawing::Point(7, 133);
 			this->btnBack->Name = L"btnBack";
 			this->btnBack->Size = System::Drawing::Size(204, 57);
 			this->btnBack->TabIndex = 18;
@@ -475,13 +482,44 @@ namespace Spectre {
 			this->btnBack->UseVisualStyleBackColor = true;
 			this->btnBack->Click += gcnew System::EventHandler(this, &UI::btnBack_Click);
 			// 
+			// uiGlobal
+			// 
+			this->uiGlobal->BackColor = System::Drawing::Color::SlateBlue;
+			this->uiGlobal->Controls->Add(this->lblSpecWidth2);
+			this->uiGlobal->Controls->Add(this->lblSpecWidth1);
+			this->uiGlobal->Controls->Add(this->btnBack);
+			this->uiGlobal->Location = System::Drawing::Point(57, 23);
+			this->uiGlobal->Name = L"uiGlobal";
+			this->uiGlobal->Size = System::Drawing::Size(273, 193);
+			this->uiGlobal->TabIndex = 19;
+			// 
+			// lblSpecWidth1
+			// 
+			this->lblSpecWidth1->AutoSize = true;
+			this->lblSpecWidth1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F));
+			this->lblSpecWidth1->Location = System::Drawing::Point(133, 8);
+			this->lblSpecWidth1->Name = L"lblSpecWidth1";
+			this->lblSpecWidth1->Size = System::Drawing::Size(41, 39);
+			this->lblSpecWidth1->TabIndex = 19;
+			this->lblSpecWidth1->Text = L"--";
+			// 
+			// lblSpecWidth2
+			// 
+			this->lblSpecWidth2->AutoSize = true;
+			this->lblSpecWidth2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F));
+			this->lblSpecWidth2->Location = System::Drawing::Point(133, 67);
+			this->lblSpecWidth2->Name = L"lblSpecWidth2";
+			this->lblSpecWidth2->Size = System::Drawing::Size(41, 39);
+			this->lblSpecWidth2->TabIndex = 20;
+			this->lblSpecWidth2->Text = L"--";
+			// 
 			// UI
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(966, 534);
+			this->Controls->Add(this->uiGlobal);
 			this->Controls->Add(this->uiGfx);
-			this->Controls->Add(this->btnBack);
 			this->Controls->Add(this->uiMainMenu);
 			this->Controls->Add(this->uiTrap);
 			this->Controls->Add(this->uiPreset);
@@ -509,6 +547,8 @@ namespace Spectre {
 			this->uiTrap->ResumeLayout(false);
 			this->uiTrap->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trbTrap))->EndInit();
+			this->uiGlobal->ResumeLayout(false);
+			this->uiGlobal->PerformLayout();
 			this->ResumeLayout(false);
 
 		}
@@ -541,8 +581,8 @@ namespace Spectre {
 			uiTrap->Height = ClientSize.Height;
 
 			// global
-			btnBack->Left = Spacing;
-			btnBack->Top  = ClientSize.Height - btnBack->Height - Spacing;
+			uiGlobal->Left = 0;
+			uiGlobal->Top = ClientSize.Height - uiGlobal->Height;
 
 			// uiMainMenu
 			btnPreset->Left = (ClientSize.Width - btnPreset->Width) / 2;
@@ -661,8 +701,14 @@ namespace Spectre {
 		{
 			e->Graphics->SmoothingMode = Drawing2D::SmoothingMode::HighQuality;
 			// Draw axes
-			//e->Graphics->DrawLine(AxisPen, TransformImp(-1000, 0, 0), TransformImp(1000, 0, 0));
-			//e->Graphics->DrawLine(AxisPen, TransformImp(0, -1000, 0), TransformImp(0, 1000, 0));
+			PointF p;
+			for (int i = -100; i < 100; ++i)
+			{
+				p = TransformImp(buf[0].len / 2 + i * PointsPerSecond, 0, 0);
+				e->Graphics->DrawLine(AxisPen, p.X, p.Y + 3, p.X, p.Y + 15);
+			}
+			p = TransformImp(buf[0].len / 2, 0, 0);
+			e->Graphics->DrawLine(AxisPen, p.X - 2000, p.Y + 3, p.X + 2000, p.Y + 3);
 
 			array<PointF>^ curvePoints = TransformPointsImp(0, e);
 			//e->Graphics->DrawCurve(GreenPen, curvePoints, 0, curvePoints->Length-1, .5F);
@@ -671,21 +717,25 @@ namespace Spectre {
 			//e->Graphics->DrawCurve(RedPen, curvePoints, 0, curvePoints->Length-1, .5F);
 			e->Graphics->DrawLines(RedPen, curvePoints);
 
-			PointF p;
-			for (int i = -100; i < 100; ++i)
-			{
-				p = TransformImp(buf[0].len / 2 + i * PointsPerSecond, 0, 0);
-				e->Graphics->DrawLine(AxisPen, p.X, p.Y + 2, p.X, p.Y + 15);
-			}
-			p = TransformImp(buf[0].len / 2, 0, 0);
-			e->Graphics->DrawLine(AxisPen, p.X - 2000, p.Y + 15, p.X + 2000, p.Y + 15);
 		}
 		void DrawSpec(PaintEventArgs^ e)
 		{
+			PointF p;
 			e->Graphics->SmoothingMode = Drawing2D::SmoothingMode::HighQuality;
 			// Draw axes
-			//e->Graphics->DrawLine(AxisPen, TransformSpec(-1, 0, 0), TransformSpec(1000, 0, 0));
-			//e->Graphics->DrawLine(AxisPen, TransformSpec(0, YRangeSpec[0]), TransformSpec(0, YRangeSpec[1]));
+			for (int i = -100; i < 100; ++i)
+			{
+				p = TransformSpec(i * buf[0].len / PointsPerSecond, 0, 0);
+				e->Graphics->DrawLine(AxisPen, p.X, p.Y + 3, p.X, p.Y + 15);
+			}
+			p = TransformSpec(0, 0, 0);
+			e->Graphics->DrawLine(AxisPen, p.X - 5, p.Y + 3, p.X + 4000, p.Y + 3);
+
+//			for (int i = 0; i < 10; ++i)
+//			{
+//				p = TransformSpec(0, i, 0);
+//				e->Graphics->DrawLine(AxisPen, p.X + 2, p.Y, p.X + 15, p.Y);
+//			}
 
 			array<PointF>^ curvePoints = TransformPointsSpec(0, e);
 			//e->Graphics->DrawCurve(GreenPen, curvePoints, 0, curvePoints->Length-1, .5F);
@@ -694,19 +744,16 @@ namespace Spectre {
 			//e->Graphics->DrawCurve(RedPen, curvePoints, 0, curvePoints->Length-1, .5F);
 			e->Graphics->DrawLines(RedPen, curvePoints);
 
-			PointF p;
-			for (int i = -100; i < 100; ++i)
-			{
-				p = TransformSpec(i * buf[0].len / PointsPerSecond, 0, 0);
-				e->Graphics->DrawLine(AxisPen, p.X, p.Y + 2, p.X, p.Y + 15);
-			}
-			p = TransformSpec(0, 0, 0);
-			e->Graphics->DrawLine(AxisPen, p.X - 5, p.Y + 15, p.X + 4000, p.Y + 15);
-			for (int i = 0; i < 10; ++i)
-			{
-				p = TransformSpec(0, i, 0);
-				e->Graphics->DrawLine(AxisPen, p.X + 2, p.Y, p.X + 15, p.Y);
-			}
+			p = TransformSpec(buf[0].SpecWidth, 0, 0);
+			e->Graphics->DrawLine(GreenPen, p.X, p.Y - 2000, p.X, p.Y + 15);
+			p = TransformSpec(buf[1].SpecWidth, 0, 0);
+			e->Graphics->DrawLine(RedPen, p.X, p.Y - 2000, p.X, p.Y + 15);
+
+			sprintf(textbuffer, "%.2f Ãö", buf[0].SpecWidth * PointsPerSecond / buf[0].len);
+			lblSpecWidth1->Text = gcnew String(textbuffer);
+			sprintf(textbuffer, "%.2f Ãö", buf[1].SpecWidth * PointsPerSecond / buf[1].len);
+			lblSpecWidth2->Text = gcnew String(textbuffer);
+
 
 		}
 
@@ -724,7 +771,11 @@ private: System::Void PresetFuncChanged(System::Object^  sender, System::EventAr
 			 //TODO
 }
 private: System::Void TrapWidthChanged(System::Object^  sender, System::EventArgs^  e) {
-			 buf[0].generate_gauss(trbTrap->Value);
+			 if (trbTrap->Value)
+				 buf[0].generate_gauss(trbTrap->Value);
+			 else
+				 buf[0].generate_rect();
+
 			 InvalidateAll();
 }
 
