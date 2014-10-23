@@ -6,6 +6,7 @@
 #pragma comment(lib, "../FFTW/libfftw3-3")
 
 extern double E_0;
+const long double pi = 3.14159265359;
 
 struct buffer 
 {
@@ -106,6 +107,63 @@ struct buffer
 		memset(imp, 0, sizeof(double)*len);
 		check_energy();
 		fourier();
+	}
+
+		void generate_tri_f_p()
+	{
+		double length = (double)(E_0);
+		for (int i = 0; i < len/2 - length - 1; i++)
+		{
+			imp[i] = 0.0;
+		}
+
+		for (int i = len/2 - length - 1; i < len/2; i++)
+		{
+			imp[i] = (i - (len/2 - length - 1))/length;
+		}
+
+		for (int i = len/2; i < len/2 + length - 1; i++)
+		{
+            imp[i] = ((length - 1 + len/2) - i)/length;
+		}
+
+		for(int i = len/2 + length - 1; i < len; i++)
+		{
+			imp[i] = 0.0;
+		}
+	}
+
+	void generate_gauss_f_p()
+	{
+		double length = (double)(E_0);
+		for (int i = 0; i < len; i++)
+		{
+			imp[i] = exp(-((i-len/2 + 1)*(i-len/2 + 1)/(((length)/sqrt(pi))*((length)/sqrt(pi)))));
+		}
+	}
+
+	void generate_sin_f_p()
+	{
+		double length = (double)(E_0);
+		for (int i = 0; i < len/2 - length - 1; i++)
+		{
+			imp[i] = 0.0;
+		}
+
+		for (int i = len/2 - length - 1; i < len/2; i++)
+		{
+			imp[i] = sin((pi/2)*((i - (len/2 - length - 1))/length));
+		}
+
+		for (int i = len/2; i < len/2 + length - 1; i++)
+		{
+			imp[i] = sin((pi/2)*(((len/2 + length - 1) - i)/length));
+		}
+
+		for (int i = len/2 + length - 1; i < len; i++)
+		{
+			imp[i] = 0.0;
+		}
 	}
 };
 
