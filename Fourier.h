@@ -118,7 +118,7 @@ struct buffer
 		fourier();
 	}
 
-		void generate_tri_f_p()
+	void generate_tri_f_p()
 	{
 		double length = (double)(E_0);
 		for (int i = 0; i < len/2 - length - 1; i++)
