@@ -36,12 +36,15 @@ namespace Spectre {
 			bDrawingMode = false;
 			Point def = Point(-1,-1);
 			Point last = def;
-			ActiveMode = MD_MainMenu;
+			SpecMult = 1;
 
 
 			RedPen = gcnew Pen(Color::Red, 1.0f);
 			GreenPen = gcnew Pen(Color::Green, 3.0f);
 			AxisPen = gcnew Pen(Color::Black, 3.0f);
+			brush = gcnew SolidBrush(Color::Black);
+			font = gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.0F, System::Drawing::FontStyle::Bold,
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204));
 			//
 		}
 
@@ -510,7 +513,7 @@ namespace Spectre {
 			// trbTrap
 			// 
 			this->trbTrap->Location = System::Drawing::Point(10, 130);
-			this->trbTrap->Maximum = 200;
+			this->trbTrap->Maximum = 238;
 			this->trbTrap->Name = L"trbTrap";
 			this->trbTrap->Size = System::Drawing::Size(255, 45);
 			this->trbTrap->TabIndex = 11;
@@ -674,9 +677,11 @@ namespace Spectre {
 		bool bDrawingMode; // Включён режим рисования
 		Point def;
 		Point last;
-		WMode ActiveMode;
+		float SpecMult;
 
 		Pen ^RedPen, ^GreenPen, ^AxisPen;
+		Brush ^brush;
+		System::Drawing::Font ^font;
 		
 		System::Void AdaptToWindowSize(System::Object^  sender, System::EventArgs^  e)
 		{
@@ -745,10 +750,11 @@ namespace Spectre {
 			pbxSpec->Top  = pbxImp->Height + Spacing;
 			
 			RawHand = gcnew array<Point>(pbxImp->Width);
+			PointF t = TransformImp(0, 0, 0);
 			for (int i = 0; i < RawHand->Length; ++i)
 			{
 				RawHand[i].X = i;
-				RawHand[i].Y = pbxImp->Height;
+				RawHand[i].Y = t.Y;
 			}
 
 			InvalidateAll();
@@ -772,6 +778,8 @@ namespace Spectre {
 			uiGlobal->Visible = true;
 			uiGfx->BringToFront();
 			uiGlobal->BringToFront();
+
+			SpecMult = 1.1;
 		}
 		System::Void btnTrap_Click(System::Object^  sender, System::EventArgs^  e)
 		{
@@ -784,6 +792,8 @@ namespace Spectre {
 			uiGlobal->Visible = true;
 			uiGfx->BringToFront();
 			uiGlobal->BringToFront();
+
+			SpecMult = 1.3;
 		}
 		System::Void btnHand_Click(System::Object^  sender, System::EventArgs^  e) {
 			buf[0].generate_null();
@@ -796,6 +806,8 @@ namespace Spectre {
 			uiGfx->BringToFront();
 			uiGlobal->BringToFront();
 			bDrawingMode = true;
+
+			SpecMult = 1;
 		}
 		System::Void InvalidateAll()
 		{
@@ -823,7 +835,7 @@ namespace Spectre {
 		PointF TransformSpec(double x, double y, int index)
 		{
 			return PointF((float)(x / buf[index].len * trackBar2->Value * pbxSpec->Width),
-				          (float)((1 - (y / 8 /* buf[0].MaxSpec*/ + 0.125) * 0.8) * pbxSpec->Height));
+				          (float)((1 - (y / 8 / SpecMult + 0.125) * 0.8) * pbxSpec->Height));
 		}
 		PointF BackTransformImp(float x, float y, int index)
 		{
@@ -833,7 +845,7 @@ namespace Spectre {
 		PointF BackTransformSpec(float x, float y, int index)
 		{
 			return PointF((float)(x * buf[index].len / trackBar2->Value/ pbxSpec->Width),
-				          (float)(((1 - (y / pbxSpec->Height))/ 0.8 - 0.125) * 8 /* buf[index].MaxSpec*/));
+				          (float)(((1 - (y / pbxSpec->Height))/ 0.8 - 0.125) * 8 * SpecMult));
 		}
 
 		array<PointF>^ TransformPointsImp(int index, PaintEventArgs^ e)
@@ -872,6 +884,8 @@ namespace Spectre {
 			{
 				p = TransformImp(buf[0].len / 2 + i * PointsPerSecond, 0, 0);
 				e->Graphics->DrawLine(AxisPen, p.X, p.Y + 3, p.X, p.Y + 15);
+				sprintf(textbuffer, "%d", i);
+				e->Graphics->DrawString(gcnew String(textbuffer), font, brush, p.X, p.Y + 2);
 			}
 			p = TransformImp(buf[0].len / 2, 0, 0);
 			e->Graphics->DrawLine(AxisPen, p.X - 2000, p.Y + 3, p.X + 2000, p.Y + 3);
@@ -900,6 +914,8 @@ namespace Spectre {
 			{
 				p = TransformSpec(i * buf[0].len / PointsPerSecond, 0, 0);
 				e->Graphics->DrawLine(AxisPen, p.X, p.Y + 3, p.X, p.Y + 15);
+				sprintf(textbuffer, "%d", i);
+				e->Graphics->DrawString(gcnew String(textbuffer), font, brush, p.X, p.Y + 2);
 			}
 			p = TransformSpec(0, 0, 0);
 			e->Graphics->DrawLine(AxisPen, p.X - 5, p.Y + 3, p.X + 4000, p.Y + 3);
@@ -981,6 +997,7 @@ private: System::Void PresetFuncChanged(System::Object^  sender, System::EventAr
 		{
 			std::cout << "DisableDrawing " << bDrawingMode << "\n";
 			bDrawing = false;
+			last = def;
 		}
 		System::Void HandDrawing(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
 		{
@@ -990,20 +1007,25 @@ private: System::Void PresetFuncChanged(System::Object^  sender, System::EventAr
 //			const int idx = (int)rdb2->Checked;
 			int idx = 0; //
 		
-//			if(last == def) last = e->Location;
-
-//			int beg = Math::Min(last.X, e->X);
-//			int end = Math::Max(last.X, e->X);
-//			for(int i = beg; i <=end; ++i)
-//			{
-//				RawHand[idx][i] = last.Y + ((float)e->Y-last.Y)*(i-beg+1)/(end-beg+1);
-//			}
 			if (e->X < 0 || e->X >= RawHand->Length)
 			{
 				bDrawing = false;
 				return;
 			}
-			RawHand[e->X].Y = (float)e->Y;
+
+			if(last == def)
+				last = e->Location;
+
+			int beg = Math::Min(last.X, e->X);
+			int end = Math::Max(last.X, e->X);
+			int bas = Math::Min(last.Y, e->Y);
+			for(int i = beg; i <=end; ++i)
+			{
+				//RawHand[i].Y = last.Y + ((float)e->Y-last.Y)*(i-last.X+1)/(e->X-last.X+1);
+				RawHand[i].Y = last.Y + ((float)e->Y-last.Y)*(i-beg+1)/(end-beg+1);
+			}
+
+			last = e->Location;
 			pbxImp->Invalidate();
 			//RefreshHand();
 		}

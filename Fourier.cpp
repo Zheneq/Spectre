@@ -5,7 +5,7 @@
 
 buffer buf[2];
 
-double E_0 = 250;
+double E_0 = 300;
 int implen, len;
 
 enum functions
