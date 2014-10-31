@@ -34,6 +34,7 @@ namespace Spectre {
 			//
 			//TODO: Add the constructor code here
 			bDrawing = false;
+			bDrawingMode = false;
 			Point def = Point(-1,-1);
 			Point last = def;
 			ActiveMode = MD_MainMenu;
@@ -106,6 +107,9 @@ namespace Spectre {
 	private: System::Windows::Forms::Label^  label6;
 	private: System::Windows::Forms::Label^  label5;
 	private: System::Windows::Forms::Label^  label4;
+	private: System::Windows::Forms::Button^  btnHand;
+	private: System::Windows::Forms::Panel^  uiHand;
+	private: System::Windows::Forms::Label^  lblHand;
 
 	private:
 		/// <summary>
@@ -121,6 +125,7 @@ namespace Spectre {
 		void InitializeComponent(void)
 		{
 			this->uiMainMenu = (gcnew System::Windows::Forms::Panel());
+			this->btnHand = (gcnew System::Windows::Forms::Button());
 			this->btnTrap = (gcnew System::Windows::Forms::Button());
 			this->btnPreset = (gcnew System::Windows::Forms::Button());
 			this->uiPreset = (gcnew System::Windows::Forms::Panel());
@@ -156,25 +161,29 @@ namespace Spectre {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->lblSpecWidth2 = (gcnew System::Windows::Forms::Label());
 			this->lblSpecWidth1 = (gcnew System::Windows::Forms::Label());
+			this->uiHand = (gcnew System::Windows::Forms::Panel());
+			this->lblHand = (gcnew System::Windows::Forms::Label());
 			this->uiMainMenu->SuspendLayout();
 			this->uiPreset->SuspendLayout();
 			this->panPresetControl->SuspendLayout();
 			this->panPresetControl2->SuspendLayout();
 			this->panPresetControl1->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar1))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar3))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar2))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pbxSpec))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pbxImp))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar3))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxSpec))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxImp))->BeginInit();
 			this->uiGfx->SuspendLayout();
 			this->uiTrap->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trbTrap))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trbTrap))->BeginInit();
 			this->uiGlobal->SuspendLayout();
+			this->uiHand->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// uiMainMenu
 			// 
 			this->uiMainMenu->BackColor = System::Drawing::SystemColors::ControlDark;
+			this->uiMainMenu->Controls->Add(this->btnHand);
 			this->uiMainMenu->Controls->Add(this->btnTrap);
 			this->uiMainMenu->Controls->Add(this->btnPreset);
 			this->uiMainMenu->Location = System::Drawing::Point(45, 12);
@@ -182,9 +191,21 @@ namespace Spectre {
 			this->uiMainMenu->Size = System::Drawing::Size(364, 296);
 			this->uiMainMenu->TabIndex = 15;
 			// 
+			// btnHand
+			// 
+			this->btnHand->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->btnHand->Location = System::Drawing::Point(3, 135);
+			this->btnHand->Name = L"btnHand";
+			this->btnHand->Size = System::Drawing::Size(350, 60);
+			this->btnHand->TabIndex = 3;
+			this->btnHand->Text = L"Hand-Drawn";
+			this->btnHand->UseVisualStyleBackColor = true;
+			this->btnHand->Click += gcnew System::EventHandler(this, &UI::btnHand_Click);
+			// 
 			// btnTrap
 			// 
-			this->btnTrap->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			this->btnTrap->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->btnTrap->Location = System::Drawing::Point(3, 69);
 			this->btnTrap->Name = L"btnTrap";
@@ -196,7 +217,7 @@ namespace Spectre {
 			// 
 			// btnPreset
 			// 
-			this->btnPreset->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			this->btnPreset->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->btnPreset->Location = System::Drawing::Point(3, 3);
 			this->btnPreset->Name = L"btnPreset";
@@ -447,6 +468,9 @@ namespace Spectre {
 			this->pbxImp->TabStop = false;
 			this->pbxImp->Click += gcnew System::EventHandler(this, &UI::onClick);
 			this->pbxImp->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &UI::onImpPaint);
+			this->pbxImp->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &UI::EnableDrawing);
+			this->pbxImp->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &UI::HandDrawing);
+			this->pbxImp->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &UI::DisableDrawing);
 			// 
 			// uiGfx
 			// 
@@ -475,7 +499,7 @@ namespace Spectre {
 			// lblTrap
 			// 
 			this->lblTrap->AutoSize = true;
-			this->lblTrap->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 36, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
+			this->lblTrap->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 36, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->lblTrap->Location = System::Drawing::Point(13, 12);
 			this->lblTrap->Name = L"lblTrap";
@@ -498,7 +522,7 @@ namespace Spectre {
 			// btnBack
 			// 
 			this->btnBack->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
-			this->btnBack->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			this->btnBack->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->btnBack->Location = System::Drawing::Point(7, 210);
 			this->btnBack->Name = L"btnBack";
@@ -526,7 +550,7 @@ namespace Spectre {
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->label3->Location = System::Drawing::Point(10, 44);
 			this->label3->Name = L"label3";
@@ -578,11 +602,34 @@ namespace Spectre {
 			this->lblSpecWidth1->TabIndex = 19;
 			this->lblSpecWidth1->Text = L"--";
 			// 
+			// uiHand
+			// 
+			this->uiHand->BackColor = System::Drawing::Color::GreenYellow;
+			this->uiHand->Controls->Add(this->lblHand);
+			this->uiHand->Location = System::Drawing::Point(405, 330);
+			this->uiHand->Name = L"uiHand";
+			this->uiHand->Size = System::Drawing::Size(327, 430);
+			this->uiHand->TabIndex = 20;
+			this->uiHand->Visible = false;
+			// 
+			// lblHand
+			// 
+			this->lblHand->AutoSize = true;
+			this->lblHand->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 36, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->lblHand->Location = System::Drawing::Point(13, 12);
+			this->lblHand->Name = L"lblHand";
+			this->lblHand->Size = System::Drawing::Size(316, 55);
+			this->lblHand->TabIndex = 14;
+			this->lblHand->Text = L"Ручной ввод";
+			this->lblHand->TextAlign = System::Drawing::ContentAlignment::TopCenter;
+			// 
 			// UI
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(966, 733);
+			this->Controls->Add(this->uiHand);
 			this->Controls->Add(this->uiGlobal);
 			this->Controls->Add(this->uiGfx);
 			this->Controls->Add(this->uiTrap);
@@ -603,24 +650,27 @@ namespace Spectre {
 			this->panPresetControl2->PerformLayout();
 			this->panPresetControl1->ResumeLayout(false);
 			this->panPresetControl1->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar1))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar3))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar2))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pbxSpec))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pbxImp))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar3))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxSpec))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxImp))->EndInit();
 			this->uiGfx->ResumeLayout(false);
 			this->uiGfx->PerformLayout();
 			this->uiTrap->ResumeLayout(false);
 			this->uiTrap->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trbTrap))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trbTrap))->EndInit();
 			this->uiGlobal->ResumeLayout(false);
 			this->uiGlobal->PerformLayout();
+			this->uiHand->ResumeLayout(false);
+			this->uiHand->PerformLayout();
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
 	private: 
 		bool bDrawing; // В данный момент рисуем мышкой (кнопка мыши нажата)
+		bool bDrawingMode; // Включён режим рисования
 		Point def;
 		Point last;
 		WMode ActiveMode;
@@ -645,6 +695,10 @@ namespace Spectre {
 			uiTrap->Top = 0;
 			uiTrap->Width = ClientSize.Width;
 			uiTrap->Height = ClientSize.Height;
+			uiHand->Left = 0;
+			uiHand->Top = 0;
+			uiHand->Width = ClientSize.Width;
+			uiHand->Height = ClientSize.Height;
 
 			// global
 			uiGlobal->Left = 0;
@@ -653,12 +707,16 @@ namespace Spectre {
 			// uiMainMenu
 			btnPreset->Left = (ClientSize.Width - btnPreset->Width) / 2;
 			btnTrap->Left = btnPreset->Left;
+			btnHand->Left = btnPreset->Left;
 
 			// uiPreset
 			lblPreset->Left = (ClientSize.Width - lblPreset->Width) / 2;
 
 			// uiTrap
 			lblTrap->Left = (ClientSize.Width - lblTrap->Width) / 2;
+
+			// uiHand
+			lblHand->Left = (ClientSize.Width - lblHand->Width) / 2;
 
 			
 			// uiGfx
@@ -686,8 +744,10 @@ namespace Spectre {
 			uiMainMenu->Visible = true;
 			uiPreset->Visible = false;
 			uiTrap->Visible = false;
+			uiHand->Visible = false;
 			uiGfx->Visible = false;
 			uiGlobal->Visible = false;
+			bDrawingMode = false;
 		}
 		System::Void btnPreset_Click(System::Object^  sender, System::EventArgs^  e)
 		{
@@ -712,6 +772,18 @@ namespace Spectre {
 			uiGfx->BringToFront();
 			uiGlobal->BringToFront();
 		}
+		System::Void btnHand_Click(System::Object^  sender, System::EventArgs^  e) {
+			buf[0].generate_null();
+			buf[1].generate_null();
+
+			uiMainMenu->Visible = false;
+			uiHand->Visible = true;
+			uiGfx->Visible = true;
+			uiGlobal->Visible = true;
+			uiGfx->BringToFront();
+			uiGlobal->BringToFront();
+			bDrawingMode = true;
+		}
 		System::Void InvalidateAll()
 		{
 			pbxImp->Invalidate();
@@ -719,7 +791,7 @@ namespace Spectre {
 		}		
 		System::Void onClick(System::Object^  sender, System::EventArgs^  e)
 		{
-			InvalidateAll();
+//			InvalidateAll();
 		}
 		System::Void onImpPaint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e)
 		{
@@ -742,7 +814,7 @@ namespace Spectre {
 		}
 		PointF BackTransformImp(float x, float y, int index)
 		{
-			return PointF((float)(x * buf[index].len / pbxImp->Width),
+			return PointF((float)((x + (trackBar3->Value - 1)*.5) * buf[index].len / trackBar3->Value / pbxImp->Width),
 				          (float)((1 - (y / pbxImp->Height)) / 0.8 - 0.125));
 		}
 		PointF BackTransformSpec(float x, float y, int index)
@@ -879,21 +951,24 @@ private: System::Void TrapWidthChanged(System::Object^  sender, System::EventArg
 			 InvalidateAll();
 }
 
-/*
+
 		System::Void EnableDrawing(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
 		{
+			std::cout << "EnableDrawing " << bDrawingMode << "\n";
 			bDrawing = true;
 		}
 		System::Void DisableDrawing(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
 		{
+			std::cout << "DisableDrawing " << bDrawingMode << "\n";
 			bDrawing = false;
 		}
 		System::Void HandDrawing(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
 		{
-			if(!rdbHand->Checked || !bDrawing)
+			if(!bDrawingMode || !bDrawing)
 				return;
 			
-			const int idx = (int)rdb2->Checked;
+//			const int idx = (int)rdb2->Checked;
+			int idx = 0; //
 		
 //			if(last == def) last = e->Location;
 
@@ -903,23 +978,31 @@ private: System::Void TrapWidthChanged(System::Object^  sender, System::EventArg
 //			{
 //				RawHand[idx][i] = last.Y + ((float)e->Y-last.Y)*(i-beg+1)/(end-beg+1);
 //			}
-
+			if (e->X < 0 || e->X >= (int)RawHand[idx].size())
+			{
+				bDrawing = false;
+				return;
+			}
 			RawHand[idx][e->X] = (float)e->Y;
 			RefreshHand();
 		}
 		System::Void RefreshHand()
 		{
-			const int idx = (int)rdb2->Checked;
-			for(int i=0; i<pbxImp->Width; ++i)
+			std::cout << "Refresh Hand\n";
+//			const int idx = (int)rdb2->Checked;
+			int idx = 0; //
+
+			for (int i = 0; i < RawHand[idx].size(); ++i)
 			{
 				PointF t = BackTransformImp((float)i, RawHand[idx][i], idx);
-				buf[idx].imp[i] = t.X;
-				buf[idx].imp[i] = t.Y;
+				if ((int)t.X < 0 || (int)t.X > buf[idx].len)
+				{
+					std::cout << "Out of bounds.\n";
+					continue;
+				}
+				buf[idx].imp[(int)t.X] = t.Y;
 			}
 			pbxImp->Invalidate();
 		}
-
-
-*/
 };
 }

@@ -100,7 +100,12 @@ struct buffer
 			<< ", Efixed = " << E_0 - energy + 2*length << std::endl;
 	}
 
-	
+	void generate_null()
+	{
+		memset(imp, 0, sizeof(double)*len);
+		fourier();
+	}
+
 	void generate_gauss(double param)
 	{
 		for (int i = 0; i < len; i++)
