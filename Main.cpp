@@ -8,7 +8,6 @@ using namespace System::Windows::Forms;
 using namespace System::Drawing;
 
 // Test
-std::vector<float> RawHand[2];
 char textbuffer[512];
 //buffer buf[2];
 //double *imp[2][2] = {{NULL, NULL}, {NULL, NULL}}, *spec[2][2] = {{NULL, NULL}, {NULL, NULL}};

@@ -3,7 +3,6 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-extern std::vector<float> RawHand[2];
 extern float PointsPerSecond;
 extern char textbuffer[512];
 
@@ -668,6 +667,8 @@ namespace Spectre {
 
 		}
 #pragma endregion
+	public:
+		array<Point>^ RawHand;
 	private: 
 		bool bDrawing; // В данный момент рисуем мышкой (кнопка мыши нажата)
 		bool bDrawingMode; // Включён режим рисования
@@ -679,6 +680,14 @@ namespace Spectre {
 		
 		System::Void AdaptToWindowSize(System::Object^  sender, System::EventArgs^  e)
 		{
+			// Проверяем, изменились ли размеры окна
+			static int w = -1, h = -1;
+			if (ClientSize.Width == w && ClientSize.Height == h)
+				return;
+			w = ClientSize.Width;
+			h = ClientSize.Height;
+			// -------------------------------------
+
 			int Spacing = 10;
 			int LeftPanelWidth = 280;
 			int TopPanelHeight = 80;
@@ -735,8 +744,12 @@ namespace Spectre {
 			pbxImp->Top   = 0;
 			pbxSpec->Top  = pbxImp->Height + Spacing;
 			
-			RawHand[0].resize(pbxImp->Width, 0);
-			RawHand[1].resize(pbxImp->Width, 0);
+			RawHand = gcnew array<Point>(pbxImp->Width);
+			for (int i = 0; i < RawHand->Length; ++i)
+			{
+				RawHand[i].X = i;
+				RawHand[i].Y = pbxImp->Height;
+			}
 
 			InvalidateAll();
 		}
@@ -862,13 +875,20 @@ namespace Spectre {
 			}
 			p = TransformImp(buf[0].len / 2, 0, 0);
 			e->Graphics->DrawLine(AxisPen, p.X - 2000, p.Y + 3, p.X + 2000, p.Y + 3);
-
-			array<PointF>^ curvePoints = TransformPointsImp(0, e);
-			//e->Graphics->DrawCurve(GreenPen, curvePoints, 0, curvePoints->Length-1, .5F);
-			e->Graphics->DrawLines(GreenPen, curvePoints);
-			curvePoints = TransformPointsImp(1, e);
-			//e->Graphics->DrawCurve(RedPen, curvePoints, 0, curvePoints->Length-1, .5F);
-			e->Graphics->DrawLines(RedPen, curvePoints);
+			
+			if(!bDrawingMode)
+			{
+				array<PointF>^ curvePoints = TransformPointsImp(0, e);
+				//e->Graphics->DrawCurve(GreenPen, curvePoints, 0, curvePoints->Length-1, .5F);
+				e->Graphics->DrawLines(GreenPen, curvePoints);
+				curvePoints = TransformPointsImp(1, e);
+				//e->Graphics->DrawCurve(RedPen, curvePoints, 0, curvePoints->Length-1, .5F);
+				e->Graphics->DrawLines(RedPen, curvePoints);
+			}
+			else
+			{
+				e->Graphics->DrawLines(GreenPen, RawHand);
+			}
 
 		}
 		void DrawSpec(PaintEventArgs^ e)
@@ -943,13 +963,13 @@ private: System::Void PresetFuncChanged(System::Object^  sender, System::EventAr
 			 InvalidateAll();
 
 }
-private: System::Void TrapWidthChanged(System::Object^  sender, System::EventArgs^  e) {
+		System::Void TrapWidthChanged(System::Object^  sender, System::EventArgs^  e) {
 			 if (trbTrap->Value)
 				 buf[0].generate_gauss(trbTrap->Value);
 			 else
 				 buf[0].generate_rect();
 			 InvalidateAll();
-}
+		}
 
 
 		System::Void EnableDrawing(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
@@ -978,13 +998,14 @@ private: System::Void TrapWidthChanged(System::Object^  sender, System::EventArg
 //			{
 //				RawHand[idx][i] = last.Y + ((float)e->Y-last.Y)*(i-beg+1)/(end-beg+1);
 //			}
-			if (e->X < 0 || e->X >= (int)RawHand[idx].size())
+			if (e->X < 0 || e->X >= RawHand->Length)
 			{
 				bDrawing = false;
 				return;
 			}
-			RawHand[idx][e->X] = (float)e->Y;
-			RefreshHand();
+			RawHand[e->X].Y = (float)e->Y;
+			pbxImp->Invalidate();
+			//RefreshHand();
 		}
 		System::Void RefreshHand()
 		{
@@ -992,9 +1013,9 @@ private: System::Void TrapWidthChanged(System::Object^  sender, System::EventArg
 //			const int idx = (int)rdb2->Checked;
 			int idx = 0; //
 
-			for (int i = 0; i < RawHand[idx].size(); ++i)
+			for (int i = 0; i < RawHand->Length; ++i)
 			{
-				PointF t = BackTransformImp((float)i, RawHand[idx][i], idx);
+				PointF t = BackTransformImp(RawHand[i].X, RawHand[i].Y, idx);
 				if ((int)t.X < 0 || (int)t.X > buf[idx].len)
 				{
 					std::cout << "Out of bounds.\n";
