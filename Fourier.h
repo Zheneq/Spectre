@@ -125,7 +125,7 @@ struct buffer
 
 	void generate_tri_f_p()
 	{
-		double length = (double)(E_0);
+		double length = (double)(E_0) * 1.5;
 		for (int i = 0; i < len/2 - length - 1; i++)
 		{
 			imp[i] = 0.0;
