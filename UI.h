@@ -903,6 +903,9 @@ namespace Spectre {
 			{
 				e->Graphics->DrawLines(GreenPen, RawHand);
 			}
+			
+			sprintf(textbuffer, "t, ñ");
+			e->Graphics->DrawString(gcnew String(textbuffer), font, brush, pbxImp->Width - 40, p.Y - 30);
 
 		}
 		void DrawSpec(PaintEventArgs^ e)
@@ -1019,10 +1022,22 @@ private: System::Void PresetFuncChanged(System::Object^  sender, System::EventAr
 			int beg = Math::Min(last.X, e->X);
 			int end = Math::Max(last.X, e->X);
 			int bas = Math::Min(last.Y, e->Y);
-			for(int i = beg; i <=end; ++i)
+
+//			for(int i = beg; i <=end; ++i)
+//			{
+//				//RawHand[i].Y = last.Y + ((float)e->Y-last.Y)*(i-last.X+1)/(e->X-last.X+1);
+//				RawHand[i].Y = last.Y + ((float)e->Y-last.Y)*(i-beg+1)/(end-beg+1);
+//			}
+			
+			for(int i = last.X; i <=e->X; ++i)
 			{
 				//RawHand[i].Y = last.Y + ((float)e->Y-last.Y)*(i-last.X+1)/(e->X-last.X+1);
 				RawHand[i].Y = last.Y + ((float)e->Y-last.Y)*(i-beg+1)/(end-beg+1);
+			}
+			for(int i = e->X; i <=last.X; ++i)
+			{
+				//RawHand[i].Y = last.Y + ((float)e->Y-last.Y)*(i-last.X+1)/(e->X-last.X+1);
+				RawHand[i].Y = e->Y + ((float)last.Y-e->Y)*(i-beg+1)/(end-beg+1);
 			}
 
 			last = e->Location;
