@@ -143,6 +143,7 @@ namespace Spectre {
 		{
 			this->components = (gcnew System::ComponentModel::Container());
 			this->uiMainMenu = (gcnew System::Windows::Forms::Panel());
+			this->btnExit = (gcnew System::Windows::Forms::Button());
 			this->btnHand = (gcnew System::Windows::Forms::Button());
 			this->btnTrap = (gcnew System::Windows::Forms::Button());
 			this->btnPreset = (gcnew System::Windows::Forms::Button());
@@ -171,6 +172,8 @@ namespace Spectre {
 			this->uiGfx = (gcnew System::Windows::Forms::Panel());
 			this->lblMessage = (gcnew System::Windows::Forms::Label());
 			this->uiTrap = (gcnew System::Windows::Forms::Panel());
+			this->label8 = (gcnew System::Windows::Forms::Label());
+			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->lblTrap = (gcnew System::Windows::Forms::Label());
 			this->trbTrap = (gcnew System::Windows::Forms::TrackBar());
 			this->btnBack = (gcnew System::Windows::Forms::Button());
@@ -185,22 +188,19 @@ namespace Spectre {
 			this->btnReset = (gcnew System::Windows::Forms::Button());
 			this->lblHand = (gcnew System::Windows::Forms::Label());
 			this->tmrMessage = (gcnew System::Windows::Forms::Timer(this->components));
-			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->label8 = (gcnew System::Windows::Forms::Label());
-			this->btnExit = (gcnew System::Windows::Forms::Button());
 			this->uiMainMenu->SuspendLayout();
 			this->uiPreset->SuspendLayout();
 			this->panPresetControl->SuspendLayout();
 			this->panPresetControl2->SuspendLayout();
 			this->panPresetControl1->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar3))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar2))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxSpec))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxImp))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar3))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pbxSpec))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pbxImp))->BeginInit();
 			this->uiGfx->SuspendLayout();
 			this->uiTrap->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trbTrap))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trbTrap))->BeginInit();
 			this->uiGlobal->SuspendLayout();
 			this->uiHand->SuspendLayout();
 			this->SuspendLayout();
@@ -217,9 +217,21 @@ namespace Spectre {
 			this->uiMainMenu->Size = System::Drawing::Size(375, 296);
 			this->uiMainMenu->TabIndex = 15;
 			// 
+			// btnExit
+			// 
+			this->btnExit->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(204)));
+			this->btnExit->Location = System::Drawing::Point(3, 201);
+			this->btnExit->Name = L"btnExit";
+			this->btnExit->Size = System::Drawing::Size(350, 60);
+			this->btnExit->TabIndex = 4;
+			this->btnExit->Text = L"Выход";
+			this->btnExit->UseVisualStyleBackColor = true;
+			this->btnExit->Click += gcnew System::EventHandler(this, &UI::btnExit_Click);
+			// 
 			// btnHand
 			// 
-			this->btnHand->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnHand->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
 			this->btnHand->Location = System::Drawing::Point(3, 135);
 			this->btnHand->Name = L"btnHand";
@@ -231,7 +243,7 @@ namespace Spectre {
 			// 
 			// btnTrap
 			// 
-			this->btnTrap->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnTrap->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
 			this->btnTrap->Location = System::Drawing::Point(3, 69);
 			this->btnTrap->Name = L"btnTrap";
@@ -243,7 +255,7 @@ namespace Spectre {
 			// 
 			// btnPreset
 			// 
-			this->btnPreset->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnPreset->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
 			this->btnPreset->Location = System::Drawing::Point(3, 3);
 			this->btnPreset->Name = L"btnPreset";
@@ -282,7 +294,7 @@ namespace Spectre {
 			// label7
 			// 
 			this->label7->AutoSize = true;
-			this->label7->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->label7->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
 			this->label7->Location = System::Drawing::Point(5, 110);
 			this->label7->Name = L"label7";
@@ -293,7 +305,7 @@ namespace Spectre {
 			// label6
 			// 
 			this->label6->AutoSize = true;
-			this->label6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->label6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
 			this->label6->Location = System::Drawing::Point(5, 60);
 			this->label6->Name = L"label6";
@@ -304,7 +316,7 @@ namespace Spectre {
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->label5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
 			this->label5->Location = System::Drawing::Point(5, 160);
 			this->label5->Name = L"label5";
@@ -315,7 +327,7 @@ namespace Spectre {
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->label4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
 			this->label4->Location = System::Drawing::Point(5, 10);
 			this->label4->Name = L"label4";
@@ -330,7 +342,7 @@ namespace Spectre {
 			this->panPresetControl2->Controls->Add(this->rdbPreset23);
 			this->panPresetControl2->Controls->Add(this->rdbPreset22);
 			this->panPresetControl2->Controls->Add(this->rdbPreset21);
-			this->panPresetControl2->Location = System::Drawing::Point(230, 0);
+			this->panPresetControl2->Location = System::Drawing::Point(220, 0);
 			this->panPresetControl2->Name = L"panPresetControl2";
 			this->panPresetControl2->Size = System::Drawing::Size(50, 250);
 			this->panPresetControl2->TabIndex = 1;
@@ -384,7 +396,7 @@ namespace Spectre {
 			this->panPresetControl1->Controls->Add(this->rdbPreset13);
 			this->panPresetControl1->Controls->Add(this->rdbPreset12);
 			this->panPresetControl1->Controls->Add(this->rdbPreset11);
-			this->panPresetControl1->Location = System::Drawing::Point(180, 0);
+			this->panPresetControl1->Location = System::Drawing::Point(170, 0);
 			this->panPresetControl1->Name = L"panPresetControl1";
 			this->panPresetControl1->Size = System::Drawing::Size(50, 250);
 			this->panPresetControl1->TabIndex = 0;
@@ -524,7 +536,7 @@ namespace Spectre {
 			// 
 			this->lblMessage->AutoSize = true;
 			this->lblMessage->BackColor = System::Drawing::Color::Transparent;
-			this->lblMessage->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->lblMessage->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
 			this->lblMessage->Location = System::Drawing::Point(3, 5);
 			this->lblMessage->Name = L"lblMessage";
@@ -546,10 +558,32 @@ namespace Spectre {
 			this->uiTrap->TabIndex = 17;
 			this->uiTrap->Visible = false;
 			// 
+			// label8
+			// 
+			this->label8->AutoSize = true;
+			this->label8->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(204)));
+			this->label8->Location = System::Drawing::Point(174, 98);
+			this->label8->Name = L"label8";
+			this->label8->Size = System::Drawing::Size(91, 31);
+			this->label8->TabIndex = 16;
+			this->label8->Text = L"Гаусс";
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(204)));
+			this->label2->Location = System::Drawing::Point(13, 96);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(96, 31);
+			this->label2->TabIndex = 15;
+			this->label2->Text = L"Прям.";
+			// 
 			// lblTrap
 			// 
 			this->lblTrap->AutoSize = true;
-			this->lblTrap->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 36, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->lblTrap->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 36, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
 			this->lblTrap->Location = System::Drawing::Point(13, 12);
 			this->lblTrap->Name = L"lblTrap";
@@ -572,7 +606,7 @@ namespace Spectre {
 			// btnBack
 			// 
 			this->btnBack->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
-			this->btnBack->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnBack->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
 			this->btnBack->Location = System::Drawing::Point(10, 169);
 			this->btnBack->Name = L"btnBack";
@@ -602,7 +636,7 @@ namespace Spectre {
 			// 
 			this->label1->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
 			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
 			this->label1->Location = System::Drawing::Point(9, 7);
 			this->label1->Name = L"label1";
@@ -638,7 +672,7 @@ namespace Spectre {
 			// 
 			this->label3->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
 			this->label3->AutoSize = true;
-			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
 			this->label3->Location = System::Drawing::Point(9, 93);
 			this->label3->Name = L"label3";
@@ -683,7 +717,7 @@ namespace Spectre {
 			// 
 			// btnReset
 			// 
-			this->btnReset->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnReset->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
 			this->btnReset->Location = System::Drawing::Point(10, 90);
 			this->btnReset->Name = L"btnReset";
@@ -696,7 +730,7 @@ namespace Spectre {
 			// lblHand
 			// 
 			this->lblHand->AutoSize = true;
-			this->lblHand->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 36, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->lblHand->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 36, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
 			this->lblHand->Location = System::Drawing::Point(13, 12);
 			this->lblHand->Name = L"lblHand";
@@ -710,40 +744,6 @@ namespace Spectre {
 			this->tmrMessage->Interval = 50;
 			this->tmrMessage->Tick += gcnew System::EventHandler(this, &UI::tmrMessage_Tick);
 			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->label2->Location = System::Drawing::Point(13, 96);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(91, 31);
-			this->label2->TabIndex = 15;
-			this->label2->Text = L"Гаусс";
-			// 
-			// label8
-			// 
-			this->label8->AutoSize = true;
-			this->label8->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->label8->Location = System::Drawing::Point(174, 98);
-			this->label8->Name = L"label8";
-			this->label8->Size = System::Drawing::Size(96, 31);
-			this->label8->TabIndex = 16;
-			this->label8->Text = L"Прям.";
-			// 
-			// btnExit
-			// 
-			this->btnExit->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->btnExit->Location = System::Drawing::Point(3, 201);
-			this->btnExit->Name = L"btnExit";
-			this->btnExit->Size = System::Drawing::Size(350, 60);
-			this->btnExit->TabIndex = 4;
-			this->btnExit->Text = L"Выход";
-			this->btnExit->UseVisualStyleBackColor = true;
-			this->btnExit->Click += gcnew System::EventHandler(this, &UI::btnExit_Click);
-			// 
 			// UI
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -756,7 +756,6 @@ namespace Spectre {
 			this->Controls->Add(this->uiPreset);
 			this->Controls->Add(this->uiMainMenu);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
-			this->MaximizeBox = false;
 			this->Name = L"UI";
 			this->Text = L"UI";
 			this->WindowState = System::Windows::Forms::FormWindowState::Maximized;
@@ -771,16 +770,16 @@ namespace Spectre {
 			this->panPresetControl->PerformLayout();
 			this->panPresetControl2->ResumeLayout(false);
 			this->panPresetControl1->ResumeLayout(false);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar3))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar2))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxSpec))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxImp))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar3))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pbxSpec))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pbxImp))->EndInit();
 			this->uiGfx->ResumeLayout(false);
 			this->uiGfx->PerformLayout();
 			this->uiTrap->ResumeLayout(false);
 			this->uiTrap->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trbTrap))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trbTrap))->EndInit();
 			this->uiGlobal->ResumeLayout(false);
 			this->uiGlobal->PerformLayout();
 			this->uiHand->ResumeLayout(false);
@@ -881,15 +880,31 @@ namespace Spectre {
 			uiGfx->Left   = LeftPanelWidth;
 			uiGfx->Top    = TopPanelHeight;
 
-			pbxImp->Width   = uiGfx->Width;
-			pbxSpec->Width  = pbxImp->Width;
-			pbxImp->Height  = (uiGfx->Height - Spacing) / 2;
-			pbxSpec->Height = pbxImp->Height;
+			if(0)
+			{
+				pbxImp->Width   = uiGfx->Width;
+				pbxSpec->Width  = pbxImp->Width;
+				pbxImp->Height  = (uiGfx->Height - Spacing) / 2;
+				pbxSpec->Height = pbxImp->Height;
 
-			pbxImp->Left  = 0;
-			pbxSpec->Left = 0;
-			pbxImp->Top   = 0;
-			pbxSpec->Top  = pbxImp->Height + Spacing;
+				pbxImp->Left  = 0;
+				pbxSpec->Left = 0;
+				pbxImp->Top   = 0;
+				pbxSpec->Top  = pbxImp->Height + Spacing;
+			}
+			else
+			{
+				pbxImp->Width   = (uiGfx->Width - Spacing) * .5;
+				pbxSpec->Width  = pbxImp->Width;
+				pbxImp->Height  = uiGfx->Height;
+				pbxSpec->Height = pbxImp->Height;
+
+				pbxImp->Left  = 0;
+				pbxSpec->Left = pbxImp->Width + Spacing;
+				pbxImp->Top   = 0;
+				pbxSpec->Top  = 0;
+			}
+
 			
 			RawHand = gcnew array<Point>(pbxImp->Width);
 			ResetHand();
@@ -1111,26 +1126,36 @@ namespace Spectre {
 			sprintf(textbuffer, "%.2f Гц", RealSpecWidth[1]);
 			lblSpecWidth2->Text = gcnew String(textbuffer);
 
+			int i;
+			double Sum = 0, t, wid;
+			for(i = 0; i < buf[0].len; i++)
+			{
+				Sum += buf[0].imp[i];
+			}
+			t = buf[0].imp[buf[0].len / 2];
+			for (i = 1; t/Sum < Level && i < buf[0].len / 2; ++i)
+			{
+				t += buf[0].imp[buf[0].len / 2 + i] + buf[0].imp[buf[0].len / 2 - i];
+			}
+			wid = i / PointsPerSecond;
 
-			float length;
-			int i, b;
-			for (i = 0; buf[0].imp[i] <= 0 && i < buf[0].len; ++i) b = i;
-			for (; buf[0].imp[i] > 0 && i < buf[0].len; ++i) length = i;
-			length = (length - b) / PointsPerSecond;
-
-			std::cout << "len " << length;
-
-			sprintf(textbuffer, "%.2f", RealSpecWidth[0] * length *.5 / pi);
+			sprintf(textbuffer, "%.2f", RealSpecWidth[0] * wid *.5);
 			lblC1->Text = gcnew String(textbuffer);
 
 
-			for (i = 0; buf[1].imp[i] <= 0 && i < buf[1].len; ++i) b = i;
-			for (; buf[1].imp[i] > 0 && i < buf[1].len; ++i) length = i;
-			length = (length - b) / PointsPerSecond;
+			Sum = 0;
+			for(i = 0; i < buf[1].len; i++)
+			{
+				Sum += buf[1].imp[i];
+			}
+			t = buf[1].imp[buf[1].len / 2];
+			for (i = 1; t/Sum < Level && i < buf[1].len / 2; ++i)
+			{
+				t += buf[1].imp[buf[1].len / 2 + i] + buf[1].imp[buf[1].len / 2 - i];
+			}
+			wid = i / PointsPerSecond;
 
-			std::cout << ' ' << length << " c = " << RealSpecWidth[1] * length *.5 / pi << '\n';
-
-			sprintf(textbuffer, "%.2f", RealSpecWidth[1] * length *.5 / pi);
+			sprintf(textbuffer, "%.2f", RealSpecWidth[1] * wid *.5);
 			lblC2->Text = gcnew String(textbuffer);
 		}
 
@@ -1253,7 +1278,7 @@ private: System::Void PresetFuncChanged(System::Object^  sender, System::EventAr
 			}
 
 			// Если довели до конца
-			if (pow(Start.X - Finish.X, 2) + pow(Start.Y - Finish.Y, 2) < pow(Radius, 2))
+			if (pow(Start.X - Finish.X, 2) + pow(Start.Y - Finish.Y, 2) < pow(Radius*1.5, 2))
 			{
 				bDrawingMode = false;
 				FinalizeHand();
@@ -1284,8 +1309,9 @@ private: System::Void PresetFuncChanged(System::Object^  sender, System::EventAr
 		{
 			ResetHand();
 			buf[0].generate_null();
+			buf[1].generate_null();
 			bDrawingMode = true;
-			pbxImp->Invalidate();
+			InvalidateAll();
 
 
 			ShowMessage(gcnew String("Возьмите левый кружок и\nнарисуйте им график импульса.\nЗакончить график нужно\nв правом кружке."));

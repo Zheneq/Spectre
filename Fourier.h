@@ -79,23 +79,23 @@ struct buffer
 		
 
 		int length = (int)(energy * .5);
-		if(length <= 0) return;
-
-		for(int i = length; i < len/2; i++)
+		if(length > 0) 
 		{
-			imp[i - length] = imp[i];
-		}
+			for(int i = length; i < len/2; i++)
+			{
+				imp[i - length] = imp[i];
+			}
 
-		for(int i = len - length - 1; i > len/2; i--)
-		{
-			imp[i + length] = imp[i];
-		}
+			for(int i = len - length - 1; i > len/2; i--)
+			{
+				imp[i + length] = imp[i];
+			}
 
-		for(int i = len/2 - length; i <= (len/2 + length); i++)
-		{
-			imp[i] = 1.0;
+			for(int i = len/2 - length; i <= (len/2 + length); i++)
+			{
+				imp[i] = 1.0;
+			}
 		}
-
 		std::cout << "check energy: E0 = " << E_0 << ", Efunc = " << E_0 - energy
 			<< ", Efixed = " << E_0 - energy + 2*length << std::endl;
 	}
@@ -155,7 +155,7 @@ struct buffer
 		double length = (double)(E_0);
 		for (int i = 0; i < len; i++)
 		{
-			imp[i] = exp(-((i-len/2 + 1)*(i-len/2 + 1)/(((length)/sqrt(pi))*((length)/sqrt(pi)))));
+			imp[i] = exp(-((i-len/2 + 1)*(i-len/2 + 1)/pow(.638*length/sqrt(2/pi),2)));
 		}
 		std::cout << "gauss_f_p ";
 		check_energy();
