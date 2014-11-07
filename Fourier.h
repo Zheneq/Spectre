@@ -192,6 +192,8 @@ struct buffer
 
 extern buffer buf[2];
 
+float Interpolate(float start, float finish, float t);
+
 namespace Fourier
 {
 	void function(int index, int left, int right);

@@ -34,10 +34,13 @@ namespace Spectre {
 			//TODO: Add the constructor code here
 			bDrawing = false;
 			bDrawingMode = false;
-			Point def = Point(-1,-1);
-			Point last = def;
+			def = Point(-1,-1);
+			last = def;
 			SpecMult = 1;
 
+			StartDef = Point(7800, 0);
+			FinishDef = Point(8584, 0);
+			Radius = 8;
 
 			RedPen = gcnew Pen(Color::Red, 1.0f);
 			GreenPen = gcnew Pen(Color::Green, 3.0f);
@@ -112,6 +115,7 @@ namespace Spectre {
 	private: System::Windows::Forms::Button^  btnHand;
 	private: System::Windows::Forms::Panel^  uiHand;
 	private: System::Windows::Forms::Label^  lblHand;
+	private: System::Windows::Forms::Button^  btnReset;
 
 	private:
 		/// <summary>
@@ -165,6 +169,7 @@ namespace Spectre {
 			this->lblSpecWidth1 = (gcnew System::Windows::Forms::Label());
 			this->uiHand = (gcnew System::Windows::Forms::Panel());
 			this->lblHand = (gcnew System::Windows::Forms::Label());
+			this->btnReset = (gcnew System::Windows::Forms::Button());
 			this->uiMainMenu->SuspendLayout();
 			this->uiPreset->SuspendLayout();
 			this->panPresetControl->SuspendLayout();
@@ -607,6 +612,7 @@ namespace Spectre {
 			// uiHand
 			// 
 			this->uiHand->BackColor = System::Drawing::Color::GreenYellow;
+			this->uiHand->Controls->Add(this->btnReset);
 			this->uiHand->Controls->Add(this->lblHand);
 			this->uiHand->Location = System::Drawing::Point(405, 330);
 			this->uiHand->Name = L"uiHand";
@@ -625,6 +631,19 @@ namespace Spectre {
 			this->lblHand->TabIndex = 14;
 			this->lblHand->Text = L"Ручной ввод";
 			this->lblHand->TextAlign = System::Drawing::ContentAlignment::TopCenter;
+			// 
+			// btnReset
+			// 
+			this->btnReset->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
+			this->btnReset->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->btnReset->Location = System::Drawing::Point(24, 82);
+			this->btnReset->Name = L"btnReset";
+			this->btnReset->Size = System::Drawing::Size(204, 57);
+			this->btnReset->TabIndex = 19;
+			this->btnReset->Text = L"Сбросить";
+			this->btnReset->UseVisualStyleBackColor = true;
+			this->btnReset->Click += gcnew System::EventHandler(this, &UI::btnReset_Click);
 			// 
 			// UI
 			// 
@@ -679,7 +698,8 @@ namespace Spectre {
 		Point last;
 		float SpecMult;
 
-		Point Start, StartDef, Finish, FinishDef; // в реальных координатах
+		Point StartDef, FinishDef; // в реальных координатах
+		PointF Start, Finish; // в экранных координатах
 		float Radius; // в экранных координатах
 
 		Pen ^RedPen, ^GreenPen, ^AxisPen;
@@ -753,12 +773,7 @@ namespace Spectre {
 			pbxSpec->Top  = pbxImp->Height + Spacing;
 			
 			RawHand = gcnew array<Point>(pbxImp->Width);
-			PointF t = TransformImp(0, 0, 0);
-			for (int i = 0; i < RawHand->Length; ++i)
-			{
-				RawHand[i].X = i;
-				RawHand[i].Y = t.Y;
-			}
+			btnReset_Click(sender, e);
 
 			InvalidateAll();
 		}
@@ -801,6 +816,7 @@ namespace Spectre {
 		System::Void btnHand_Click(System::Object^  sender, System::EventArgs^  e) {
 			buf[0].generate_null();
 			buf[1].generate_null();
+			btnReset_Click(sender, e);
 
 			uiMainMenu->Visible = false;
 			uiHand->Visible = true;
@@ -904,6 +920,14 @@ namespace Spectre {
 			}
 			else
 			{
+				e->Graphics->FillEllipse(
+					GreenPen->Brush,
+					Start.X - Radius - GreenPen->Width / 2, Start.Y - Radius - GreenPen->Width / 2,
+					Radius * 2, Radius * 2);
+				e->Graphics->FillEllipse(
+					GreenPen->Brush,
+					Finish.X - Radius - GreenPen->Width / 2, Finish.Y - Radius - GreenPen->Width / 2,
+					Radius * 2, Radius * 2);
 				e->Graphics->DrawLines(GreenPen, RawHand);
 			}
 			
@@ -1002,6 +1026,9 @@ private: System::Void PresetFuncChanged(System::Object^  sender, System::EventAr
 			PointF t = BackTransformImp(e->X, e->Y, 0);
 			std::cout << "Click " << t.X << ", " << t.Y << "\n";
 
+			if (pow(e->X - Start.X, 2) + pow(e->Y - Start.Y, 2) > pow(Radius, 2))
+				return;
+
 			std::cout << "EnableDrawing " << bDrawingMode << "\n";
 			bDrawing = true;
 		}
@@ -1026,9 +1053,12 @@ private: System::Void PresetFuncChanged(System::Object^  sender, System::EventAr
 		
 			if (e->X < 0 || e->X >= RawHand->Length)
 			{
-				bDrawing = false;
+				DisableDrawing(sender, e);
 				return;
 			}
+
+			if (e->X < last.X)
+				return;
 
 			if(last == def)
 				last = e->Location;
@@ -1048,6 +1078,7 @@ private: System::Void PresetFuncChanged(System::Object^  sender, System::EventAr
 				//RawHand[i].Y = last.Y + ((float)e->Y-last.Y)*(i-last.X+1)/(e->X-last.X+1);
 				RawHand[i].Y = last.Y + ((float)e->Y-last.Y)*(i-beg+1)/(end-beg+1);
 			}
+			// Если влево рисовать нельзя, этот цикл не нужен
 			for(int i = e->X; i <=last.X; ++i)
 			{
 				//RawHand[i].Y = last.Y + ((float)e->Y-last.Y)*(i-last.X+1)/(e->X-last.X+1);
@@ -1055,6 +1086,25 @@ private: System::Void PresetFuncChanged(System::Object^  sender, System::EventAr
 			}
 
 			last = e->Location;
+			Start = PointF(e->X, e->Y);
+
+			for (int i = Start.X + 1; i < Finish.X; ++i)
+			{
+				RawHand[i].Y = Start.Y + (Finish.Y - Start.Y)*(i - Start.X) / (Finish.X - Start.X);
+			}
+
+			// Если довели до конца
+			if (pow(Start.X - Finish.X, 2) + pow(Start.Y - Finish.Y, 2) < pow(Radius, 2))
+			{
+				bDrawingMode = false;
+				FinalizeHand();
+			}
+			else if (Start.X > Finish.X)
+			{
+				// Плохой рисунок
+				bDrawingMode = false;
+			}
+
 			pbxImp->Invalidate();
 			//RefreshHand();
 		}
@@ -1075,6 +1125,48 @@ private: System::Void PresetFuncChanged(System::Object^  sender, System::EventAr
 				buf[idx].imp[(int)t.X] = t.Y;
 			}
 			pbxImp->Invalidate();
+		}
+		System::Void btnReset_Click(System::Object^  sender, System::EventArgs^  e)
+		{
+			PointF t = TransformImp(0, 0, 0);
+			for (int i = 0; i < RawHand->Length; ++i)
+			{
+				RawHand[i].X = i;
+				RawHand[i].Y = t.Y;
+			}
+			Start = TransformImp(StartDef.X, StartDef.Y, 0);
+			Finish = TransformImp(FinishDef.X, FinishDef.Y, 0);
+			buf[0].generate_null();
+			bDrawingMode = true;
+			pbxImp->Invalidate();
+		}
+		void FinalizeHand()
+		{
+			std::cout << "Finalize\n";
+			//RawHand
+			array<PointF> ^temp = gcnew array<PointF>(RawHand->Length);
+			for (int i = 0; i < temp->Length; ++i)
+			{
+				temp[i] = BackTransformImp(RawHand[i].X, RawHand[i].Y, 0);
+			}
+			for (int i = 1; i < temp->Length; ++i)
+			{
+				for (int j = temp[i - 1].X + 1; j <= temp[i].X; ++j)
+				{
+					buf[0].imp[j] = Interpolate(temp[i - 1].Y, temp[i].Y, (j - temp[i - 1].X) / (temp[i].X - temp[i - 1].X));
+				}
+			}
+
+			float t = 0, te;
+			for (int i = 0; i < buf[0].len; ++i) t += buf[0].imp[i] * buf[0].imp[i];
+			std::cout << t << "\n";
+			te = E_0;
+			E_0 = t; // Больше говнокода богу говнокода!
+			buf[1].generate_rect();
+			E_0 = te; // Зато работает
+
+			buf[0].fourier();
+			InvalidateAll();
 		}
 };
 }
