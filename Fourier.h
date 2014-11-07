@@ -145,6 +145,8 @@ struct buffer
 		{
 			imp[i] = 0.0;
 		}
+		std::cout << "tri_f_p ";
+		check_energy();
 		fourier();
 	}
 
@@ -155,6 +157,8 @@ struct buffer
 		{
 			imp[i] = exp(-((i-len/2 + 1)*(i-len/2 + 1)/(((length)/sqrt(pi))*((length)/sqrt(pi)))));
 		}
+		std::cout << "gauss_f_p ";
+		check_energy();
 		fourier();
 	}
 
@@ -180,6 +184,8 @@ struct buffer
 		{
 			imp[i] = 0.0;
 		}
+		std::cout << "sin_f_p ";
+		check_energy();
 		fourier();
 	}
 };

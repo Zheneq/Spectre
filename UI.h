@@ -940,6 +940,9 @@ namespace Spectre {
 			e->Graphics->DrawLine(GreenPen, p.X, p.Y - 2000, p.X, p.Y + 15);
 			p = TransformSpec(buf[1].SpecWidth, 0, 0);
 			e->Graphics->DrawLine(RedPen, p.X, p.Y - 2000, p.X, p.Y + 15);
+			
+			sprintf(textbuffer, "f, Ãö");
+			e->Graphics->DrawString(gcnew String(textbuffer), font, brush, pbxImp->Width - 55, p.Y - 30);
 
 			sprintf(textbuffer, "%.2f Ãö", buf[0].SpecWidth * PointsPerSecond / buf[0].len);
 			lblSpecWidth1->Text = gcnew String(textbuffer);
@@ -1001,6 +1004,11 @@ private: System::Void PresetFuncChanged(System::Object^  sender, System::EventAr
 			std::cout << "DisableDrawing " << bDrawingMode << "\n";
 			bDrawing = false;
 			last = def;
+
+//			for(int i = 2; i < RawHand->Length-2; ++i)
+//			{
+//				RawHand[i].Y = (RawHand[i].Y + 0.6*(RawHand[i-1].Y+RawHand[i+1].Y)+ 0.1*(RawHand[i-2].Y+RawHand[i+2].Y))/2.4;
+//			}
 		}
 		System::Void HandDrawing(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
 		{
