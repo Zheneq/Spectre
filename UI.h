@@ -679,6 +679,9 @@ namespace Spectre {
 		Point last;
 		float SpecMult;
 
+		Point Start, StartDef, Finish, FinishDef; // в реальных координатах
+		float Radius; // в экранных координатах
+
 		Pen ^RedPen, ^GreenPen, ^AxisPen;
 		Brush ^brush;
 		System::Drawing::Font ^font;
@@ -839,14 +842,14 @@ namespace Spectre {
 		}
 		PointF BackTransformImp(float x, float y, int index)
 		{
-			return PointF((float)((x + (trackBar3->Value - 1)*.5) * buf[index].len / trackBar3->Value / pbxImp->Width),
+			return PointF((float)((x / pbxImp->Width + (trackBar3->Value - 1)*.5) * buf[index].len / trackBar3->Value ),
 				          (float)((1 - (y / pbxImp->Height)) / 0.8 - 0.125));
 		}
-		PointF BackTransformSpec(float x, float y, int index)
-		{
-			return PointF((float)(x * buf[index].len / trackBar2->Value/ pbxSpec->Width),
-				          (float)(((1 - (y / pbxSpec->Height))/ 0.8 - 0.125) * 8 * SpecMult));
-		}
+//		PointF BackTransformSpec(float x, float y, int index)
+//		{
+//			return PointF((float)(x * buf[index].len / trackBar2->Value/ pbxSpec->Width),
+//				          (float)(((1 - (y / pbxSpec->Height))/ 0.8 - 0.125) * 8 * SpecMult));
+//		}
 
 		array<PointF>^ TransformPointsImp(int index, PaintEventArgs^ e)
 		{
@@ -996,6 +999,9 @@ private: System::Void PresetFuncChanged(System::Object^  sender, System::EventAr
 
 		System::Void EnableDrawing(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
 		{
+			PointF t = BackTransformImp(e->X, e->Y, 0);
+			std::cout << "Click " << t.X << ", " << t.Y << "\n";
+
 			std::cout << "EnableDrawing " << bDrawingMode << "\n";
 			bDrawing = true;
 		}
