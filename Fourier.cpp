@@ -5,7 +5,8 @@
 
 buffer buf[2];
 
-double E_0 = 300;
+const double E_0_def = 300;
+double E_0 = E_0_def;
 int implen, len;
 
 float Interpolate(float start, float finish, float t)

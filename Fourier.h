@@ -5,9 +5,11 @@
 #include <math.h>
 #pragma comment(lib, "../FFTW/libfftw3-3")
 
+extern float PointsPerSecond;
 extern double E_0;
+extern const double E_0_def;
 const long double pi = 3.14159265359;
-const double Level = .92;
+const double Level = .90457703976772257201578964538544;
 
 struct buffer 
 {
@@ -61,12 +63,18 @@ struct buffer
 			spec[i] = (cspec[i][0]*cspec[i][0]+cspec[i][1]*cspec[i][1])/len;
 			if(spec[i] > MaxSpec) MaxSpec = spec[i];
 			SpecSum += spec[i];
+
+			if (i == (int)(len / PointsPerSecond)) std::cout << "int = " << SpecSum << '\n';
 		}
+		std::cout << "full int = " << SpecSum << '\n';
 		for (i = 0; t/SpecSum < Level && i < len / 2 + 1; ++i)
 		{
 			t += spec[i];
 		}
 		SpecWidth = i;
+
+
+		for (i = 0; i < len / 2 + 1; i++) spec[i] = sqrt(spec[i]);
 	}
 
 	void check_energy(){
