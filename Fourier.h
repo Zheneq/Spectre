@@ -7,7 +7,7 @@
 
 extern double E_0;
 const long double pi = 3.14159265359;
-const double Level = .95;
+const double Level = .92;
 
 struct buffer 
 {

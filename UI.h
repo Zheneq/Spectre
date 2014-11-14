@@ -47,8 +47,9 @@ namespace Spectre {
 			AxisPen = gcnew Pen(Color::Black, 3.0f);
 			FramePen = gcnew Pen(Color::Black, 1.0f);
 			brush = gcnew SolidBrush(Color::Black);
-			font = gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.0F, System::Drawing::FontStyle::Bold,
-				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204));
+			font = gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold);
+			//	gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.0F, System::Drawing::FontStyle::Bold,
+			//	System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204));
 			//
 			RefreshColorScheme();
 		}
@@ -1024,15 +1025,16 @@ namespace Spectre {
 			e->Graphics->DrawLine(FramePen, pbxImp->Width - 1, 0, pbxImp->Width - 1, pbxImp->Height - 1);
 			// Draw axes
 			PointF p;
-			for (int i = -100; i < 100; ++i)
+			for (int i = -10; i < 10; ++i)
 			{
 				p = TransformImp(buf[0].len / 2 + i * PointsPerSecond, 0, 0);
 				e->Graphics->DrawLine(AxisPen, p.X, p.Y + 3, p.X, p.Y + 15);
 				sprintf(textbuffer, "%d", i);
-				e->Graphics->DrawString(gcnew String(textbuffer), font, brush, p.X, p.Y + 2);
+				e->Graphics->DrawString(gcnew String(textbuffer), font, brush, p.X - 15, p.Y + 15);
 			}
 			p = TransformImp(buf[0].len / 2, 0, 0);
 			e->Graphics->DrawLine(AxisPen, p.X - 2000, p.Y + 3, p.X + 2000, p.Y + 3);
+			e->Graphics->DrawLine(AxisPen, p.X, p.Y - 2000, p.X, p.Y + 2000);
 			
 			if(!bDrawingMode)
 			{
@@ -1070,12 +1072,12 @@ namespace Spectre {
 			e->Graphics->DrawLine(FramePen, 0, 0, 0, pbxSpec->Height - 1);
 			e->Graphics->DrawLine(FramePen, pbxSpec->Width - 1, 0, pbxSpec->Width - 1, pbxSpec->Height - 1);
 			// Draw axes
-			for (int i = -100; i < 100; ++i)
+			for (int i = 0; i < 20; ++i)
 			{
 				p = TransformSpec(i * buf[0].len / PointsPerSecond, 0, 0);
 				e->Graphics->DrawLine(AxisPen, p.X, p.Y + 3, p.X, p.Y + 15);
 				sprintf(textbuffer, "%d", i);
-				e->Graphics->DrawString(gcnew String(textbuffer), font, brush, p.X, p.Y + 2);
+				e->Graphics->DrawString(gcnew String(textbuffer), font, brush, p.X - 15, p.Y + 15);
 			}
 			p = TransformSpec(0, 0, 0);
 			e->Graphics->DrawLine(AxisPen, p.X - 5, p.Y + 3, p.X + 4000, p.Y + 3);
