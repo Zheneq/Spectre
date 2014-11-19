@@ -36,7 +36,9 @@ namespace Spectre {
 			bDrawingMode = false;
 			def = Point(-1,-1);
 			last = def;
-			SpecMult = 1;
+			SpecYMult = 0.125;
+			ImpXMult = trackBar3->Value;
+			SpecXMult = trackBar2->Value;
 
 			StartDef = Point(7800, 0);
 			FinishDef = Point(8584, 0);
@@ -174,6 +176,8 @@ private: System::Windows::Forms::Label^  txtImp;
 			this->pbxSpec = (gcnew System::Windows::Forms::PictureBox());
 			this->pbxImp = (gcnew System::Windows::Forms::PictureBox());
 			this->uiGfx = (gcnew System::Windows::Forms::Panel());
+			this->txtSpec = (gcnew System::Windows::Forms::Label());
+			this->txtImp = (gcnew System::Windows::Forms::Label());
 			this->trackBar4 = (gcnew System::Windows::Forms::TrackBar());
 			this->lblMessage = (gcnew System::Windows::Forms::Label());
 			this->uiTrap = (gcnew System::Windows::Forms::Panel());
@@ -193,8 +197,6 @@ private: System::Windows::Forms::Label^  txtImp;
 			this->btnReset = (gcnew System::Windows::Forms::Button());
 			this->lblHand = (gcnew System::Windows::Forms::Label());
 			this->tmrMessage = (gcnew System::Windows::Forms::Timer(this->components));
-			this->txtImp = (gcnew System::Windows::Forms::Label());
-			this->txtSpec = (gcnew System::Windows::Forms::Label());
 			this->uiMainMenu->SuspendLayout();
 			this->uiPreset->SuspendLayout();
 			this->panPresetControl->SuspendLayout();
@@ -484,6 +486,7 @@ private: System::Windows::Forms::Label^  txtImp;
 			this->trackBar3->Size = System::Drawing::Size(252, 45);
 			this->trackBar3->TabIndex = 13;
 			this->trackBar3->Value = 18;
+			this->trackBar3->Visible = false;
 			this->trackBar3->Scroll += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
 			this->trackBar3->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
 			// 
@@ -496,6 +499,7 @@ private: System::Windows::Forms::Label^  txtImp;
 			this->trackBar2->Size = System::Drawing::Size(252, 45);
 			this->trackBar2->TabIndex = 12;
 			this->trackBar2->Value = 75;
+			this->trackBar2->Visible = false;
 			this->trackBar2->Scroll += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
 			this->trackBar2->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
 			// 
@@ -541,6 +545,30 @@ private: System::Windows::Forms::Label^  txtImp;
 			this->uiGfx->TabIndex = 17;
 			this->uiGfx->Visible = false;
 			// 
+			// txtSpec
+			// 
+			this->txtSpec->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
+			this->txtSpec->AutoSize = true;
+			this->txtSpec->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->txtSpec->Location = System::Drawing::Point(475, 13);
+			this->txtSpec->Name = L"txtSpec";
+			this->txtSpec->Size = System::Drawing::Size(120, 37);
+			this->txtSpec->TabIndex = 25;
+			this->txtSpec->Text = L"Спектр";
+			// 
+			// txtImp
+			// 
+			this->txtImp->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
+			this->txtImp->AutoSize = true;
+			this->txtImp->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->txtImp->Location = System::Drawing::Point(16, 10);
+			this->txtImp->Name = L"txtImp";
+			this->txtImp->Size = System::Drawing::Size(140, 37);
+			this->txtImp->TabIndex = 24;
+			this->txtImp->Text = L"Импульс";
+			// 
 			// trackBar4
 			// 
 			this->trackBar4->Location = System::Drawing::Point(258, 147);
@@ -550,6 +578,7 @@ private: System::Windows::Forms::Label^  txtImp;
 			this->trackBar4->Size = System::Drawing::Size(252, 45);
 			this->trackBar4->TabIndex = 15;
 			this->trackBar4->Value = 18;
+			this->trackBar4->Visible = false;
 			this->trackBar4->Scroll += gcnew System::EventHandler(this, &UI::trackBar4_ValueChanged);
 			this->trackBar4->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar4_ValueChanged);
 			// 
@@ -765,30 +794,6 @@ private: System::Windows::Forms::Label^  txtImp;
 			this->tmrMessage->Interval = 50;
 			this->tmrMessage->Tick += gcnew System::EventHandler(this, &UI::tmrMessage_Tick);
 			// 
-			// txtImp
-			// 
-			this->txtImp->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
-			this->txtImp->AutoSize = true;
-			this->txtImp->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->txtImp->Location = System::Drawing::Point(16, 10);
-			this->txtImp->Name = L"txtImp";
-			this->txtImp->Size = System::Drawing::Size(140, 37);
-			this->txtImp->TabIndex = 24;
-			this->txtImp->Text = L"Импульс";
-			// 
-			// txtSpec
-			// 
-			this->txtSpec->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
-			this->txtSpec->AutoSize = true;
-			this->txtSpec->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->txtSpec->Location = System::Drawing::Point(475, 13);
-			this->txtSpec->Name = L"txtSpec";
-			this->txtSpec->Size = System::Drawing::Size(120, 37);
-			this->txtSpec->TabIndex = 25;
-			this->txtSpec->Text = L"Спектр";
-			// 
 			// UI
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -841,7 +846,7 @@ private: System::Windows::Forms::Label^  txtImp;
 		bool bDrawingMode; // Включён режим рисования
 		Point def;
 		Point last;
-		float SpecMult;
+		float SpecYMult;
 
 		Point StartDef, FinishDef; // в реальных координатах
 		PointF Start, Finish; // в экранных координатах
@@ -852,6 +857,8 @@ private: System::Windows::Forms::Label^  txtImp;
 		System::Drawing::Font ^font;
 
 		int MsgTime;
+
+		float ImpXMult, SpecXMult;
 
 		System::Void RefreshColorScheme();
 

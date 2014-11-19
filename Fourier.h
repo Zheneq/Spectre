@@ -9,7 +9,7 @@ extern float PointsPerSecond;
 extern double E_0;
 extern const double E_0_def;
 const long double pi = 3.14159265359;
-const double Level = .90457703976772257201578964538544;
+const double Level = .90457703976772257201578964538544; // 0.90282233018308548168257003610692
 
 struct buffer 
 {

@@ -22,6 +22,9 @@ namespace Spectre {
 		panPresetControl->BackColor = clr;
 		panPresetControl1->BackColor = clr;
 		panPresetControl2->BackColor = clr;
+
+		txtImp->Font = font;
+		txtSpec->Font = font;
 	}
 
 	System::Void UI::AdaptToWindowSize(System::Object^  sender, System::EventArgs^  e)
@@ -98,16 +101,19 @@ namespace Spectre {
 		}
 		else
 		{
-			pbxImp->Width = (uiGfx->Width - Spacing) * .5;
+			pbxImp->Width = Math::Min((uiGfx->Width - Spacing) / 2, uiGfx->Height - Spacing * 3 - txtImp->Height);
+			pbxImp->Height = pbxImp->Width;
+
 			pbxSpec->Width = pbxImp->Width;
-			pbxImp->Height = uiGfx->Height - 2 * Spacing;
 			pbxSpec->Height = pbxImp->Height;
 
 			pbxImp->Left = 0;
 			pbxSpec->Left = pbxImp->Width + Spacing;
-			pbxImp->Top = 2 * Spacing;
-			pbxSpec->Top = 2 * Spacing;
+			pbxImp->Top = 2 * Spacing + txtImp->Height;
+			pbxSpec->Top = pbxImp->Top;
 
+			txtImp->Top = 0;
+			txtSpec->Top = 0;
 			txtImp->Left = (pbxImp->Width - txtImp->Width) / 2;
 			txtSpec->Left = pbxSpec->Left + (pbxSpec->Width - txtSpec->Width) / 2;
 		}
@@ -140,7 +146,9 @@ namespace Spectre {
 		uiGfx->BringToFront();
 		uiGlobal->BringToFront();
 
-		SpecMult = 0.4;
+		SpecXMult = 118;
+		ImpXMult = 14;
+		SpecYMult = 0.3125;
 	}
 	System::Void UI::btnTrap_Click(System::Object^  sender, System::EventArgs^  e)
 	{
@@ -154,7 +162,9 @@ namespace Spectre {
 		uiGfx->BringToFront();
 		uiGlobal->BringToFront();
 
-		SpecMult = 0.4;
+		SpecXMult = 118;
+		ImpXMult = 14;
+		SpecYMult = 0.3125;
 	}
 	System::Void UI::btnHand_Click(System::Object^  sender, System::EventArgs^  e) {
 		buf[0].generate_null();
@@ -169,7 +179,7 @@ namespace Spectre {
 		uiGlobal->BringToFront();
 		bDrawingMode = true;
 
-		SpecMult = 1;
+		SpecYMult = 0.125;
 	}
 	System::Void UI::InvalidateAll()
 	{
@@ -191,23 +201,23 @@ namespace Spectre {
 
 	PointF UI::TransformImp(double x, double y, int index)
 	{
-		return PointF((float)((x / buf[index].len * trackBar3->Value - (trackBar3->Value - 1)*.5) * pbxImp->Width),
+		return PointF((float)((x / buf[index].len * ImpXMult - (ImpXMult - 1)*.5) * pbxImp->Width),
 			(float)((1 - (y + 0.125) * 0.8) * pbxImp->Height));
 	}
 	PointF UI::TransformSpec(double x, double y, int index)
 	{
-		return PointF((float)(x / buf[index].len * trackBar2->Value * pbxSpec->Width),
-			(float)((1 - (y / 8 / SpecMult + 0.125) * 0.8) * pbxSpec->Height));
+		return PointF((float)((x / buf[index].len) * SpecXMult * pbxSpec->Width + 40),
+			(float)((1 - (y * SpecYMult + 0.125) * 0.8) * pbxSpec->Height));
 	}
 	PointF UI::BackTransformImp(float x, float y, int index)
 	{
-		return PointF((float)((x / pbxImp->Width + (trackBar3->Value - 1)*.5) * buf[index].len / trackBar3->Value),
+		return PointF((float)((x / pbxImp->Width + (ImpXMult - 1)*.5) * buf[index].len / ImpXMult),
 			(float)((1 - (y / pbxImp->Height)) / 0.8 - 0.125));
 	}
 	//		PointF UI::BackTransformSpec(float x, float y, int index)
 	//		{
-	//			return PointF((float)(x * buf[index].len / trackBar2->Value/ pbxSpec->Width),
-	//				          (float)(((1 - (y / pbxSpec->Height))/ 0.8 - 0.125) * 8 * SpecMult));
+	//			return PointF((float)(x * buf[index].len / SpecXMult/ pbxSpec->Width),
+	//				          (float)(((1 - (y / pbxSpec->Height))/ 0.8 - 0.125) * 8 * SpecYMult));
 	//		}
 
 	array<PointF>^ UI::TransformPointsImp(int index, PaintEventArgs^ e)
@@ -289,13 +299,19 @@ namespace Spectre {
 		}
 
 		sprintf(textbuffer, "t, ñ");
-		e->Graphics->DrawString(gcnew String(textbuffer), font, brush, pbxImp->Width - 40, p.Y - 30);
+		e->Graphics->DrawString(gcnew String(textbuffer), font, brush, pbxImp->Width - 80, p.Y + 10);
 
 	}
 	void UI::DrawSpec(PaintEventArgs^ e)
 	{
 		PointF p;
 		e->Graphics->SmoothingMode = Drawing2D::SmoothingMode::HighQuality;
+
+		if (uiHand->Visible)
+		{
+			if (int t = Math::Max(buf[0].SpecWidth, buf[1].SpecWidth)) SpecXMult = .9 * buf[0].len / t;
+		}
+
 		// Draw frame
 		e->Graphics->DrawLine(FramePen, 0, 0, pbxSpec->Width - 1, 0);
 		e->Graphics->DrawLine(FramePen, 0, pbxSpec->Height - 1, pbxSpec->Width - 1, pbxSpec->Height - 1);
@@ -310,13 +326,16 @@ namespace Spectre {
 			e->Graphics->DrawString(gcnew String(textbuffer), font, brush, p.X - 15, p.Y + 15);
 		}
 		p = TransformSpec(0, 0, 0);
-		e->Graphics->DrawLine(AxisPen, p.X - 5, p.Y + 3, p.X + 4000, p.Y + 3);
+		e->Graphics->DrawLine(AxisPen, p.X - 2, p.Y + 3, p.X + 4000, p.Y + 3);
+		e->Graphics->DrawLine(AxisPen, p.X - 2, p.Y - 4000, p.X - 2, p.Y);
 
-		//			for (int i = 0; i < 10; ++i)
-		//			{
-		//				p = TransformSpec(0, i, 0);
-		//				e->Graphics->DrawLine(AxisPen, p.X + 2, p.Y, p.X + 15, p.Y);
-		//			}
+		for (int i = 0; i < 10; ++i)
+		{
+			p = TransformSpec(0, i, 0);
+			e->Graphics->DrawLine(AxisPen, p.X - 2, p.Y, p.X - 15, p.Y);
+			sprintf(textbuffer, "%d", i);
+			e->Graphics->DrawString(gcnew String(textbuffer), font, brush, p.X - 42, p.Y - 15);
+		}
 
 		array<PointF>^ curvePoints = TransformPointsSpec(0, e);
 		//e->Graphics->DrawCurve(GreenPen, curvePoints, 0, curvePoints->Length-1, .5F);
@@ -331,7 +350,7 @@ namespace Spectre {
 		e->Graphics->DrawLine(RedPen, p.X, p.Y - 2000, p.X, p.Y + 15);
 
 		sprintf(textbuffer, "f, Ãö");
-		e->Graphics->DrawString(gcnew String(textbuffer), font, brush, pbxImp->Width - 55, p.Y - 30);
+		e->Graphics->DrawString(gcnew String(textbuffer), font, brush, pbxImp->Width - 100, p.Y + 10);
 
 
 		float RealSpecWidth[2];
@@ -364,13 +383,15 @@ namespace Spectre {
 			 InvalidateAll();
 }
 	System::Void UI::trackBar2_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
-			 std::cout << "tb2 " << trackBar2->Value << '\n' << "tb3 " << trackBar3->Value << '\n';
-			 InvalidateAll();
+		ImpXMult = trackBar3->Value;
+		SpecXMult = trackBar2->Value;
+		std::cout << "tb2 " << SpecXMult << '\n' << "tb3 " << ImpXMult << '\n';
+		InvalidateAll();
 }
 	System::Void UI::trackBar4_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
-			 SpecMult = (float)trackBar4->Value / 10;
-			 std::cout << "SpecMult " << SpecMult << '\n';
-			 InvalidateAll();
+		SpecYMult = 1.25 / (float)trackBar4->Value;
+		std::cout << "SpecYMult " << SpecYMult << '\n';
+		InvalidateAll();
 }
 	System::Void UI::PresetFuncChanged(System::Object^  sender, System::EventArgs^  e) {
 			 if (rdbPreset11->Checked)
@@ -547,13 +568,10 @@ namespace Spectre {
 
 	System::Void UI::ShowMessage(String ^msg)
 	{
-		if (!tmrMessage->Enabled)
-		{
-			lblMessage->Text = msg;
-			lblMessage->Visible = true;
-			MsgTime = 0;
-			tmrMessage->Enabled = true;
-		}
+		lblMessage->Text = msg;
+		lblMessage->Visible = true;
+		MsgTime = 0;
+		tmrMessage->Enabled = true;
 	}
 
 	System::Void UI::tmrMessage_Tick(System::Object^  sender, System::EventArgs^  e)
