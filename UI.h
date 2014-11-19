@@ -53,6 +53,8 @@ namespace Spectre {
 			//	gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.0F, System::Drawing::FontStyle::Bold,
 			//	System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204));
 			//
+			YAxis = 40.0f;
+
 			RefreshColorScheme();
 		}
 
@@ -132,6 +134,10 @@ namespace Spectre {
 private: System::Windows::Forms::TrackBar^  trackBar4;
 private: System::Windows::Forms::Label^  txtSpec;
 private: System::Windows::Forms::Label^  txtImp;
+private: System::Windows::Forms::Label^  txtSpecX;
+private: System::Windows::Forms::Label^  txtSpecY;
+private: System::Windows::Forms::Label^  txtImpX;
+private: System::Windows::Forms::Label^  txtImpY;
 	private: System::ComponentModel::IContainer^  components;
 
 	private:
@@ -197,6 +203,10 @@ private: System::Windows::Forms::Label^  txtImp;
 			this->btnReset = (gcnew System::Windows::Forms::Button());
 			this->lblHand = (gcnew System::Windows::Forms::Label());
 			this->tmrMessage = (gcnew System::Windows::Forms::Timer(this->components));
+			this->txtImpY = (gcnew System::Windows::Forms::Label());
+			this->txtImpX = (gcnew System::Windows::Forms::Label());
+			this->txtSpecY = (gcnew System::Windows::Forms::Label());
+			this->txtSpecX = (gcnew System::Windows::Forms::Label());
 			this->uiMainMenu->SuspendLayout();
 			this->uiPreset->SuspendLayout();
 			this->panPresetControl->SuspendLayout();
@@ -531,6 +541,10 @@ private: System::Windows::Forms::Label^  txtImp;
 			// uiGfx
 			// 
 			this->uiGfx->BackColor = System::Drawing::Color::Maroon;
+			this->uiGfx->Controls->Add(this->txtSpecX);
+			this->uiGfx->Controls->Add(this->txtSpecY);
+			this->uiGfx->Controls->Add(this->txtImpX);
+			this->uiGfx->Controls->Add(this->txtImpY);
 			this->uiGfx->Controls->Add(this->txtSpec);
 			this->uiGfx->Controls->Add(this->txtImp);
 			this->uiGfx->Controls->Add(this->trackBar4);
@@ -549,11 +563,11 @@ private: System::Windows::Forms::Label^  txtImp;
 			// 
 			this->txtSpec->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
 			this->txtSpec->AutoSize = true;
-			this->txtSpec->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->txtSpec->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->txtSpec->Location = System::Drawing::Point(475, 13);
 			this->txtSpec->Name = L"txtSpec";
-			this->txtSpec->Size = System::Drawing::Size(120, 37);
+			this->txtSpec->Size = System::Drawing::Size(139, 39);
 			this->txtSpec->TabIndex = 25;
 			this->txtSpec->Text = L"Спектр";
 			// 
@@ -561,11 +575,11 @@ private: System::Windows::Forms::Label^  txtImp;
 			// 
 			this->txtImp->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
 			this->txtImp->AutoSize = true;
-			this->txtImp->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->txtImp->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->txtImp->Location = System::Drawing::Point(16, 10);
 			this->txtImp->Name = L"txtImp";
-			this->txtImp->Size = System::Drawing::Size(140, 37);
+			this->txtImp->Size = System::Drawing::Size(167, 39);
 			this->txtImp->TabIndex = 24;
 			this->txtImp->Text = L"Импульс";
 			// 
@@ -794,6 +808,54 @@ private: System::Windows::Forms::Label^  txtImp;
 			this->tmrMessage->Interval = 50;
 			this->tmrMessage->Tick += gcnew System::EventHandler(this, &UI::tmrMessage_Tick);
 			// 
+			// txtImpY
+			// 
+			this->txtImpY->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
+			this->txtImpY->AutoSize = true;
+			this->txtImpY->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->txtImpY->Location = System::Drawing::Point(189, 17);
+			this->txtImpY->Name = L"txtImpY";
+			this->txtImpY->Size = System::Drawing::Size(41, 39);
+			this->txtImpY->TabIndex = 26;
+			this->txtImpY->Text = L"A";
+			// 
+			// txtImpX
+			// 
+			this->txtImpX->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
+			this->txtImpX->AutoSize = true;
+			this->txtImpX->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->txtImpX->Location = System::Drawing::Point(236, 17);
+			this->txtImpX->Name = L"txtImpX";
+			this->txtImpX->Size = System::Drawing::Size(68, 39);
+			this->txtImpX->TabIndex = 27;
+			this->txtImpX->Text = L"t, с";
+			// 
+			// txtSpecY
+			// 
+			this->txtSpecY->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
+			this->txtSpecY->AutoSize = true;
+			this->txtSpecY->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->txtSpecY->Location = System::Drawing::Point(310, 13);
+			this->txtSpecY->Name = L"txtSpecY";
+			this->txtSpecY->Size = System::Drawing::Size(61, 39);
+			this->txtSpecY->TabIndex = 28;
+			this->txtSpecY->Text = L"|A|";
+			// 
+			// txtSpecX
+			// 
+			this->txtSpecX->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
+			this->txtSpecX->AutoSize = true;
+			this->txtSpecX->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->txtSpecX->Location = System::Drawing::Point(377, 17);
+			this->txtSpecX->Name = L"txtSpecX";
+			this->txtSpecX->Size = System::Drawing::Size(91, 39);
+			this->txtSpecX->TabIndex = 29;
+			this->txtSpecX->Text = L"f, Гц";
+			// 
 			// UI
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -860,6 +922,8 @@ private: System::Windows::Forms::Label^  txtImp;
 
 		float ImpXMult, SpecXMult;
 
+		float YAxis;
+
 		System::Void RefreshColorScheme();
 
 		System::Void AdaptToWindowSize(System::Object^  sender, System::EventArgs^  e);
@@ -895,7 +959,7 @@ private: System::Windows::Forms::Label^  txtImp;
 		System::Void btnReset_Click(System::Object^  sender, System::EventArgs^  e);
 		void FinalizeHand();
 
-		System::Void ShowMessage(String ^msg);
+		System::Void ShowMessage(String ^msg, bool);
 
 		System::Void tmrMessage_Tick(System::Object^  sender, System::EventArgs^  e);
 		System::Void btnExit_Click(System::Object^  sender, System::EventArgs^  e);

@@ -109,13 +109,26 @@ namespace Spectre {
 
 			pbxImp->Left = 0;
 			pbxSpec->Left = pbxImp->Width + Spacing;
-			pbxImp->Top = 2 * Spacing + txtImp->Height;
+			pbxImp->Top = (uiGfx->Height - pbxImp->Height + txtImp->Height) / 2;
 			pbxSpec->Top = pbxImp->Top;
 
 			txtImp->Top = 0;
 			txtSpec->Top = 0;
 			txtImp->Left = (pbxImp->Width - txtImp->Width) / 2;
 			txtSpec->Left = pbxSpec->Left + (pbxSpec->Width - txtSpec->Width) / 2;
+
+			txtImpY->Left = pbxImp->Left;
+			txtImpY->Top = pbxImp->Top - txtImpY->Height;
+			txtSpecY->Left = pbxSpec->Left;
+			txtSpecY->Top = pbxSpec->Top - txtSpecY->Height;
+
+			txtImpX->Left = pbxImp->Right - txtImpX->Width;
+			txtImpX->Top = pbxImp->Bottom;
+			txtSpecX->Left = pbxSpec->Right - txtSpecX->Width;
+			txtSpecX->Top = pbxSpec->Bottom;
+
+			lblMessage->Top = pbxImp->Top + Spacing;
+			lblMessage->Left = pbxImp->Left + Spacing;
 		}
 
 
@@ -206,7 +219,7 @@ namespace Spectre {
 	}
 	PointF UI::TransformSpec(double x, double y, int index)
 	{
-		return PointF((float)((x / buf[index].len) * SpecXMult * pbxSpec->Width + 40),
+		return PointF((float)((x / buf[index].len) * SpecXMult * pbxSpec->Width + YAxis),
 			(float)((1 - (y * SpecYMult + 0.125) * 0.8) * pbxSpec->Height));
 	}
 	PointF UI::BackTransformImp(float x, float y, int index)
@@ -249,7 +262,6 @@ namespace Spectre {
 
 	void UI::DrawImp(PaintEventArgs^ e)
 	{
-		float YAxis = 40.0f;
 
 		e->Graphics->SmoothingMode = Drawing2D::SmoothingMode::HighQuality;
 
@@ -263,7 +275,7 @@ namespace Spectre {
 		for (int i = -10; i < 10; ++i)
 		{
 			p = TransformImp(buf[0].len / 2 + i * PointsPerSecond, 0, 0);
-			e->Graphics->DrawLine(AxisPen, p.X, p.Y + 3, p.X, p.Y + 15);
+			e->Graphics->DrawLine(AxisPen, p.X, p.Y, p.X, p.Y + 15);
 			sprintf(textbuffer, "%d", i);
 			e->Graphics->DrawString(gcnew String(textbuffer), font, brush, p.X - 15, p.Y + 15);
 		}
@@ -273,7 +285,7 @@ namespace Spectre {
 		e->Graphics->DrawString(gcnew String(textbuffer), font, brush, YAxis - 42, p.Y - 15);
 
 		p = TransformImp(buf[0].len / 2, 0, 0);
-		e->Graphics->DrawLine(AxisPen, p.X - 2000, p.Y + 3, p.X + 2000, p.Y + 3);
+		e->Graphics->DrawLine(AxisPen, p.X - 2000, p.Y, p.X + 2000, p.Y);
 		e->Graphics->DrawLine(AxisPen, YAxis, p.Y - 2000, YAxis, p.Y + 2000);
 
 		if (!bDrawingMode)
@@ -299,7 +311,7 @@ namespace Spectre {
 		}
 
 		sprintf(textbuffer, "t, с");
-		e->Graphics->DrawString(gcnew String(textbuffer), font, brush, pbxImp->Width - 80, p.Y + 10);
+//		e->Graphics->DrawString(gcnew String(textbuffer), font, brush, pbxImp->Width - 80, p.Y + 10);
 
 	}
 	void UI::DrawSpec(PaintEventArgs^ e)
@@ -309,7 +321,8 @@ namespace Spectre {
 
 		if (uiHand->Visible)
 		{
-			if (int t = Math::Max(buf[0].SpecWidth, buf[1].SpecWidth)) SpecXMult = .9 * buf[0].len / t;
+			if (double t = Math::Max(buf[0].SpecWidth, buf[1].SpecWidth)) SpecXMult = .9 * buf[0].len / t;
+			if (double t = Math::Max(buf[0].MaxSpec, buf[1].MaxSpec)) SpecYMult = 1.0 / t;
 		}
 
 		// Draw frame
@@ -321,18 +334,18 @@ namespace Spectre {
 		for (int i = 0; i < 20; ++i)
 		{
 			p = TransformSpec(i * buf[0].len / PointsPerSecond, 0, 0);
-			e->Graphics->DrawLine(AxisPen, p.X, p.Y + 3, p.X, p.Y + 15);
+			e->Graphics->DrawLine(AxisPen, p.X, p.Y, p.X, p.Y + 15);
 			sprintf(textbuffer, "%d", i);
 			e->Graphics->DrawString(gcnew String(textbuffer), font, brush, p.X - 15, p.Y + 15);
 		}
 		p = TransformSpec(0, 0, 0);
-		e->Graphics->DrawLine(AxisPen, p.X - 2, p.Y + 3, p.X + 4000, p.Y + 3);
-		e->Graphics->DrawLine(AxisPen, p.X - 2, p.Y - 4000, p.X - 2, p.Y);
+		e->Graphics->DrawLine(AxisPen, p.X, p.Y, p.X + 4000, p.Y);
+		e->Graphics->DrawLine(AxisPen, p.X, p.Y - 4000, p.X, p.Y);
 
 		for (int i = 0; i < 10; ++i)
 		{
 			p = TransformSpec(0, i, 0);
-			e->Graphics->DrawLine(AxisPen, p.X - 2, p.Y, p.X - 15, p.Y);
+			e->Graphics->DrawLine(AxisPen, p.X, p.Y, p.X - 15, p.Y);
 			sprintf(textbuffer, "%d", i);
 			e->Graphics->DrawString(gcnew String(textbuffer), font, brush, p.X - 42, p.Y - 15);
 		}
@@ -350,7 +363,7 @@ namespace Spectre {
 		e->Graphics->DrawLine(RedPen, p.X, p.Y - 2000, p.X, p.Y + 15);
 
 		sprintf(textbuffer, "f, Гц");
-		e->Graphics->DrawString(gcnew String(textbuffer), font, brush, pbxImp->Width - 100, p.Y + 10);
+//		e->Graphics->DrawString(gcnew String(textbuffer), font, brush, pbxImp->Width - 100, p.Y + 10);
 
 
 		float RealSpecWidth[2];
@@ -508,7 +521,7 @@ namespace Spectre {
 			 {
 				 // Плохой рисунок
 				 bDrawingMode = false;
-				 ShowMessage(gcnew String("Закончить график нужно \n в правом кружке."));
+				 ShowMessage(gcnew String("Закончить график нужно \n в правом кружке."), true);
 				 btnReset_Click(sender, e);
 			 }
 
@@ -535,7 +548,7 @@ namespace Spectre {
 			 InvalidateAll();
 
 
-			 ShowMessage(gcnew String("Возьмите левый кружок и\nнарисуйте им график импульса.\nЗакончить график нужно\nв правом кружке."));
+			 ShowMessage(gcnew String("Возьмите левый кружок и\nнарисуйте им график импульса.\nЗакончить график нужно\nв правом кружке."), false);
 		 }
 	void UI::FinalizeHand()
 		 {
@@ -566,12 +579,15 @@ namespace Spectre {
 			 InvalidateAll();
 		 }
 
-	System::Void UI::ShowMessage(String ^msg)
+	System::Void UI::ShowMessage(String ^msg, bool bImportant)
 	{
-		lblMessage->Text = msg;
-		lblMessage->Visible = true;
-		MsgTime = 0;
-		tmrMessage->Enabled = true;
+		if (!tmrMessage->Enabled || bImportant)
+		{
+			lblMessage->Text = msg;
+			lblMessage->Visible = true;
+			MsgTime = 0;
+			tmrMessage->Enabled = true;
+		}
 	}
 
 	System::Void UI::tmrMessage_Tick(System::Object^  sender, System::EventArgs^  e)
