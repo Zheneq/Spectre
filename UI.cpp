@@ -14,9 +14,11 @@ namespace Spectre {
 		Color clr = System::Drawing::Color::White;
 
 		uiMainMenu->BackColor = clr;
+		uiFaq->BackColor = clr;
 		uiPreset->BackColor = clr;
 		uiTrap->BackColor = clr;
 		uiHand->BackColor = clr;
+		uiAuthors->BackColor = clr;
 		uiGlobal->BackColor = clr;
 		uiGfx->BackColor = clr;
 		panPresetControl->BackColor = clr;
@@ -57,6 +59,17 @@ namespace Spectre {
 		uiHand->Top = 0;
 		uiHand->Width = ClientSize.Width;
 		uiHand->Height = ClientSize.Height;
+		uiFaq->Left = 0;
+		uiFaq->Top = 0;
+		uiFaq->Width = ClientSize.Width;
+		uiFaq->Height = ClientSize.Height;
+		uiAuthors->Left = 0;
+		uiAuthors->Top = 0;
+		uiAuthors->Width = ClientSize.Width;
+		uiAuthors->Height = ClientSize.Height;
+
+		btnBack->Left = Spacing;
+		btnBack->Top = ClientSize.Height - Spacing - btnBack->Height;
 
 		// global
 		uiGlobal->Left = 0;
@@ -64,13 +77,23 @@ namespace Spectre {
 
 		// uiMainMenu
 		btnPreset->Left = (ClientSize.Width - btnPreset->Width) / 2;
+		btnFaq->Left = btnPreset->Left;
+		btnFaq->Width = btnPreset->Width;
 		btnTrap->Left = btnPreset->Left;
 		btnTrap->Width = btnPreset->Width;
 		btnHand->Left = btnPreset->Left;
 		btnHand->Width = btnPreset->Width;
+		btnAuthors->Left = btnPreset->Left;
+		btnAuthors->Width = btnPreset->Width;
 		btnExit->Left = btnPreset->Left;
 		btnExit->Width = btnPreset->Width;
 
+		// uiFaq
+		pbxFaq->Left = 0;
+		pbxFaq->Top = 0;
+		pbxFaq->Width = uiFaq->Width;
+		pbxFaq->Height = uiFaq->Height;
+		
 		// uiPreset
 		lblPreset->Left = (ClientSize.Width - lblPreset->Width) / 2;
 
@@ -135,18 +158,34 @@ namespace Spectre {
 		RawHand = gcnew array<Point>(pbxImp->Width);
 		ResetHand();
 
+		uiGfx->BringToFront();
+		uiGlobal->BringToFront();
+		btnBack->BringToFront();
+
 		InvalidateAll();
 	}
 	System::Void UI::btnBack_Click(System::Object^  sender, System::EventArgs^  e) {
+		Back();
+	}
+	System::Void UI::Back() {
 		uiMainMenu->Visible = true;
+		uiFaq->Visible = false;
 		uiPreset->Visible = false;
 		uiTrap->Visible = false;
 		uiHand->Visible = false;
+		uiAuthors->Visible = false;
 		uiGfx->Visible = false;
 		uiGlobal->Visible = false;
 		bDrawingMode = false;
+		lblMessage->Visible = false;
+		btnBack->Visible = false;
 
 		E_0 = E_0_def;
+	}
+	System::Void UI::btnFaq_Click(System::Object^  sender, System::EventArgs^  e) {
+		uiMainMenu->Visible = false;
+		uiFaq->Visible = true;
+		btnBack->Visible = true;
 	}
 	System::Void UI::btnPreset_Click(System::Object^  sender, System::EventArgs^  e)
 	{
@@ -156,8 +195,7 @@ namespace Spectre {
 		uiPreset->Visible = true;
 		uiGfx->Visible = true;
 		uiGlobal->Visible = true;
-		uiGfx->BringToFront();
-		uiGlobal->BringToFront();
+		btnBack->Visible = true;
 
 		SpecXMult = 118;
 		ImpXMult = 14;
@@ -172,8 +210,7 @@ namespace Spectre {
 		uiTrap->Visible = true;
 		uiGfx->Visible = true;
 		uiGlobal->Visible = true;
-		uiGfx->BringToFront();
-		uiGlobal->BringToFront();
+		btnBack->Visible = true;
 
 		SpecXMult = 118;
 		ImpXMult = 14;
@@ -188,11 +225,18 @@ namespace Spectre {
 		uiHand->Visible = true;
 		uiGfx->Visible = true;
 		uiGlobal->Visible = true;
-		uiGfx->BringToFront();
-		uiGlobal->BringToFront();
+		btnBack->Visible = true;
 		bDrawingMode = true;
 
 		SpecYMult = 0.125;
+	}
+	System::Void UI::btnAuthors_Click(System::Object^  sender, System::EventArgs^  e) {
+		uiMainMenu->Visible = false;
+		uiAuthors->Visible = true;
+		btnBack->Visible = true;
+	}
+	System::Void UI::btnExit_Click(System::Object^  sender, System::EventArgs^  e) {
+		this->Close();
 	}
 	System::Void UI::InvalidateAll()
 	{
@@ -291,23 +335,23 @@ namespace Spectre {
 		if (!bDrawingMode)
 		{
 			array<PointF>^ curvePoints = TransformPointsImp(0, e);
-			//e->Graphics->DrawCurve(GreenPen, curvePoints, 0, curvePoints->Length-1, .5F);
-			e->Graphics->DrawLines(GreenPen, curvePoints);
+			//e->Graphics->DrawCurve(SecondPen, curvePoints, 0, curvePoints->Length-1, .5F);
+			e->Graphics->DrawLines(SecondPen, curvePoints);
 			curvePoints = TransformPointsImp(1, e);
-			//e->Graphics->DrawCurve(RedPen, curvePoints, 0, curvePoints->Length-1, .5F);
-			e->Graphics->DrawLines(RedPen, curvePoints);
+			//e->Graphics->DrawCurve(FirstPen, curvePoints, 0, curvePoints->Length-1, .5F);
+			e->Graphics->DrawLines(FirstPen, curvePoints);
 		}
 		else
 		{
 			e->Graphics->FillEllipse(
-				GreenPen->Brush,
-				Start.X - Radius - GreenPen->Width / 2, Start.Y - Radius - GreenPen->Width / 2,
+				SecondPen->Brush,
+				Start.X - Radius - SecondPen->Width / 2, Start.Y - Radius - SecondPen->Width / 2,
 				Radius * 2, Radius * 2);
 			e->Graphics->FillEllipse(
-				GreenPen->Brush,
-				Finish.X - Radius - GreenPen->Width / 2, Finish.Y - Radius - GreenPen->Width / 2,
+				SecondPen->Brush,
+				Finish.X - Radius - SecondPen->Width / 2, Finish.Y - Radius - SecondPen->Width / 2,
 				Radius * 2, Radius * 2);
-			e->Graphics->DrawLines(GreenPen, RawHand);
+			e->Graphics->DrawLines(SecondPen, RawHand);
 		}
 
 		sprintf(textbuffer, "t, ñ");
@@ -351,16 +395,16 @@ namespace Spectre {
 		}
 
 		array<PointF>^ curvePoints = TransformPointsSpec(0, e);
-		//e->Graphics->DrawCurve(GreenPen, curvePoints, 0, curvePoints->Length-1, .5F);
-		e->Graphics->DrawLines(GreenPen, curvePoints);
+		//e->Graphics->DrawCurve(SecondPen, curvePoints, 0, curvePoints->Length-1, .5F);
+		e->Graphics->DrawLines(SecondPen, curvePoints);
 		curvePoints = TransformPointsSpec(1, e);
-		//e->Graphics->DrawCurve(RedPen, curvePoints, 0, curvePoints->Length-1, .5F);
-		e->Graphics->DrawLines(RedPen, curvePoints);
+		//e->Graphics->DrawCurve(FirstPen, curvePoints, 0, curvePoints->Length-1, .5F);
+		e->Graphics->DrawLines(FirstPen, curvePoints);
 
 		p = TransformSpec(buf[0].SpecWidth, 0, 0);
-		e->Graphics->DrawLine(GreenPen, p.X, p.Y - 2000, p.X, p.Y + 15);
+		e->Graphics->DrawLine(_SecondPen, p.X, p.Y - 2000, p.X, p.Y + 15);
 		p = TransformSpec(buf[1].SpecWidth, 0, 0);
-		e->Graphics->DrawLine(RedPen, p.X, p.Y - 2000, p.X, p.Y + 15);
+		e->Graphics->DrawLine(_FirstPen, p.X, p.Y - 2000, p.X, p.Y + 15);
 
 		sprintf(textbuffer, "f, Ãö");
 //		e->Graphics->DrawString(gcnew String(textbuffer), font, brush, pbxImp->Width - 100, p.Y + 10);
@@ -598,9 +642,6 @@ namespace Spectre {
 			lblMessage->Visible = false;
 			tmrMessage->Enabled = false;
 		}
-	}
-	System::Void UI::btnExit_Click(System::Object^  sender, System::EventArgs^  e) {
-		this->Close();
 	}
 
 }
