@@ -130,7 +130,8 @@ namespace Spectre {
 	private: System::Windows::Forms::Panel^  uiHand;
 	private: System::Windows::Forms::Label^  lblHand;
 	private: System::Windows::Forms::Button^  btnReset;
-	private: System::Windows::Forms::Label^  label1;
+private: System::Windows::Forms::Label^  lblDeltaT;
+
 	private: System::Windows::Forms::Label^  lblC2;
 	private: System::Windows::Forms::Label^  lblC1;
 	private: System::Windows::Forms::Timer^  tmrMessage;
@@ -152,6 +153,8 @@ private: System::Windows::Forms::PictureBox^  pbxFaq;
 private: System::Windows::Forms::Panel^  uiAuthors;
 private: System::Windows::Forms::Button^  btnAuthors;
 private: System::Windows::Forms::Button^  btnFaq;
+private: System::Windows::Forms::Label^  lblDeltaT2;
+private: System::Windows::Forms::Label^  lblDeltaT1;
 
 	private: System::ComponentModel::IContainer^  components;
 
@@ -215,7 +218,7 @@ private: System::Windows::Forms::Button^  btnFaq;
 			this->btnBack = (gcnew System::Windows::Forms::Button());
 			this->uiGlobal = (gcnew System::Windows::Forms::Panel());
 			this->label9 = (gcnew System::Windows::Forms::Label());
-			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->lblDeltaT = (gcnew System::Windows::Forms::Label());
 			this->lblC2 = (gcnew System::Windows::Forms::Label());
 			this->lblC1 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
@@ -228,6 +231,8 @@ private: System::Windows::Forms::Button^  btnFaq;
 			this->uiFaq = (gcnew System::Windows::Forms::Panel());
 			this->pbxFaq = (gcnew System::Windows::Forms::PictureBox());
 			this->uiAuthors = (gcnew System::Windows::Forms::Panel());
+			this->lblDeltaT1 = (gcnew System::Windows::Forms::Label());
+			this->lblDeltaT2 = (gcnew System::Windows::Forms::Label());
 			this->uiMainMenu->SuspendLayout();
 			this->uiPreset->SuspendLayout();
 			this->panPresetControl->SuspendLayout();
@@ -257,9 +262,9 @@ private: System::Windows::Forms::Button^  btnFaq;
 			this->uiMainMenu->Controls->Add(this->btnHand);
 			this->uiMainMenu->Controls->Add(this->btnTrap);
 			this->uiMainMenu->Controls->Add(this->btnPreset);
-			this->uiMainMenu->Location = System::Drawing::Point(45, 12);
+			this->uiMainMenu->Location = System::Drawing::Point(19, 12);
 			this->uiMainMenu->Name = L"uiMainMenu";
-			this->uiMainMenu->Size = System::Drawing::Size(375, 436);
+			this->uiMainMenu->Size = System::Drawing::Size(178, 93);
 			this->uiMainMenu->TabIndex = 15;
 			// 
 			// btnAuthors
@@ -340,9 +345,9 @@ private: System::Windows::Forms::Button^  btnFaq;
 			this->uiPreset->Controls->Add(this->panPresetControl);
 			this->uiPreset->Controls->Add(this->lblPreset);
 			this->uiPreset->Controls->Add(this->trackBar1);
-			this->uiPreset->Location = System::Drawing::Point(426, 15);
+			this->uiPreset->Location = System::Drawing::Point(212, 12);
 			this->uiPreset->Name = L"uiPreset";
-			this->uiPreset->Size = System::Drawing::Size(398, 427);
+			this->uiPreset->Size = System::Drawing::Size(175, 93);
 			this->uiPreset->TabIndex = 16;
 			this->uiPreset->Visible = false;
 			// 
@@ -602,9 +607,9 @@ private: System::Windows::Forms::Button^  btnFaq;
 			this->uiGfx->Controls->Add(this->trackBar2);
 			this->uiGfx->Controls->Add(this->pbxImp);
 			this->uiGfx->Controls->Add(this->pbxSpec);
-			this->uiGfx->Location = System::Drawing::Point(16, 199);
+			this->uiGfx->Location = System::Drawing::Point(791, 12);
 			this->uiGfx->Name = L"uiGfx";
-			this->uiGfx->Size = System::Drawing::Size(676, 474);
+			this->uiGfx->Size = System::Drawing::Size(176, 93);
 			this->uiGfx->TabIndex = 17;
 			this->uiGfx->Visible = false;
 			// 
@@ -614,7 +619,7 @@ private: System::Windows::Forms::Button^  btnFaq;
 			this->txtSpecX->AutoSize = true;
 			this->txtSpecX->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->txtSpecX->Location = System::Drawing::Point(377, 17);
+			this->txtSpecX->Location = System::Drawing::Point(127, -364);
 			this->txtSpecX->Name = L"txtSpecX";
 			this->txtSpecX->Size = System::Drawing::Size(91, 39);
 			this->txtSpecX->TabIndex = 29;
@@ -626,7 +631,7 @@ private: System::Windows::Forms::Button^  btnFaq;
 			this->txtSpecY->AutoSize = true;
 			this->txtSpecY->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->txtSpecY->Location = System::Drawing::Point(310, 13);
+			this->txtSpecY->Location = System::Drawing::Point(60, -368);
 			this->txtSpecY->Name = L"txtSpecY";
 			this->txtSpecY->Size = System::Drawing::Size(61, 39);
 			this->txtSpecY->TabIndex = 28;
@@ -638,7 +643,7 @@ private: System::Windows::Forms::Button^  btnFaq;
 			this->txtImpX->AutoSize = true;
 			this->txtImpX->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->txtImpX->Location = System::Drawing::Point(236, 17);
+			this->txtImpX->Location = System::Drawing::Point(-14, -364);
 			this->txtImpX->Name = L"txtImpX";
 			this->txtImpX->Size = System::Drawing::Size(68, 39);
 			this->txtImpX->TabIndex = 27;
@@ -650,7 +655,7 @@ private: System::Windows::Forms::Button^  btnFaq;
 			this->txtImpY->AutoSize = true;
 			this->txtImpY->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->txtImpY->Location = System::Drawing::Point(189, 17);
+			this->txtImpY->Location = System::Drawing::Point(-61, -364);
 			this->txtImpY->Name = L"txtImpY";
 			this->txtImpY->Size = System::Drawing::Size(41, 39);
 			this->txtImpY->TabIndex = 26;
@@ -662,7 +667,7 @@ private: System::Windows::Forms::Button^  btnFaq;
 			this->txtSpec->AutoSize = true;
 			this->txtSpec->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->txtSpec->Location = System::Drawing::Point(475, 13);
+			this->txtSpec->Location = System::Drawing::Point(225, -368);
 			this->txtSpec->Name = L"txtSpec";
 			this->txtSpec->Size = System::Drawing::Size(139, 39);
 			this->txtSpec->TabIndex = 25;
@@ -674,7 +679,7 @@ private: System::Windows::Forms::Button^  btnFaq;
 			this->txtImp->AutoSize = true;
 			this->txtImp->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->txtImp->Location = System::Drawing::Point(16, 10);
+			this->txtImp->Location = System::Drawing::Point(-234, -371);
 			this->txtImp->Name = L"txtImp";
 			this->txtImp->Size = System::Drawing::Size(167, 39);
 			this->txtImp->TabIndex = 24;
@@ -713,9 +718,9 @@ private: System::Windows::Forms::Button^  btnFaq;
 			this->uiTrap->Controls->Add(this->label2);
 			this->uiTrap->Controls->Add(this->lblTrap);
 			this->uiTrap->Controls->Add(this->trbTrap);
-			this->uiTrap->Location = System::Drawing::Point(39, 324);
+			this->uiTrap->Location = System::Drawing::Point(398, 12);
 			this->uiTrap->Name = L"uiTrap";
-			this->uiTrap->Size = System::Drawing::Size(327, 430);
+			this->uiTrap->Size = System::Drawing::Size(234, 93);
 			this->uiTrap->TabIndex = 17;
 			this->uiTrap->Visible = false;
 			// 
@@ -767,7 +772,7 @@ private: System::Windows::Forms::Button^  btnFaq;
 			this->btnBack->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
 			this->btnBack->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->btnBack->Location = System::Drawing::Point(372, 679);
+			this->btnBack->Location = System::Drawing::Point(12, 123);
 			this->btnBack->Name = L"btnBack";
 			this->btnBack->Size = System::Drawing::Size(260, 60);
 			this->btnBack->TabIndex = 18;
@@ -778,14 +783,16 @@ private: System::Windows::Forms::Button^  btnFaq;
 			// uiGlobal
 			// 
 			this->uiGlobal->BackColor = System::Drawing::Color::SlateBlue;
+			this->uiGlobal->Controls->Add(this->lblDeltaT2);
+			this->uiGlobal->Controls->Add(this->lblDeltaT1);
 			this->uiGlobal->Controls->Add(this->label9);
-			this->uiGlobal->Controls->Add(this->label1);
+			this->uiGlobal->Controls->Add(this->lblDeltaT);
 			this->uiGlobal->Controls->Add(this->lblC2);
 			this->uiGlobal->Controls->Add(this->lblC1);
 			this->uiGlobal->Controls->Add(this->label3);
 			this->uiGlobal->Controls->Add(this->lblSpecWidth2);
 			this->uiGlobal->Controls->Add(this->lblSpecWidth1);
-			this->uiGlobal->Location = System::Drawing::Point(606, 434);
+			this->uiGlobal->Location = System::Drawing::Point(945, 195);
 			this->uiGlobal->Name = L"uiGlobal";
 			this->uiGlobal->Size = System::Drawing::Size(280, 290);
 			this->uiGlobal->TabIndex = 19;
@@ -797,23 +804,23 @@ private: System::Windows::Forms::Button^  btnFaq;
 			this->label9->AutoSize = true;
 			this->label9->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label9->Location = System::Drawing::Point(9, 4);
+			this->label9->Location = System::Drawing::Point(9, 49);
 			this->label9->Name = L"label9";
 			this->label9->Size = System::Drawing::Size(197, 37);
 			this->label9->TabIndex = 27;
 			this->label9->Text = L"С = ΔωΔt/2π";
 			// 
-			// label1
+			// lblDeltaT
 			// 
-			this->label1->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
-			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->lblDeltaT->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
+			this->lblDeltaT->AutoSize = true;
+			this->lblDeltaT->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label1->Location = System::Drawing::Point(9, 49);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(163, 37);
-			this->label1->TabIndex = 26;
-			this->label1->Text = L"Δt = const";
+			this->lblDeltaT->Location = System::Drawing::Point(10, 7);
+			this->lblDeltaT->Name = L"lblDeltaT";
+			this->lblDeltaT->Size = System::Drawing::Size(118, 37);
+			this->lblDeltaT->TabIndex = 26;
+			this->lblDeltaT->Text = L"Δt = Δt";
 			// 
 			// lblC2
 			// 
@@ -880,9 +887,9 @@ private: System::Windows::Forms::Button^  btnFaq;
 			this->uiHand->BackColor = System::Drawing::Color::GreenYellow;
 			this->uiHand->Controls->Add(this->btnReset);
 			this->uiHand->Controls->Add(this->lblHand);
-			this->uiHand->Location = System::Drawing::Point(860, 215);
+			this->uiHand->Location = System::Drawing::Point(638, 12);
 			this->uiHand->Name = L"uiHand";
-			this->uiHand->Size = System::Drawing::Size(327, 430);
+			this->uiHand->Size = System::Drawing::Size(140, 93);
 			this->uiHand->TabIndex = 20;
 			this->uiHand->Visible = false;
 			// 
@@ -919,7 +926,7 @@ private: System::Windows::Forms::Button^  btnFaq;
 			// 
 			this->uiFaq->BackColor = System::Drawing::Color::Lime;
 			this->uiFaq->Controls->Add(this->pbxFaq);
-			this->uiFaq->Location = System::Drawing::Point(849, 15);
+			this->uiFaq->Location = System::Drawing::Point(1001, 12);
 			this->uiFaq->Name = L"uiFaq";
 			this->uiFaq->Size = System::Drawing::Size(114, 67);
 			this->uiFaq->TabIndex = 21;
@@ -927,6 +934,7 @@ private: System::Windows::Forms::Button^  btnFaq;
 			// pbxFaq
 			// 
 			this->pbxFaq->BackColor = System::Drawing::Color::White;
+			this->pbxFaq->ImageLocation = L"zaglav.emf";
 			this->pbxFaq->Location = System::Drawing::Point(3, 3);
 			this->pbxFaq->Name = L"pbxFaq";
 			this->pbxFaq->Size = System::Drawing::Size(100, 50);
@@ -936,16 +944,43 @@ private: System::Windows::Forms::Button^  btnFaq;
 			// uiAuthors
 			// 
 			this->uiAuthors->BackColor = System::Drawing::Color::Teal;
-			this->uiAuthors->Location = System::Drawing::Point(849, 105);
+			this->uiAuthors->Location = System::Drawing::Point(1005, 89);
 			this->uiAuthors->Name = L"uiAuthors";
 			this->uiAuthors->Size = System::Drawing::Size(200, 100);
 			this->uiAuthors->TabIndex = 22;
+			// 
+			// lblDeltaT1
+			// 
+			this->lblDeltaT1->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
+			this->lblDeltaT1->AutoSize = true;
+			this->lblDeltaT1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->lblDeltaT1->ForeColor = System::Drawing::Color::Blue;
+			this->lblDeltaT1->Location = System::Drawing::Point(9, 7);
+			this->lblDeltaT1->Name = L"lblDeltaT1";
+			this->lblDeltaT1->Size = System::Drawing::Size(49, 37);
+			this->lblDeltaT1->TabIndex = 28;
+			this->lblDeltaT1->Text = L"Δt";
+			// 
+			// lblDeltaT2
+			// 
+			this->lblDeltaT2->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
+			this->lblDeltaT2->AutoSize = true;
+			this->lblDeltaT2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->lblDeltaT2->ForeColor = System::Drawing::Color::Red;
+			this->lblDeltaT2->Location = System::Drawing::Point(79, 7);
+			this->lblDeltaT2->Name = L"lblDeltaT2";
+			this->lblDeltaT2->Size = System::Drawing::Size(49, 37);
+			this->lblDeltaT2->TabIndex = 29;
+			this->lblDeltaT2->Text = L"Δt";
 			// 
 			// UI
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1249, 733);
+			this->Controls->Add(this->btnBack);
 			this->Controls->Add(this->uiMainMenu);
 			this->Controls->Add(this->uiAuthors);
 			this->Controls->Add(this->uiFaq);
@@ -953,7 +988,6 @@ private: System::Windows::Forms::Button^  btnFaq;
 			this->Controls->Add(this->uiGlobal);
 			this->Controls->Add(this->uiHand);
 			this->Controls->Add(this->uiGfx);
-			this->Controls->Add(this->btnBack);
 			this->Controls->Add(this->uiPreset);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			this->Name = L"UI";
