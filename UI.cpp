@@ -186,6 +186,7 @@ namespace Spectre {
 		uiMainMenu->Visible = false;
 		uiFaq->Visible = true;
 		btnBack->Visible = true;
+		btnBack->BringToFront();
 	}
 	System::Void UI::btnPreset_Click(System::Object^  sender, System::EventArgs^  e)
 	{
@@ -196,6 +197,7 @@ namespace Spectre {
 		uiGfx->Visible = true;
 		uiGlobal->Visible = true;
 		btnBack->Visible = true;
+		btnBack->BringToFront();
 
 		SpecXMult = 118;
 		ImpXMult = 14;
@@ -211,6 +213,7 @@ namespace Spectre {
 		uiGfx->Visible = true;
 		uiGlobal->Visible = true;
 		btnBack->Visible = true;
+		btnBack->BringToFront();
 
 		SpecXMult = 118;
 		ImpXMult = 14;
@@ -226,6 +229,7 @@ namespace Spectre {
 		uiGfx->Visible = true;
 		uiGlobal->Visible = true;
 		btnBack->Visible = true;
+		btnBack->BringToFront();
 		bDrawingMode = true;
 
 		SpecYMult = 0.125;
@@ -234,6 +238,7 @@ namespace Spectre {
 		uiMainMenu->Visible = false;
 		uiAuthors->Visible = true;
 		btnBack->Visible = true;
+		btnBack->BringToFront();
 	}
 	System::Void UI::btnExit_Click(System::Object^  sender, System::EventArgs^  e) {
 		this->Close();
@@ -415,17 +420,18 @@ namespace Spectre {
 		RealSpecWidth[1] = buf[1].SpecWidth * PointsPerSecond / buf[1].len + .01;
 
 
-		sprintf(textbuffer, "%.2f 關", RealSpecWidth[0]);
+		sprintf(textbuffer, "%.1f 關", RealSpecWidth[0]);
 		lblSpecWidth1->Text = gcnew String(textbuffer);
-		sprintf(textbuffer, "%.2f 關", RealSpecWidth[1]);
+		sprintf(textbuffer, "%.1f 關", RealSpecWidth[1]);
 		lblSpecWidth2->Text = gcnew String(textbuffer);
 
 
 
-		sprintf(textbuffer, "%.2f", RealSpecWidth[0] * E_0 / PointsPerSecond);
+		sprintf(textbuffer, "%.1f", RealSpecWidth[0] * E_0 / PointsPerSecond);
 		lblC1->Text = gcnew String(textbuffer);
 
-		sprintf(textbuffer, "%.2f", RealSpecWidth[1] * E_0 / PointsPerSecond);
+		sprintf(textbuffer, "%.1f", RealSpecWidth[1] * E_0 / PointsPerSecond);
+		//sprintf(textbuffer, "%.1f", 1.0f); // so evil
 		lblC2->Text = gcnew String(textbuffer);
 	}
 
