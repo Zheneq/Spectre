@@ -9,7 +9,7 @@ extern float PointsPerSecond;
 extern double E_0;
 extern const double E_0_def;
 const long double pi = 3.14159265359;
-extern double Level, DefaultLevel;
+const double Level = .90457703976772257201578964538544; // 0.90282233018308548168257003610692
 
 struct buffer 
 {
@@ -73,7 +73,8 @@ struct buffer
 		}
 		SpecWidth = i;
 
-		for (i = 0; i < len / 2 + 1; i++) spec[i] = 2*sqrt(spec[i]);
+
+		for (i = 0; i < len / 2 + 1; i++) spec[i] = sqrt(spec[i]);
 	}
 
 	void check_energy(){
@@ -128,35 +129,6 @@ struct buffer
 		memset(imp, 0, sizeof(double)*len);
 		check_energy();
 		fourier();
-
-		// Хотфикс кривой отсечки
-		int t;
-		for (t = 1; t < len / 2 + 1; t++)
-		{
-			if (spec[t - 1] > spec[t] && spec[t] < spec[t + 1])
-				break;
-		}
-		double SubSum = 0, FullSum, NewLevel;
-		for (int i = 0; i < t; ++i)
-			SubSum += pow(spec[i], 2);
-		FullSum = SubSum;
-		for (int i = t; i < len / 2 + 1; ++i)
-			FullSum += pow(spec[i], 2);
-		NewLevel = SubSum / FullSum;
-		if (abs(NewLevel - DefaultLevel) < .05)
-			Level = NewLevel;
-		else
-			Level = DefaultLevel;
-
-		// Пересчитываем ширину
-		double ts = 0;
-		int i;
-		for (i = 0; ts / FullSum < Level && i < len / 2 + 1; ++i)
-		{
-			ts += pow(spec[i], 2);
-		}
-		SpecWidth = i;
-
 	}
 
 	void generate_tri_f_p()
