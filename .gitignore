@@ -3,6 +3,7 @@
 
 *.dll
 *.vcxproj
+*.filters
 
 # User-specific files
 *.suo

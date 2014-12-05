@@ -16,3 +16,9 @@ float Interpolate(float start, float finish, float t)
 	// Ћинейна€ интерпол€ци€
 	return start + (finish - start)*t;
 }
+
+void SpecInvalidate()
+{
+	buf[0].fourier();
+	buf[1].fourier();
+}

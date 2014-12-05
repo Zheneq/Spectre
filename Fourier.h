@@ -2,14 +2,17 @@
 #include "../FFTW/fftw3.h"
 #include <string.h>
 #include <iostream>
+#define _USE_MATH_DEFINES
 #include <math.h>
 #pragma comment(lib, "../FFTW/libfftw3-3")
 
 extern float PointsPerSecond;
 extern double E_0;
 extern const double E_0_def;
-const long double pi = 3.14159265359;
+const long double pi = M_PI;
 extern double Level, DefaultLevel;
+
+void SpecInvalidate();
 
 struct buffer 
 {
@@ -55,25 +58,40 @@ struct buffer
 	void fourier()
 	{
 		fftw_execute(p);
-		int i;
+		for (int i = 0; i <= len / 2; i++)
+		{
+			spec[i] = 2 * sqrt((cspec[i][0] * cspec[i][0] + cspec[i][1] * cspec[i][1]) / len);
+		}
+
+	
+		double SpecSqrSum = 0;
 		MaxSpec = 0;
-		double SpecSum = 0, t = 0;
-		for(i = 0; i < len/2 + 1; i++)
+		for(int i = 0; i <= len/2; i++)
 		{
-			spec[i] = (cspec[i][0]*cspec[i][0]+cspec[i][1]*cspec[i][1])/len;
-			if(spec[i] > MaxSpec) MaxSpec = spec[i];
-			SpecSum += spec[i];
+			SpecSqrSum += pow(spec[i], 2);
+			if (spec[i] > MaxSpec) MaxSpec = spec[i];
 
-			if (i == (int)(len / PointsPerSecond)) std::cout << "int = " << SpecSum << '\n';
+			if (i == (int)(len / PointsPerSecond)) std::cout << "  SpecSqrSum [0:1] = " << SpecSqrSum << '\n';
 		}
-		std::cout << "full int = " << SpecSum << '\n';
-		for (i = 0; t/SpecSum < Level && i < len / 2 + 1; ++i)
+		std::cout << "  SpecSqrSum = " << SpecSqrSum << '\n';
+
+		int i;
+		double temp = Level * SpecSqrSum;
+		for (i = 0; (temp > 0) && (i <= len / 2); ++i)
 		{
-			t += spec[i];
+			temp -= pow(spec[i], 2);
 		}
-		SpecWidth = i;
+		SpecWidth = i; //- ((.5*spec[i] < Level*SpecSqrSum - t) ? 0 : 1);
+		std::cout << "  SpecWidth = " << SpecWidth << '\n';
 
-		for (i = 0; i < len / 2 + 1; i++) spec[i] = 2*sqrt(spec[i]);
+		/////////////////////////////
+		double tt = 0;
+		for (int i = 0; i < SpecWidth; ++i)
+		{
+			tt += pow(spec[i], 2);
+		}
+		std::cout << "     " << tt << '/' << Level * SpecSqrSum << " (" << Level << " of " << SpecSqrSum << ")" << '\n';
+
 	}
 
 	void check_energy(){
@@ -109,12 +127,14 @@ struct buffer
 
 	void generate_null()
 	{
+		std::cout << "gen null\n";
 		memset(imp, 0, sizeof(double)*len);
 		fourier();
 	}
 
 	void generate_gauss(double param)
 	{
+		std::cout << "gen gauss\n";
 		for (int i = 0; i < len; i++)
 		{
 			imp[i] = exp(-((i-len/2)*(i-len/2)/(param*param)));
@@ -125,6 +145,7 @@ struct buffer
 
 	void generate_rect()
 	{
+		std::cout << "gen rect\n";
 		memset(imp, 0, sizeof(double)*len);
 		check_energy();
 		fourier();
@@ -148,7 +169,9 @@ struct buffer
 		else
 			Level = DefaultLevel;
 
+		std::cout << "l=" << Level << " (" << (Level == DefaultLevel) << ")\n";
 		// Пересчитываем ширину
+		/*
 		double ts = 0;
 		int i;
 		for (i = 0; ts / FullSum < Level && i < len / 2 + 1; ++i)
@@ -156,7 +179,10 @@ struct buffer
 			ts += pow(spec[i], 2);
 		}
 		SpecWidth = i;
-
+		*/
+		std::cout << "gen rect 2\n";
+		SpecInvalidate();
+		//fourier();
 	}
 
 	void generate_tri_f_p()
