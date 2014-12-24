@@ -92,6 +92,14 @@ struct buffer
 		}
 		std::cout << "     " << tt << '/' << Level * SpecSqrSum << " (" << Level << " of " << SpecSqrSum << ")" << '\n';
 
+		/////////////////////////////
+/*
+// Хранить в спеке квадрат (для отладки)
+		for (int i = 0; i <= len/2; ++i)
+		{
+			spec[i] *= spec[i];
+		}
+*/
 	}
 
 	void check_energy(){
