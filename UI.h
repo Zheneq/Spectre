@@ -276,9 +276,9 @@ private: System::Windows::Forms::PictureBox^  pbxCMC;
 			this->uiMainMenu->Controls->Add(this->btnHand);
 			this->uiMainMenu->Controls->Add(this->btnTrap);
 			this->uiMainMenu->Controls->Add(this->btnPreset);
-			this->uiMainMenu->Location = System::Drawing::Point(12, 196);
+			this->uiMainMenu->Location = System::Drawing::Point(12, 12);
 			this->uiMainMenu->Name = L"uiMainMenu";
-			this->uiMainMenu->Size = System::Drawing::Size(927, 540);
+			this->uiMainMenu->Size = System::Drawing::Size(142, 85);
 			this->uiMainMenu->TabIndex = 15;
 			// 
 			// pbxCMC
@@ -597,20 +597,18 @@ private: System::Windows::Forms::PictureBox^  pbxCMC;
 			this->trackBar3->Size = System::Drawing::Size(252, 45);
 			this->trackBar3->TabIndex = 13;
 			this->trackBar3->Value = 18;
-			this->trackBar3->Visible = false;
 			this->trackBar3->Scroll += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
 			this->trackBar3->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
 			// 
 			// trackBar2
 			// 
 			this->trackBar2->Location = System::Drawing::Point(3, 204);
-			this->trackBar2->Maximum = 200;
+			this->trackBar2->Maximum = 1000;
 			this->trackBar2->Minimum = 1;
 			this->trackBar2->Name = L"trackBar2";
 			this->trackBar2->Size = System::Drawing::Size(252, 45);
 			this->trackBar2->TabIndex = 12;
 			this->trackBar2->Value = 75;
-			this->trackBar2->Visible = false;
 			this->trackBar2->Scroll += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
 			this->trackBar2->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
 			// 
@@ -655,9 +653,9 @@ private: System::Windows::Forms::PictureBox^  pbxCMC;
 			this->uiGfx->Controls->Add(this->trackBar2);
 			this->uiGfx->Controls->Add(this->pbxImp);
 			this->uiGfx->Controls->Add(this->pbxSpec);
-			this->uiGfx->Location = System::Drawing::Point(784, 12);
+			this->uiGfx->Location = System::Drawing::Point(305, 125);
 			this->uiGfx->Name = L"uiGfx";
-			this->uiGfx->Size = System::Drawing::Size(187, 84);
+			this->uiGfx->Size = System::Drawing::Size(634, 464);
 			this->uiGfx->TabIndex = 17;
 			this->uiGfx->Visible = false;
 			// 
@@ -678,7 +676,7 @@ private: System::Windows::Forms::PictureBox^  pbxCMC;
 			this->txtSpecX->AutoSize = true;
 			this->txtSpecX->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
-			this->txtSpecX->Location = System::Drawing::Point(132, -373);
+			this->txtSpecX->Location = System::Drawing::Point(356, 7);
 			this->txtSpecX->Name = L"txtSpecX";
 			this->txtSpecX->Size = System::Drawing::Size(91, 39);
 			this->txtSpecX->TabIndex = 29;
@@ -690,7 +688,7 @@ private: System::Windows::Forms::PictureBox^  pbxCMC;
 			this->txtSpecY->AutoSize = true;
 			this->txtSpecY->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
-			this->txtSpecY->Location = System::Drawing::Point(65, -377);
+			this->txtSpecY->Location = System::Drawing::Point(289, 3);
 			this->txtSpecY->Name = L"txtSpecY";
 			this->txtSpecY->Size = System::Drawing::Size(61, 39);
 			this->txtSpecY->TabIndex = 28;
@@ -702,7 +700,7 @@ private: System::Windows::Forms::PictureBox^  pbxCMC;
 			this->txtImpX->AutoSize = true;
 			this->txtImpX->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
-			this->txtImpX->Location = System::Drawing::Point(-9, -373);
+			this->txtImpX->Location = System::Drawing::Point(215, 7);
 			this->txtImpX->Name = L"txtImpX";
 			this->txtImpX->Size = System::Drawing::Size(68, 39);
 			this->txtImpX->TabIndex = 27;
@@ -714,7 +712,7 @@ private: System::Windows::Forms::PictureBox^  pbxCMC;
 			this->txtImpY->AutoSize = true;
 			this->txtImpY->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
-			this->txtImpY->Location = System::Drawing::Point(-56, -373);
+			this->txtImpY->Location = System::Drawing::Point(168, 7);
 			this->txtImpY->Name = L"txtImpY";
 			this->txtImpY->Size = System::Drawing::Size(41, 39);
 			this->txtImpY->TabIndex = 26;
@@ -726,7 +724,7 @@ private: System::Windows::Forms::PictureBox^  pbxCMC;
 			this->txtSpec->AutoSize = true;
 			this->txtSpec->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
-			this->txtSpec->Location = System::Drawing::Point(230, -377);
+			this->txtSpec->Location = System::Drawing::Point(454, 3);
 			this->txtSpec->Name = L"txtSpec";
 			this->txtSpec->Size = System::Drawing::Size(139, 39);
 			this->txtSpec->TabIndex = 25;
@@ -738,7 +736,7 @@ private: System::Windows::Forms::PictureBox^  pbxCMC;
 			this->txtImp->AutoSize = true;
 			this->txtImp->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(204)));
-			this->txtImp->Location = System::Drawing::Point(-229, -380);
+			this->txtImp->Location = System::Drawing::Point(-5, 0);
 			this->txtImp->Name = L"txtImp";
 			this->txtImp->Size = System::Drawing::Size(167, 39);
 			this->txtImp->TabIndex = 24;
@@ -753,7 +751,6 @@ private: System::Windows::Forms::PictureBox^  pbxCMC;
 			this->trackBar4->Size = System::Drawing::Size(252, 45);
 			this->trackBar4->TabIndex = 15;
 			this->trackBar4->Value = 18;
-			this->trackBar4->Visible = false;
 			this->trackBar4->Scroll += gcnew System::EventHandler(this, &UI::trackBar4_ValueChanged);
 			this->trackBar4->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar4_ValueChanged);
 			// 

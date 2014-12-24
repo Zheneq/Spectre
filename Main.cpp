@@ -22,8 +22,8 @@ int main(array<String^>^ args)
     Application::SetCompatibleTextRenderingDefault(false);
 
 	// Test
-	buf[0].alloc(16384);
-	buf[1].alloc(16384);
+	buf[0].alloc(65536);
+	buf[1].alloc(65536);
 	buf[0].generate_gauss(100);
 	buf[1].generate_rect();
 	//// Test
