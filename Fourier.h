@@ -93,9 +93,108 @@ struct buffer
 		std::cout << "     " << tt << '/' << Level * SpecSqrSum << " (" << Level << " of " << SpecSqrSum << ")" << '\n';
 
 	}
+	double calc_sum(int Median, double IntSqr, /*out*/ int &left, /*out*/ int &right)
+	{
+		// Суммируем, постепенно симметрично отступая от средневзвешенного
+		double Sum = Level * IntSqr;
+		for(int i = 0; i < len/2; ++i)
+		{
+			if(Median + i >= len)
+			{
+				std::cout << "Median is odd (+)\n";
+			}
+			else
+			{
+				Sum -= pow(imp[Median + i], 2);
+				right = Median + i;
+				if(Sum < 0) break;
+			}
+			
+			if(Median - i < 0)
+			{
+				std::cout << "Median is odd (-)\n";
+			}
+			else
+			{
+				Sum -= pow(imp[Median - i], 2);
+				left = Median - i;
+				if(Sum < 0) break;
+			}
+		}
+		return Sum;
+	}
+	void check_energy()
+	{
+		// Делим график на чанки
+		const int CHUNK_SIZE = 128;
+		int ChunkCount = len / CHUNK_SIZE;
+		int Shift = (len % CHUNK_SIZE) / 2;
+		double *Chunks = new double[ChunkCount];
+		
+		// Суммируем на каждом
+		double IntSqr = 0;
+		for(int i = 0; i < ChunkCount; ++i)
+		{
+			Chunks[i] = 0;
+			for(int j = 0; j < CHUNK_SIZE; ++j)
+			{
+				Chunks[i] += pow(imp[Shift + CHUNK_SIZE * i + j], 2);
+			}
+			IntSqr += Chunks[i];
+		}
 
-	void check_energy(){
+		// Находим средневзвешенное
+		double _Median = 0;
+		for(int i = 0; i < ChunkCount; ++i)
+			_Median += (Shift + CHUNK_SIZE * i + CHUNK_SIZE/2) * Chunks[i]/IntSqr;
+		int Median = (int)_Median;
 
+		delete[] Chunks;
+		
+		// Немного подправляем массив для меньших потерь округления
+		double _IntSqr = IntSqr;
+		IntSqr = Math::Round(IntSqr * .1) * 10; // Точность, где же ты?
+		double RoundingCoef = sqrt(IntSqr / _IntSqr);
+		for(int i = 0; i < len; ++i)
+		{
+			imp[i] *= RoundingCoef;
+		}
+
+		// Суммируем, постепенно симметрично отступая от средневзвешенного
+		int left, right;
+		double Sum = calc_sum(Median, IntSqr, left, right);
+
+		// Небольшие жадные подправки
+		bool adjusted = false;
+		while(left >= 0)
+		{
+			if(pow(imp[left-1], 2) > pow(imp[right], 2))
+			{
+				--left;
+				--right;
+				adjusted = true;
+			}
+		}
+		while(right < len)
+		{
+			if(pow(imp[right+1], 2) > pow(imp[left], 2))
+			{
+				++left;
+				++right;
+				adjusted = true;
+			}
+		}
+		if(adjusted)
+		{
+			Median = (left + right) / 2;
+			// Суммируем, постепенно симметрично отступая от нового средневзвешенного
+			double Sum = calc_sum(Median, IntSqr, left, right);
+		}
+				
+		std::cout << "\twidth = " << right - left << ", overhead = " << Sum << ", left = " << left <<
+			", right = " << right << std::endl;
+
+		/////////////////////////////////
 		double energy = E_0;
 
 		for (int i = 0; i < len; i++){
