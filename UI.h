@@ -1169,6 +1169,7 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 
 		System::Void ResetHand();
 		System::Void btnReset_Click(System::Object^  sender, System::EventArgs^  e);
+		System::Void Reset_Click();
 		void FinalizeHand();
 
 		System::Void ShowMessage(String ^msg, bool);

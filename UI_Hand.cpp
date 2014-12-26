@@ -113,6 +113,10 @@ namespace Spectre {
 	}
 	System::Void UI::btnReset_Click(System::Object^  sender, System::EventArgs^  e)
 	{
+		Reset_Click();
+	}
+	System::Void UI::Reset_Click()
+	{
 		ResetHand();
 		buf[0].generate_null();
 		buf[1].generate_null();
@@ -138,15 +142,19 @@ namespace Spectre {
 			}
 		}
 
-		float t = 0, te;
-		for (int i = 0; i < buf[0].len; ++i) t += buf[0].imp[i] * buf[0].imp[i];
-		std::cout << t << "\n";
-		//te = E_0;
-		ImpHalfWidth = buf[0].calc_halfwidth(); // Больше говнокода богу говнокода!
-		buf[1].generate_rect();
-		//E_0 = te; // Зато работает
-
+	
+		ImpHalfWidth = buf[0].calc_halfwidth();
 		buf[0].fourier();
+
+		if (2.0 * ImpHalfWidth / PointsPerSecond * (buf[0].SpecWidth * PointsPerSecond / buf[0].len + 0.005) > 10)
+		{
+			// Плохой рисунок
+			bDrawingMode = false;
+			ShowMessage(gcnew String("Закончить график нужно \n в правом кружке."), true);
+			Reset_Click();
+		}
+
+		buf[1].generate_rect();
 		InvalidateAll();
 	}
 
