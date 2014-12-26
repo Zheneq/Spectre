@@ -142,7 +142,7 @@ namespace Spectre {
 		for (int i = 0; i < buf[0].len; ++i) t += buf[0].imp[i] * buf[0].imp[i];
 		std::cout << t << "\n";
 		//te = E_0;
-		E_0 = t; // Больше говнокода богу говнокода!
+		ImpHalfWidth = buf[0].calc_halfwidth(); // Больше говнокода богу говнокода!
 		buf[1].generate_rect();
 		//E_0 = te; // Зато работает
 

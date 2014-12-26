@@ -43,7 +43,7 @@ namespace Spectre {
 	System::Void UI::trackBar2_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
 		ImpXMult = trackBar3->Value;
 		SpecXMult = trackBar2->Value;
-		std::cout << "tb2 " << SpecXMult << '\n' << "tb3 " << ImpXMult << '\n';
+		std::cout << "SpecXMult " << SpecXMult << '\n' << "ImpXMult " << ImpXMult << '\n';
 		InvalidateAll();
 }
 	System::Void UI::trackBar4_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
@@ -53,7 +53,19 @@ namespace Spectre {
 }
 	System::Void UI::button1_Click(System::Object^  sender, System::EventArgs^  e)
 	{
-		FILE *f = fopen("dump.txt", "w");
+		FILE *f = fopen("dump-imp.txt", "w");
+		for (int i = 0; i < buf[0].len; ++i)
+		{
+			fprintf(f, "%d, %lf\n", i, buf[0].imp[i]);
+		}
+		fprintf(f, "\n\n");
+		for (int i = 0; i < buf[1].len ; ++i)
+		{
+			fprintf(f, "%d, %lf\n", i, buf[1].imp[i]);
+		}
+		fclose(f);
+
+		f = fopen("dump-spec-sqr.txt", "w");
 		for (int i = 0; i <= buf[0].len / 2; ++i)
 		{
 			fprintf(f, "%d, %lf\n", i, pow(buf[0].spec[i], 2));
@@ -62,6 +74,18 @@ namespace Spectre {
 		for (int i = 0; i <= buf[1].len / 2; ++i)
 		{
 			fprintf(f, "%d, %lf\n", i, pow(buf[1].spec[i], 2));
+		}
+		fclose(f);
+
+		f = fopen("dump-spec-abs.txt", "w");
+		for (int i = 0; i <= buf[0].len / 2; ++i)
+		{
+			fprintf(f, "%d, %lf\n", i, buf[0].spec[i]);
+		}
+		fprintf(f, "\n\n");
+		for (int i = 0; i <= buf[1].len / 2; ++i)
+		{
+			fprintf(f, "%d, %lf\n", i, buf[1].spec[i]);
 		}
 		fclose(f);
 	}

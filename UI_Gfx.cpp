@@ -178,22 +178,24 @@ namespace Spectre {
 		//		e->Graphics->DrawString(gcnew String(textbuffer), font, brush, pbxImp->Width - 100, p.Y + 10);
 
 
-		float RealSpecWidth[2];
-		RealSpecWidth[0] = buf[0].SpecWidth * PointsPerSecond / buf[0].len + .01;
-		RealSpecWidth[1] = buf[1].SpecWidth * PointsPerSecond / buf[1].len + .01;
+		double RealSpecWidth[2];
+		RealSpecWidth[0] = buf[0].SpecWidth * PointsPerSecond / buf[0].len + 0.005;
+		RealSpecWidth[1] = buf[1].SpecWidth * PointsPerSecond / buf[1].len + 0.005;
 
 
-		sprintf(textbuffer, "%.1f 關", RealSpecWidth[0]);
+		sprintf(textbuffer, "%.2f 關", RealSpecWidth[0]);
 		lblSpecWidth1->Text = gcnew String(textbuffer);
-		sprintf(textbuffer, "%.1f 關", RealSpecWidth[1]);
+		sprintf(textbuffer, "%.2f 關", RealSpecWidth[1]);
 		lblSpecWidth2->Text = gcnew String(textbuffer);
 
 
 
-		sprintf(textbuffer, "%.1f", RealSpecWidth[0] * E_0 / PointsPerSecond);
+//		sprintf(textbuffer, "%.1lf", RealSpecWidth[0] * buf[0].Energy / PointsPerSecond);
+		sprintf(textbuffer, "%.2lf", 2.0 * ImpHalfWidth / PointsPerSecond * RealSpecWidth[0]);
 		lblC1->Text = gcnew String(textbuffer);
 
-		sprintf(textbuffer, "%.1f", RealSpecWidth[1] * E_0 / PointsPerSecond);
+//		sprintf(textbuffer, "%.1lf", RealSpecWidth[1] * buf[0].Energy / PointsPerSecond);
+		sprintf(textbuffer, "%.2lf", 2.0 * ImpHalfWidth / PointsPerSecond * RealSpecWidth[1]);
 		lblC2->Text = gcnew String(textbuffer);
 	}
 }

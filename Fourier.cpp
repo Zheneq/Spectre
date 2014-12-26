@@ -8,8 +8,9 @@ buffer buf[2];
 const double E_0_def = 300;
 double E_0 = E_0_def;
 
-int ImpHalfWidth = 270;
-double DefaultLevel = 0.90282233018308548168257003610692; // .90457703976772257201578964538544;
+const int ImpHalfWidth_DEF = 270;
+int ImpHalfWidth = ImpHalfWidth_DEF;
+double DefaultLevel = 0.90282233018308548168257003610692; //  .90457703976772257201578964538544; // 
 double Level = DefaultLevel;
 int implen, len;
 

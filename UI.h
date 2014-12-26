@@ -40,8 +40,8 @@ namespace Spectre {
 			ImpXMult = trackBar3->Value;
 			SpecXMult = trackBar2->Value;
 
-			StartDef = Point(7800, 0);
-			FinishDef = Point(8584, 0);
+			StartDef = Point(32768 - 600, 0);
+			FinishDef = Point(32768 + 600, 0);
 			Radius = 8;
 
 			FirstPen = gcnew Pen(Color::Red, 3.0f);
@@ -163,6 +163,7 @@ private: System::Windows::Forms::PictureBox^  pictureBox2;
 private: System::Windows::Forms::PictureBox^  pictureBox1;
 
 
+
 	private: System::ComponentModel::IContainer^  components;
 
 	private:
@@ -190,6 +191,8 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			this->btnTrap = (gcnew System::Windows::Forms::Button());
 			this->btnPreset = (gcnew System::Windows::Forms::Button());
 			this->uiPreset = (gcnew System::Windows::Forms::Panel());
+			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->panPresetControl = (gcnew System::Windows::Forms::Panel());
 			this->panPresetControl2 = (gcnew System::Windows::Forms::Panel());
 			this->rdbPreset24 = (gcnew System::Windows::Forms::RadioButton());
@@ -240,12 +243,12 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			this->uiFaq = (gcnew System::Windows::Forms::Panel());
 			this->pbxFaq = (gcnew System::Windows::Forms::PictureBox());
 			this->uiAuthors = (gcnew System::Windows::Forms::Panel());
-			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
-			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->uiMainMenu->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxCMC))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxPhys))->BeginInit();
 			this->uiPreset->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->panPresetControl->SuspendLayout();
 			this->panPresetControl2->SuspendLayout();
 			this->panPresetControl1->SuspendLayout();
@@ -262,8 +265,6 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			this->uiHand->SuspendLayout();
 			this->uiFaq->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxFaq))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// uiMainMenu
@@ -280,7 +281,7 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			this->uiMainMenu->Controls->Add(this->btnPreset);
 			this->uiMainMenu->Location = System::Drawing::Point(12, 12);
 			this->uiMainMenu->Name = L"uiMainMenu";
-			this->uiMainMenu->Size = System::Drawing::Size(142, 85);
+			this->uiMainMenu->Size = System::Drawing::Size(136, 93);
 			this->uiMainMenu->TabIndex = 15;
 			// 
 			// pbxCMC
@@ -322,7 +323,7 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 				static_cast<System::Byte>(204)));
 			this->btnAuthors->Location = System::Drawing::Point(269, 451);
 			this->btnAuthors->Name = L"btnAuthors";
-			this->btnAuthors->Size = System::Drawing::Size(450, 60);
+			this->btnAuthors->Size = System::Drawing::Size(470, 60);
 			this->btnAuthors->TabIndex = 6;
 			this->btnAuthors->Text = L"Авторы";
 			this->btnAuthors->UseVisualStyleBackColor = true;
@@ -334,7 +335,7 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 				static_cast<System::Byte>(204)));
 			this->btnFaq->Location = System::Drawing::Point(269, 187);
 			this->btnFaq->Name = L"btnFaq";
-			this->btnFaq->Size = System::Drawing::Size(450, 60);
+			this->btnFaq->Size = System::Drawing::Size(470, 60);
 			this->btnFaq->TabIndex = 5;
 			this->btnFaq->Text = L"Принцип расчёта";
 			this->btnFaq->UseVisualStyleBackColor = true;
@@ -346,7 +347,7 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 				static_cast<System::Byte>(204)));
 			this->btnExit->Location = System::Drawing::Point(269, 517);
 			this->btnExit->Name = L"btnExit";
-			this->btnExit->Size = System::Drawing::Size(450, 60);
+			this->btnExit->Size = System::Drawing::Size(470, 60);
 			this->btnExit->TabIndex = 4;
 			this->btnExit->Text = L"Выход";
 			this->btnExit->UseVisualStyleBackColor = true;
@@ -358,9 +359,9 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 				static_cast<System::Byte>(204)));
 			this->btnHand->Location = System::Drawing::Point(269, 385);
 			this->btnHand->Name = L"btnHand";
-			this->btnHand->Size = System::Drawing::Size(450, 60);
+			this->btnHand->Size = System::Drawing::Size(470, 60);
 			this->btnHand->TabIndex = 3;
-			this->btnHand->Text = L"Ручной ввод";
+			this->btnHand->Text = L"Произвольная форма";
 			this->btnHand->UseVisualStyleBackColor = true;
 			this->btnHand->Click += gcnew System::EventHandler(this, &UI::btnHand_Click);
 			// 
@@ -370,9 +371,9 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 				static_cast<System::Byte>(204)));
 			this->btnTrap->Location = System::Drawing::Point(269, 319);
 			this->btnTrap->Name = L"btnTrap";
-			this->btnTrap->Size = System::Drawing::Size(450, 60);
+			this->btnTrap->Size = System::Drawing::Size(470, 60);
 			this->btnTrap->TabIndex = 2;
-			this->btnTrap->Text = L"Криволинейная трапеция";
+			this->btnTrap->Text = L"Влияние фронта импульса";
 			this->btnTrap->UseVisualStyleBackColor = true;
 			this->btnTrap->Click += gcnew System::EventHandler(this, &UI::btnTrap_Click);
 			// 
@@ -382,9 +383,9 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 				static_cast<System::Byte>(204)));
 			this->btnPreset->Location = System::Drawing::Point(269, 253);
 			this->btnPreset->Name = L"btnPreset";
-			this->btnPreset->Size = System::Drawing::Size(450, 60);
+			this->btnPreset->Size = System::Drawing::Size(470, 60);
 			this->btnPreset->TabIndex = 1;
-			this->btnPreset->Text = L"Фиксированный импульс";
+			this->btnPreset->Text = L"Импульсы разной формы";
 			this->btnPreset->UseVisualStyleBackColor = true;
 			this->btnPreset->Click += gcnew System::EventHandler(this, &UI::btnPreset_Click);
 			// 
@@ -396,11 +397,29 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			this->uiPreset->Controls->Add(this->panPresetControl);
 			this->uiPreset->Controls->Add(this->lblPreset);
 			this->uiPreset->Controls->Add(this->trackBar1);
-			this->uiPreset->Location = System::Drawing::Point(170, 12);
+			this->uiPreset->Location = System::Drawing::Point(169, 12);
 			this->uiPreset->Name = L"uiPreset";
-			this->uiPreset->Size = System::Drawing::Size(216, 118);
+			this->uiPreset->Size = System::Drawing::Size(194, 105);
 			this->uiPreset->TabIndex = 16;
 			this->uiPreset->Visible = false;
+			// 
+			// pictureBox2
+			// 
+			this->pictureBox2->BackColor = System::Drawing::Color::Red;
+			this->pictureBox2->Location = System::Drawing::Point(205, 300);
+			this->pictureBox2->Name = L"pictureBox2";
+			this->pictureBox2->Size = System::Drawing::Size(10, 1000);
+			this->pictureBox2->TabIndex = 17;
+			this->pictureBox2->TabStop = false;
+			// 
+			// pictureBox1
+			// 
+			this->pictureBox1->BackColor = System::Drawing::Color::Blue;
+			this->pictureBox1->Location = System::Drawing::Point(65, 300);
+			this->pictureBox1->Name = L"pictureBox1";
+			this->pictureBox1->Size = System::Drawing::Size(10, 1000);
+			this->pictureBox1->TabIndex = 16;
+			this->pictureBox1->TabStop = false;
 			// 
 			// panPresetControl
 			// 
@@ -566,14 +585,14 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			this->lblPreset->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 36, System::Drawing::FontStyle::Bold));
 			this->lblPreset->Location = System::Drawing::Point(13, 12);
 			this->lblPreset->Name = L"lblPreset";
-			this->lblPreset->Size = System::Drawing::Size(610, 55);
+			this->lblPreset->Size = System::Drawing::Size(622, 55);
 			this->lblPreset->TabIndex = 14;
-			this->lblPreset->Text = L"Фиксированный импульс";
+			this->lblPreset->Text = L"Импульсы разной формы";
 			this->lblPreset->TextAlign = System::Drawing::ContentAlignment::TopCenter;
 			// 
 			// trackBar1
 			// 
-			this->trackBar1->Location = System::Drawing::Point(11, 346);
+			this->trackBar1->Location = System::Drawing::Point(305, 95);
 			this->trackBar1->Maximum = 100;
 			this->trackBar1->Minimum = 8;
 			this->trackBar1->Name = L"trackBar1";
@@ -587,12 +606,12 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			// trackBar3
 			// 
 			this->trackBar3->Location = System::Drawing::Point(261, 204);
-			this->trackBar3->Maximum = 20;
+			this->trackBar3->Maximum = 50;
 			this->trackBar3->Minimum = 1;
 			this->trackBar3->Name = L"trackBar3";
 			this->trackBar3->Size = System::Drawing::Size(252, 45);
 			this->trackBar3->TabIndex = 13;
-			this->trackBar3->Value = 18;
+			this->trackBar3->Value = 43;
 			this->trackBar3->Scroll += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
 			this->trackBar3->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
 			// 
@@ -604,7 +623,7 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			this->trackBar2->Name = L"trackBar2";
 			this->trackBar2->Size = System::Drawing::Size(252, 45);
 			this->trackBar2->TabIndex = 12;
-			this->trackBar2->Value = 75;
+			this->trackBar2->Value = 254;
 			this->trackBar2->Scroll += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
 			this->trackBar2->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
 			// 
@@ -649,9 +668,9 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			this->uiGfx->Controls->Add(this->trackBar2);
 			this->uiGfx->Controls->Add(this->pbxImp);
 			this->uiGfx->Controls->Add(this->pbxSpec);
-			this->uiGfx->Location = System::Drawing::Point(801, 12);
+			this->uiGfx->Location = System::Drawing::Point(15, 195);
 			this->uiGfx->Name = L"uiGfx";
-			this->uiGfx->Size = System::Drawing::Size(247, 121);
+			this->uiGfx->Size = System::Drawing::Size(747, 473);
 			this->uiGfx->TabIndex = 17;
 			this->uiGfx->Visible = false;
 			// 
@@ -663,7 +682,6 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			this->button1->TabIndex = 30;
 			this->button1->Text = L"Dump";
 			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Visible = false;
 			this->button1->Click += gcnew System::EventHandler(this, &UI::button1_Click);
 			// 
 			// txtSpecX
@@ -672,7 +690,7 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			this->txtSpecX->AutoSize = true;
 			this->txtSpecX->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->txtSpecX->Location = System::Drawing::Point(162, -336);
+			this->txtSpecX->Location = System::Drawing::Point(412, 16);
 			this->txtSpecX->Name = L"txtSpecX";
 			this->txtSpecX->Size = System::Drawing::Size(91, 39);
 			this->txtSpecX->TabIndex = 29;
@@ -684,7 +702,7 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			this->txtSpecY->AutoSize = true;
 			this->txtSpecY->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->txtSpecY->Location = System::Drawing::Point(95, -340);
+			this->txtSpecY->Location = System::Drawing::Point(345, 12);
 			this->txtSpecY->Name = L"txtSpecY";
 			this->txtSpecY->Size = System::Drawing::Size(61, 39);
 			this->txtSpecY->TabIndex = 28;
@@ -696,7 +714,7 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			this->txtImpX->AutoSize = true;
 			this->txtImpX->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->txtImpX->Location = System::Drawing::Point(21, -336);
+			this->txtImpX->Location = System::Drawing::Point(271, 16);
 			this->txtImpX->Name = L"txtImpX";
 			this->txtImpX->Size = System::Drawing::Size(68, 39);
 			this->txtImpX->TabIndex = 27;
@@ -708,7 +726,7 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			this->txtImpY->AutoSize = true;
 			this->txtImpY->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->txtImpY->Location = System::Drawing::Point(-26, -336);
+			this->txtImpY->Location = System::Drawing::Point(224, 16);
 			this->txtImpY->Name = L"txtImpY";
 			this->txtImpY->Size = System::Drawing::Size(41, 39);
 			this->txtImpY->TabIndex = 26;
@@ -720,7 +738,7 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			this->txtSpec->AutoSize = true;
 			this->txtSpec->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->txtSpec->Location = System::Drawing::Point(260, -340);
+			this->txtSpec->Location = System::Drawing::Point(510, 12);
 			this->txtSpec->Name = L"txtSpec";
 			this->txtSpec->Size = System::Drawing::Size(139, 39);
 			this->txtSpec->TabIndex = 25;
@@ -732,7 +750,7 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			this->txtImp->AutoSize = true;
 			this->txtImp->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->txtImp->Location = System::Drawing::Point(-199, -343);
+			this->txtImp->Location = System::Drawing::Point(51, 9);
 			this->txtImp->Name = L"txtImp";
 			this->txtImp->Size = System::Drawing::Size(167, 39);
 			this->txtImp->TabIndex = 24;
@@ -803,20 +821,21 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 				static_cast<System::Byte>(204)));
 			this->lblTrap->Location = System::Drawing::Point(13, 12);
 			this->lblTrap->Name = L"lblTrap";
-			this->lblTrap->Size = System::Drawing::Size(623, 55);
+			this->lblTrap->Size = System::Drawing::Size(651, 55);
 			this->lblTrap->TabIndex = 14;
-			this->lblTrap->Text = L"Криволинейная трапеция";
+			this->lblTrap->Text = L"Влияние фронта импульса";
 			this->lblTrap->TextAlign = System::Drawing::ContentAlignment::TopCenter;
 			// 
 			// trbTrap
 			// 
+			this->trbTrap->LargeChange = 30;
 			this->trbTrap->Location = System::Drawing::Point(10, 130);
-			this->trbTrap->Maximum = 238;
+			this->trbTrap->Maximum = 330;
 			this->trbTrap->Name = L"trbTrap";
 			this->trbTrap->Size = System::Drawing::Size(260, 45);
-			this->trbTrap->SmallChange = 3;
+			this->trbTrap->SmallChange = 15;
 			this->trbTrap->TabIndex = 11;
-			this->trbTrap->Value = 119;
+			this->trbTrap->Value = 165;
 			this->trbTrap->Scroll += gcnew System::EventHandler(this, &UI::TrapWidthChanged);
 			this->trbTrap->ValueChanged += gcnew System::EventHandler(this, &UI::TrapWidthChanged);
 			// 
@@ -886,7 +905,7 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			this->label9->Name = L"label9";
 			this->label9->Size = System::Drawing::Size(270, 37);
 			this->label9->TabIndex = 27;
-			this->label9->Text = L"g";
+			this->label9->Text = L"C = ΔfΔt";
 			this->label9->TextAlign = System::Drawing::ContentAlignment::TopCenter;
 			// 
 			// lblDeltaT
@@ -991,9 +1010,9 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 				static_cast<System::Byte>(204)));
 			this->lblHand->Location = System::Drawing::Point(13, 12);
 			this->lblHand->Name = L"lblHand";
-			this->lblHand->Size = System::Drawing::Size(316, 55);
+			this->lblHand->Size = System::Drawing::Size(534, 55);
 			this->lblHand->TabIndex = 14;
-			this->lblHand->Text = L"Ручной ввод";
+			this->lblHand->Text = L"Произвольная форма";
 			this->lblHand->TextAlign = System::Drawing::ContentAlignment::TopCenter;
 			// 
 			// tmrMessage
@@ -1029,24 +1048,6 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			this->uiAuthors->Size = System::Drawing::Size(200, 100);
 			this->uiAuthors->TabIndex = 22;
 			// 
-			// pictureBox1
-			// 
-			this->pictureBox1->BackColor = System::Drawing::Color::Blue;
-			this->pictureBox1->Location = System::Drawing::Point(65, 300);
-			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(10, 1000);
-			this->pictureBox1->TabIndex = 16;
-			this->pictureBox1->TabStop = false;
-			// 
-			// pictureBox2
-			// 
-			this->pictureBox2->BackColor = System::Drawing::Color::Red;
-			this->pictureBox2->Location = System::Drawing::Point(205, 300);
-			this->pictureBox2->Name = L"pictureBox2";
-			this->pictureBox2->Size = System::Drawing::Size(10, 1000);
-			this->pictureBox2->TabIndex = 17;
-			this->pictureBox2->TabStop = false;
-			// 
 			// UI
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -1074,6 +1075,8 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxPhys))->EndInit();
 			this->uiPreset->ResumeLayout(false);
 			this->uiPreset->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->panPresetControl->ResumeLayout(false);
 			this->panPresetControl2->ResumeLayout(false);
 			this->panPresetControl1->ResumeLayout(false);
@@ -1094,8 +1097,6 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			this->uiHand->PerformLayout();
 			this->uiFaq->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbxFaq))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			this->ResumeLayout(false);
 
 		}

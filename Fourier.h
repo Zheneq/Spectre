@@ -16,6 +16,7 @@ extern const double E_0_def;
 
 extern float PointsPerSecond;
 extern int ImpHalfWidth;
+extern const int ImpHalfWidth_DEF;
 const long double pi = 3.14159265358979323846;
 extern double Level, DefaultLevel;
 
@@ -29,9 +30,11 @@ struct buffer
 	fftw_complex *cspec;
 	fftw_plan p;
 	int len;
+	int w; // Полуширина импульса
 
 	double MaxSpec;
-	int SpecWidth;
+	int SpecWidth; // Ширина спектра
+	double Energy;
 
 	buffer() : imp(NULL), spec(NULL), cspec(NULL), len(0), p(NULL), MaxSpec(1) {}
 
@@ -67,11 +70,11 @@ struct buffer
 		fftw_execute(p);
 		for (int i = 0; i <= len / 2; i++)
 		{
-			spec[i] = 2 * sqrt((cspec[i][0] * cspec[i][0] + cspec[i][1] * cspec[i][1]) / len);
+			spec[i] = sqrt((cspec[i][0] * cspec[i][0] + cspec[i][1] * cspec[i][1]) / len);
 		}
 
 	
-		double SpecSqrSum = 0;
+		double SpecSqrSum = -0.5 * pow(spec[0], 2); // нужна только половинка от нулевой частоты
 		MaxSpec = 0;
 		for(int i = 0; i <= len/2; i++)
 		{
@@ -80,10 +83,11 @@ struct buffer
 
 			if (i == (int)(len / PointsPerSecond)) cout << "  SpecSqrSum [0:1] = " << SpecSqrSum << '\n';
 		}
-		cout << "  SpecSqrSum = " << SpecSqrSum << '\n';
+		cout << "  SpecSqrSum = " << SpecSqrSum << "\tSpec[0]^2 = " << spec[0]*spec[0] << '\n';
+		Energy = SpecSqrSum;
 
 		int i;
-		double temp = Level * SpecSqrSum;
+		double temp = Level * SpecSqrSum + 0.5 * pow(spec[0], 2);
 		for (i = 0; (temp > 0) && (i <= len / 2); ++i)
 		{
 			temp -= pow(spec[i], 2);
@@ -91,15 +95,6 @@ struct buffer
 		SpecWidth = i; //- ((.5*spec[i] < Level*SpecSqrSum - t) ? 0 : 1);
 		cout << "  SpecWidth = " << SpecWidth << '\n';
 
-		/////////////////////////////
-		double tt = 0;
-		for (int i = 0; i < SpecWidth; ++i)
-		{
-			tt += pow(spec[i], 2);
-		}
-		cout << "     " << tt << '/' << Level * SpecSqrSum << " (" << Level << " of " << SpecSqrSum << ")" << '\n';
-
-		/////////////////////////////
 /*
 // Хранить в спеке квадрат (для отладки)
 		for (int i = 0; i <= len/2; ++i)
@@ -150,7 +145,15 @@ struct buffer
 			{
 				Sum -= pow(imp[Median + i], 2);
 				right = Median + i;
-				if(Sum < 0) break;
+				if (Sum < 0)
+				{
+					if (abs(Sum) > 0.5 * pow(imp[Median + i], 2))
+					{
+						--right;
+						Sum += pow(imp[Median + i], 2);
+					}
+					break;
+				}
 			}
 			
 			if(Median - i < 0)
@@ -161,12 +164,20 @@ struct buffer
 			{
 				Sum -= pow(imp[Median - i], 2);
 				left = Median - i;
-				if(Sum < 0) break;
+				if (Sum < 0)
+				{
+					if (abs(Sum) > 0.5 * pow(imp[Median - i], 2))
+					{
+						++left;
+						Sum += pow(imp[Median - i], 2);
+					}
+					break;
+				}
 			}
 		}
 		return Sum;
 	}
-	int calc_width()
+	int calc_halfwidth()
 	{
 		// Делим график на чанки
 		const int CHUNK_SIZE = 128;
@@ -187,7 +198,11 @@ struct buffer
 		}
 
 		// TODO: Не случится ли чего, если он будет не нулём, но очень маленьким?
-		if (IntSqr == 0) return 0;
+		if (IntSqr == 0)
+		{
+			cout << "\twidth = 0\n";
+			return 0;
+		}
 
 		// Находим средневзвешенное
 		double _Median = 0;
@@ -236,12 +251,12 @@ struct buffer
 		cout << "\twidth = " << width << ", overhead = " << Sum << ", left = " << left <<
 			", right = " << right << endl;
 
-		return width;
+		return w = width/2;
 
 	}
 	void check_energy()
 	{
-		int halfwidth = calc_width() / 2;
+		int halfwidth = calc_halfwidth();
 		if (halfwidth > ImpHalfWidth)
 		{
 			cout << "\tWidth is too big (more than needed by " << halfwidth - ImpHalfWidth << ")\n";
@@ -261,35 +276,25 @@ struct buffer
 		{
 			FILE *f = fopen("deb.txt", "w");
 
-			int l = 0, r = len / 2;
+			int l = 0, r = 2*ImpHalfWidth; // Вообще максимум должен быть в районе ImpHalfWidth/Level
 			double e = Level * imp_sqr_int(len); // Требуемое значение энергии внутри отсечек   ( типа imp_sqr_int(inf) )
-			for (x = 0; (imp_sqr_int(ImpHalfWidth - x) + fmin(x, ImpHalfWidth)) > Level * (imp_sqr_int(len) + x); ++x) // x > e + Level * x - imp_sqr_int(ImpHalfWidth - x)
+
+			while (r > l)
 			{
-				fprintf(f, "%d %lf\n", x, (imp_sqr_int(ImpHalfWidth - x) + fmin(x, ImpHalfWidth)) / (imp_sqr_int(len) + x));
-				if (x > 1000)// ImpHalfWidth)
-				{
-					cout << "ERROR\n";
-					x = 0;
+				x = (r + l) / 2;
+				double t = (imp_sqr_int(ImpHalfWidth - x) + fmin(x, ImpHalfWidth)) - Level * (imp_sqr_int(len) + x);
+				if (t < 0)
+					r = x;
+				else if (t > 0 && x > l) // если x<=l, то r и l столкнулись, и цикл может повиснуть
+					l = x;
+				else
 					break;
-				}
 			}
 
 			fclose(f);
 		}
 
 		int length = ++x;
-
-		/////////////////////////////////
-/*
-		double energy = E_0;
-
-		for (int i = 0; i < len; i++){
-			energy -= imp[i]*imp[i];
-		}
-		
-
-		int length = (int)(energy * .5);
-*/
 
 
 		if(length > 0) 
@@ -308,13 +313,11 @@ struct buffer
 			{
 				imp[i] = 1.0;
 			}
+			cout << "\t\tInserted y=1 for " << length*2 << " from " << len / 2 - length - 1 << " to " << len / 2 + length << endl;
 		}
-/*
-		cout << "check energy: E0 = " << E_0 << ", Efunc = " << E_0 - energy
-			<< ", Efixed = " << E_0 - energy + 2*length << endl;
-*/
-		halfwidth = calc_width() / 2;
-		cout << "New halfwidth = " << halfwidth << " (" << ImpHalfWidth << " needed)\n";
+
+		calc_halfwidth();
+		cout << "New halfwidth = " << w << " (" << ImpHalfWidth << " needed)\n";
 	}
 
 	void generate_null()
@@ -371,15 +374,15 @@ struct buffer
 			ts += pow(spec[i], 2);
 		}
 		SpecWidth = i;
-		*/
 		cout << "gen rect 2\n";
 		SpecInvalidate();
+		*/
 		//fourier();
 	}
 
 	void generate_tri_f_p()
 	{
-		double length = (double)(E_0) * 1.5;
+		double length = 505;
 		for (int i = 0; i < len/2 - length - 1; i++)
 		{
 			imp[i] = 0.0;
@@ -406,10 +409,10 @@ struct buffer
 
 	void generate_gauss_f_p()
 	{
-		double length = (double)(E_0);
+		double length = 262.5;
 		for (int i = 0; i < len; i++)
 		{
-			imp[i] = exp(-((i-len/2 + 1)*(i-len/2 + 1)/pow(.638*length/sqrt(2/pi),2)));
+			imp[i] = exp(-((i-len/2 + 1)*(i-len/2 + 1)/pow(length/sqrt(2/pi),2)));
 		}
 		cout << "gauss_f_p ";
 		check_energy();
@@ -418,7 +421,7 @@ struct buffer
 
 	void generate_sin_f_p()
 	{
-		double length = (double)(E_0);
+		double length = 454;
 		for (int i = 0; i < len/2 - length - 1; i++)
 		{
 			imp[i] = 0.0;

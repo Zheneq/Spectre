@@ -202,6 +202,7 @@ namespace Spectre {
 		btnBack->Visible = false;
 
 		E_0 = E_0_def;
+		ImpHalfWidth = ImpHalfWidth_DEF;
 	}
 	System::Void UI::btnFaq_Click(System::Object^  sender, System::EventArgs^  e) {
 		uiMainMenu->Visible = false;
@@ -220,9 +221,9 @@ namespace Spectre {
 		btnBack->Visible = true;
 		btnBack->BringToFront();
 
-		SpecXMult = 118;
-		ImpXMult = 13;
-		SpecYMult = 0.15;
+		SpecXMult = 254;
+		ImpXMult = 43;
+		SpecYMult = 0.417;
 	}
 	System::Void UI::btnTrap_Click(System::Object^  sender, System::EventArgs^  e)
 	{
@@ -236,14 +237,16 @@ namespace Spectre {
 		btnBack->Visible = true;
 		btnBack->BringToFront();
 
-		SpecXMult = 118;
-		ImpXMult = 13;
-		SpecYMult = 0.15;
+		SpecXMult = 254;
+		ImpXMult = 43;
+		SpecYMult = 0.417;
 	}
 	System::Void UI::btnHand_Click(System::Object^  sender, System::EventArgs^  e) {
 		buf[0].generate_null();
 		buf[1].generate_null();
 		btnReset_Click(sender, e);
+
+	//	ResetHand();
 
 		uiMainMenu->Visible = false;
 		uiHand->Visible = true;
@@ -253,7 +256,7 @@ namespace Spectre {
 		btnBack->BringToFront();
 		bDrawingMode = true;
 
-		ImpXMult = 13;
+		ImpXMult = 43;
 		SpecYMult = 0.125;
 	}
 	System::Void UI::btnAuthors_Click(System::Object^  sender, System::EventArgs^  e) {
