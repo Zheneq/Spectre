@@ -612,6 +612,7 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			this->trackBar3->Size = System::Drawing::Size(252, 45);
 			this->trackBar3->TabIndex = 13;
 			this->trackBar3->Value = 43;
+			this->trackBar3->Visible = false;
 			this->trackBar3->Scroll += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
 			this->trackBar3->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
 			// 
@@ -624,6 +625,7 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			this->trackBar2->Size = System::Drawing::Size(252, 45);
 			this->trackBar2->TabIndex = 12;
 			this->trackBar2->Value = 254;
+			this->trackBar2->Visible = false;
 			this->trackBar2->Scroll += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
 			this->trackBar2->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar2_ValueChanged);
 			// 
@@ -682,6 +684,7 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			this->button1->TabIndex = 30;
 			this->button1->Text = L"Dump";
 			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Visible = false;
 			this->button1->Click += gcnew System::EventHandler(this, &UI::button1_Click);
 			// 
 			// txtSpecX
@@ -765,6 +768,7 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			this->trackBar4->Size = System::Drawing::Size(252, 45);
 			this->trackBar4->TabIndex = 15;
 			this->trackBar4->Value = 18;
+			this->trackBar4->Visible = false;
 			this->trackBar4->Scroll += gcnew System::EventHandler(this, &UI::trackBar4_ValueChanged);
 			this->trackBar4->ValueChanged += gcnew System::EventHandler(this, &UI::trackBar4_ValueChanged);
 			// 
@@ -1062,8 +1066,10 @@ private: System::Windows::Forms::PictureBox^  pictureBox1;
 			this->Controls->Add(this->uiHand);
 			this->Controls->Add(this->uiGfx);
 			this->Controls->Add(this->uiPreset);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			this->Name = L"UI";
 			this->Text = L"UI";
+			this->WindowState = System::Windows::Forms::FormWindowState::Maximized;
 			this->Load += gcnew System::EventHandler(this, &UI::AdaptToWindowSize);
 			this->Shown += gcnew System::EventHandler(this, &UI::AdaptToWindowSize);
 			this->ResizeEnd += gcnew System::EventHandler(this, &UI::AdaptToWindowSize);
