@@ -1,15 +1,22 @@
 #pragma once
+
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include "../FFTW/fftw3.h"
 #include <string.h>
 #include <iostream>
-#define _USE_MATH_DEFINES
-#include <math.h>
+
 #pragma comment(lib, "../FFTW/libfftw3-3")
 
-extern float PointsPerSecond;
+using namespace std;
+
+// DEPRECATED
 extern double E_0;
 extern const double E_0_def;
-const long double pi = M_PI;
+
+extern float PointsPerSecond;
+extern int ImpHalfWidth;
+const long double pi = 3.14159265358979323846;
 extern double Level, DefaultLevel;
 
 void SpecInvalidate();
@@ -71,9 +78,9 @@ struct buffer
 			SpecSqrSum += pow(spec[i], 2);
 			if (spec[i] > MaxSpec) MaxSpec = spec[i];
 
-			if (i == (int)(len / PointsPerSecond)) std::cout << "  SpecSqrSum [0:1] = " << SpecSqrSum << '\n';
+			if (i == (int)(len / PointsPerSecond)) cout << "  SpecSqrSum [0:1] = " << SpecSqrSum << '\n';
 		}
-		std::cout << "  SpecSqrSum = " << SpecSqrSum << '\n';
+		cout << "  SpecSqrSum = " << SpecSqrSum << '\n';
 
 		int i;
 		double temp = Level * SpecSqrSum;
@@ -82,7 +89,7 @@ struct buffer
 			temp -= pow(spec[i], 2);
 		}
 		SpecWidth = i; //- ((.5*spec[i] < Level*SpecSqrSum - t) ? 0 : 1);
-		std::cout << "  SpecWidth = " << SpecWidth << '\n';
+		cout << "  SpecWidth = " << SpecWidth << '\n';
 
 		/////////////////////////////
 		double tt = 0;
@@ -90,7 +97,7 @@ struct buffer
 		{
 			tt += pow(spec[i], 2);
 		}
-		std::cout << "     " << tt << '/' << Level * SpecSqrSum << " (" << Level << " of " << SpecSqrSum << ")" << '\n';
+		cout << "     " << tt << '/' << Level * SpecSqrSum << " (" << Level << " of " << SpecSqrSum << ")" << '\n';
 
 		/////////////////////////////
 /*
@@ -101,6 +108,34 @@ struct buffer
 		}
 */
 	}
+	double imp_sqr_int(int x)
+	{
+		double res = 0;
+		int r = len / 2 + x;
+		if (r >= len) r = len - 1;
+		for (int i = len / 2; i <= r; ++i)
+		{
+			res += pow(imp[i], 2);
+		}
+		return res;
+	}
+
+/*
+	double imp_sqr_int_inv(double y)
+	{
+		int x;
+		for (x = 0; x < len / 2; ++x)
+		{
+			y -= pow(imp[x], 2);
+			if (y <= 0)
+			{
+				cout << "imp_sqr_int_inv: overhead = " << -y << endl;
+				return x;
+			}
+		}
+	}
+*/
+
 	double calc_sum(int Median, double IntSqr, /*out*/ int &left, /*out*/ int &right)
 	{
 		// Суммируем, постепенно симметрично отступая от средневзвешенного
@@ -109,7 +144,7 @@ struct buffer
 		{
 			if(Median + i >= len)
 			{
-				std::cout << "Median is odd (+)\n";
+				cout << "Median is odd (+)\n";
 			}
 			else
 			{
@@ -120,7 +155,7 @@ struct buffer
 			
 			if(Median - i < 0)
 			{
-				std::cout << "Median is odd (-)\n";
+				cout << "Median is odd (-)\n";
 			}
 			else
 			{
@@ -131,78 +166,121 @@ struct buffer
 		}
 		return Sum;
 	}
-	void check_energy()
+	int calc_width()
 	{
 		// Делим график на чанки
 		const int CHUNK_SIZE = 128;
 		int ChunkCount = len / CHUNK_SIZE;
 		int Shift = (len % CHUNK_SIZE) / 2;
 		double *Chunks = new double[ChunkCount];
-		
+
 		// Суммируем на каждом
 		double IntSqr = 0;
-		for(int i = 0; i < ChunkCount; ++i)
+		for (int i = 0; i < ChunkCount; ++i)
 		{
 			Chunks[i] = 0;
-			for(int j = 0; j < CHUNK_SIZE; ++j)
+			for (int j = 0; j < CHUNK_SIZE; ++j)
 			{
 				Chunks[i] += pow(imp[Shift + CHUNK_SIZE * i + j], 2);
 			}
 			IntSqr += Chunks[i];
 		}
 
+		// TODO: Не случится ли чего, если он будет не нулём, но очень маленьким?
+		if (IntSqr == 0) return 0;
+
 		// Находим средневзвешенное
 		double _Median = 0;
-		for(int i = 0; i < ChunkCount; ++i)
-			_Median += (Shift + CHUNK_SIZE * i + CHUNK_SIZE/2) * Chunks[i]/IntSqr;
+		for (int i = 0; i < ChunkCount; ++i)
+			_Median += (Shift + CHUNK_SIZE * i + CHUNK_SIZE / 2) * Chunks[i] / IntSqr;
 		int Median = (int)_Median;
 
 		delete[] Chunks;
-		
+/*
 		// Немного подправляем массив для меньших потерь округления
 		double _IntSqr = IntSqr;
-		IntSqr = Math::Round(IntSqr * .1) * 10; // Точность, где же ты?
+		IntSqr = round(IntSqr * .1) * 10; // Точность, где же ты?
 		double RoundingCoef = sqrt(IntSqr / _IntSqr);
-		for(int i = 0; i < len; ++i)
+		for (int i = 0; i < len; ++i)
 		{
 			imp[i] *= RoundingCoef;
 		}
-
+*/
 		// Суммируем, постепенно симметрично отступая от средневзвешенного
 		int left, right;
 		double Sum = calc_sum(Median, IntSqr, left, right);
 
 		// Небольшие жадные подправки
 		bool adjusted = false;
-		while(left >= 0)
+		while (left >= 0 && (pow(imp[left - 1], 2) > pow(imp[right], 2)))
 		{
-			if(pow(imp[left-1], 2) > pow(imp[right], 2))
-			{
-				--left;
-				--right;
-				adjusted = true;
-			}
+			--left;
+			--right;
+			adjusted = true;
 		}
-		while(right < len)
+		while (right < len && (pow(imp[right + 1], 2) > pow(imp[left], 2)))
 		{
-			if(pow(imp[right+1], 2) > pow(imp[left], 2))
-			{
-				++left;
-				++right;
-				adjusted = true;
-			}
+
+			++left;
+			++right;
+			adjusted = true;
 		}
-		if(adjusted)
+		if (adjusted)
 		{
 			Median = (left + right) / 2;
 			// Суммируем, постепенно симметрично отступая от нового средневзвешенного
-			double Sum = calc_sum(Median, IntSqr, left, right);
+			Sum = calc_sum(Median, IntSqr, left, right);
 		}
-				
-		std::cout << "\twidth = " << right - left << ", overhead = " << Sum << ", left = " << left <<
-			", right = " << right << std::endl;
+
+		int width = right - left;
+		cout << "\twidth = " << width << ", overhead = " << Sum << ", left = " << left <<
+			", right = " << right << endl;
+
+		return width;
+
+	}
+	void check_energy()
+	{
+		int halfwidth = calc_width() / 2;
+		if (halfwidth > ImpHalfWidth)
+		{
+			cout << "\tWidth is too big (more than needed by " << halfwidth - ImpHalfWidth << ")\n";
+		}
+		if (halfwidth >= ImpHalfWidth)
+		{
+			return;
+		}
+
+		int x; // Сколько нужно добавить
+		// Добавляем ширины
+		if (halfwidth == 0)
+		{
+			x = round(ImpHalfWidth / Level);
+		}
+		else
+		{
+			FILE *f = fopen("deb.txt", "w");
+
+			int l = 0, r = len / 2;
+			double e = Level * imp_sqr_int(len); // Требуемое значение энергии внутри отсечек   ( типа imp_sqr_int(inf) )
+			for (x = 0; (imp_sqr_int(ImpHalfWidth - x) + fmin(x, ImpHalfWidth)) > Level * (imp_sqr_int(len) + x); ++x) // x > e + Level * x - imp_sqr_int(ImpHalfWidth - x)
+			{
+				fprintf(f, "%d %lf\n", x, (imp_sqr_int(ImpHalfWidth - x) + fmin(x, ImpHalfWidth)) / (imp_sqr_int(len) + x));
+				if (x > 1000)// ImpHalfWidth)
+				{
+					cout << "ERROR\n";
+					x = 0;
+					break;
+				}
+			}
+
+			fclose(f);
+		}
+
+		int length = ++x;
 
 		/////////////////////////////////
+/*
 		double energy = E_0;
 
 		for (int i = 0; i < len; i++){
@@ -211,9 +289,12 @@ struct buffer
 		
 
 		int length = (int)(energy * .5);
+*/
+
+
 		if(length > 0) 
 		{
-			for(int i = length; i < len/2; i++)
+			for(int i = length; i < len/2 - 1; i++)
 			{
 				imp[i - length] = imp[i];
 			}
@@ -223,25 +304,29 @@ struct buffer
 				imp[i + length] = imp[i];
 			}
 
-			for(int i = len/2 - length; i <= (len/2 + length); i++)
+			for(int i = len/2 - length - 1; i <= (len/2 + length); i++)
 			{
 				imp[i] = 1.0;
 			}
 		}
-		std::cout << "check energy: E0 = " << E_0 << ", Efunc = " << E_0 - energy
-			<< ", Efixed = " << E_0 - energy + 2*length << std::endl;
+/*
+		cout << "check energy: E0 = " << E_0 << ", Efunc = " << E_0 - energy
+			<< ", Efixed = " << E_0 - energy + 2*length << endl;
+*/
+		halfwidth = calc_width() / 2;
+		cout << "New halfwidth = " << halfwidth << " (" << ImpHalfWidth << " needed)\n";
 	}
 
 	void generate_null()
 	{
-		std::cout << "gen null\n";
+		cout << "gen null\n";
 		memset(imp, 0, sizeof(double)*len);
 		fourier();
 	}
 
 	void generate_gauss(double param)
 	{
-		std::cout << "gen gauss\n";
+		cout << "gen gauss\n";
 		for (int i = 0; i < len; i++)
 		{
 			imp[i] = exp(-((i-len/2)*(i-len/2)/(param*param)));
@@ -252,11 +337,11 @@ struct buffer
 
 	void generate_rect()
 	{
-		std::cout << "gen rect\n";
+		cout << "gen rect\n";
 		memset(imp, 0, sizeof(double)*len);
 		check_energy();
 		fourier();
-
+/*
 		// Хотфикс кривой отсечки
 		int t;
 		for (t = 1; t < len / 2 + 1; t++)
@@ -275,8 +360,8 @@ struct buffer
 			Level = NewLevel;
 		else
 			Level = DefaultLevel;
-
-		std::cout << "l=" << Level << " (" << (Level == DefaultLevel) << ")\n";
+*/
+		cout << "l=" << Level << " (" << (Level == DefaultLevel) << ")\n";
 		// Пересчитываем ширину
 		/*
 		double ts = 0;
@@ -287,7 +372,7 @@ struct buffer
 		}
 		SpecWidth = i;
 		*/
-		std::cout << "gen rect 2\n";
+		cout << "gen rect 2\n";
 		SpecInvalidate();
 		//fourier();
 	}
@@ -314,7 +399,7 @@ struct buffer
 		{
 			imp[i] = 0.0;
 		}
-		std::cout << "tri_f_p ";
+		cout << "tri_f_p ";
 		check_energy();
 		fourier();
 	}
@@ -326,7 +411,7 @@ struct buffer
 		{
 			imp[i] = exp(-((i-len/2 + 1)*(i-len/2 + 1)/pow(.638*length/sqrt(2/pi),2)));
 		}
-		std::cout << "gauss_f_p ";
+		cout << "gauss_f_p ";
 		check_energy();
 		fourier();
 	}
@@ -353,7 +438,7 @@ struct buffer
 		{
 			imp[i] = 0.0;
 		}
-		std::cout << "sin_f_p ";
+		cout << "sin_f_p ";
 		check_energy();
 		fourier();
 	}

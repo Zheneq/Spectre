@@ -24,7 +24,7 @@ int main(array<String^>^ args)
 	// Test
 	buf[0].alloc(65536);
 	buf[1].alloc(65536);
-	buf[0].generate_gauss(100);
+	buf[0].generate_gauss(30);
 	buf[1].generate_rect();
 	//// Test
 

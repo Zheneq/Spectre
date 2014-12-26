@@ -89,6 +89,7 @@ namespace Spectre {
 
 }
 	System::Void UI::TrapWidthChanged(System::Object^  sender, System::EventArgs^  e) {
+			std::cout << "TrapWidthChanged " << trbTrap->Value << '\n';
 			 if (trbTrap->Value)
 				 buf[0].generate_gauss(trbTrap->Value);
 			 else
